@@ -1,0 +1,35 @@
+{
+  "name": "react_getopi",
+  "version": "0.3.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.2",
+    "@fortawesome/free-brands-svg-icons": "^5.2.0",
+    "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@fortawesome/react-fontawesome": "^0.1.0",
+    "apollo-cache-inmemory": "^1.3.0-beta.6",
+    "apollo-client": "^2.3.7",
+    "apollo-link": "^1.2.2",
+    "apollo-link-batch-http": "^1.2.2",
+    "apollo-link-error": "^1.1.0",
+    "apollo-link-http": "^1.5.4",
+    "avataaars": "^1.1.0",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "react": "^16.4.1",
+    "react-apollo": "^2.1.9",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "stickyfilljs": "^2.0.5",
+    "webfontloader": "^1.6.28"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.76.0"
+  }
+}

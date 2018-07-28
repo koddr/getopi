@@ -1,0 +1,9 @@
+.idea/
+.editorconfig
+.gitignore
+.prettierignore
+package.json
+package-lock.json
+Pipfile
+Pipfile.lock
+**/*.py

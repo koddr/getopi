@@ -1,0 +1,81 @@
+@import "reset.css";
+
+:root {
+  /* Typography */
+  --default-font-family: "Open Sans", Helvetica, "Helvetica Neue", sans-serif;
+  --default-font-size: 16px;
+  --default-font-weight: 400;
+  /* Colors */
+  --black: #272628;
+  --white: #ffffff;
+  --white-dark: #f5f5f5;
+  --grey-light: #f7f7f7;
+  --grey-dark: #4e4d4f;
+  --grey: #abaaac;
+  --blue: #0033ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--default-font-family);
+  font-weight: var(--default-font-weight);
+  font-size: var(--default-font-size);
+  background-color: var(--white);
+  color: var(--black);
+}
+
+h1 {
+  font-size: 3.6rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+hr {
+  background-color: var(--blue);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+}
+
+.item {
+  padding: 1rem;
+}
+
+.heading {
+  padding-bottom: 0.3rem;
+}
+
+.heading__blue {
+  color: var(--blue);
+}
+
+.heading__grey {
+  color: var(--grey);
+}
+
+.header {
+}
+
+.header__sticky {
+  position: sticky;
+  top: 0;
+}
+
+.header__sticky:before,
+.header__sticky:after {
+  content: "";
+  display: table;
+}
+
+@media (max-width: 768px) {
+}
