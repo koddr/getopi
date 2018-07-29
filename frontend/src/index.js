@@ -50,7 +50,6 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/landing" component={Landing} />
       </Switch>
     </Router>
   </ApolloProvider>,

@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 
 // Components
 import Header from "./ui/Header";
+import Loader from "./ui/Loader";
 
 // GraphQL query
 const query = gql`
@@ -28,8 +29,8 @@ export default function Landing() {
         <div className="item">
           <Query query={query}>
             {({ data, error, loading }) => {
+              if (loading) return <Loader />;
               if (error) return "Ooops...";
-              if (loading) return "Loading...";
 
               return (
                 <React.Fragment>
