@@ -27,6 +27,14 @@ body {
   color: var(--black);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding-bottom: 0.3rem;
+}
+
 h1 {
   font-size: 3.6rem;
   font-weight: 800;
@@ -42,17 +50,13 @@ hr {
 
 .container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto;
   grid-column-gap: 10px;
   grid-row-gap: 15px;
 }
 
 .item {
   padding: 1rem;
-}
-
-.heading {
-  padding-bottom: 0.3rem;
 }
 
 .heading__blue {

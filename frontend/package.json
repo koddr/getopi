@@ -1,6 +1,6 @@
 {
   "name": "react_getopi",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
@@ -16,9 +16,9 @@
     "avataaars": "^1.1.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
-    "react": "^16.4.1",
+    "react": "^16.4.2",
     "react-apollo": "^2.1.9",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "stickyfilljs": "^2.0.5",
