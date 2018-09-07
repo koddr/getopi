@@ -27,7 +27,7 @@ export default function Landing() {
           <h2 className="heading__grey">Online focus group for your project</h2>
         </div>
         <div className="item">
-          <Query query={query}>
+          <Query query={query} notifyOnNetworkStatusChange>
             {({ data, error, loading }) => {
               if (loading) return <Loader />;
               if (error) return "Ooops...";
