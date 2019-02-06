@@ -1,7 +1,6 @@
 from django.db import models
 from .choises import STATUSES
 
-
 class Project(models.Model):
     """
     Class Project
