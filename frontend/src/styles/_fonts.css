@@ -1,0 +1,122 @@
+/* Inter font: normal, 400 */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-Regular.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-Regular.woff?v=3.11") format("woff");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-Italic.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-Italic.woff?v=3.11") format("woff");
+}
+
+/* Inter font: semi-bold, 600 */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-SemiBold.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-SemiBold.woff?v=3.11") format("woff");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-SemiBoldItalic.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-SemiBoldItalic.woff?v=3.11") format("woff");
+}
+
+/* Inter font: extra-bold, 800 */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-ExtraBold.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-ExtraBold.woff?v=3.11") format("woff");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-ExtraBoldItalic.woff2?v=3.11") format("woff2"),
+    url("../assets/fonts/Inter-ExtraBoldItalic.woff?v=3.11") format("woff");
+}
+
+/* Inter variables font: 400-800 */
+
+@font-face {
+  font-family: "Inter var";
+  font-weight: 400 800;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url("../assets/fonts/Inter-roman.var.woff2?v=3.11") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter var";
+  font-weight: 400 800;
+  font-display: swap;
+  font-style: italic;
+  font-named-instance: "Italic";
+  src: url("../assets/fonts/Inter-italic.var.woff2?v=3.11") format("woff2");
+}
+
+/* Body font */
+
+html,
+body {
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading font */
+
+h1 {
+  font-size: calc(16px * 2.8);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: calc(16px * 2);
+}
+
+h3 {
+  font-size: calc(16px * 1.8);
+}
+
+h4 {
+  font-size: calc(16px * 1.6);
+}
+
+h5 {
+  font-size: calc(16px * 1.4);
+}
+
+h6 {
+  font-size: calc(16px * 1.2);
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}

@@ -1,0 +1,26 @@
+@import "_fonts.css";
+@import "_colors.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Inter", Helvetica, Arial, sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  html,
+  body {
+    font-family: "Inter var", Helvetica, Arial, sans-serif;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
