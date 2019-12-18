@@ -1,9 +1,15 @@
 @import "_fonts.css";
 @import "_colors.css";
 
+/* Reset */
+
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+
+/* General */
 
 html,
 body {
@@ -19,8 +25,62 @@ body {
 
 html,
 body {
+  color: #2c2c2c;
+  background-color: #fafafa;
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
-  padding: 0;
-  margin: 0;
+}
+
+/* Heading */
+
+h1 {
+  font-size: calc(16px * 2.8);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: calc(16px * 2);
+}
+
+h3 {
+  font-size: calc(16px * 1.8);
+}
+
+h4 {
+  font-size: calc(16px * 1.6);
+}
+
+h5 {
+  font-size: calc(16px * 1.4);
+}
+
+h6 {
+  font-size: calc(16px * 1.2);
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: calc(16px * 1.2);
+}
+
+/* Content */
+
+p {
+  margin-bottom: calc(16px * 1.2);
 }

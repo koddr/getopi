@@ -4,20 +4,24 @@ import useStoreon from "storeon/preact";
 // Style
 import style from "./style";
 
+// UI elements
+import Input from "../../ui/input";
+
 const LoginForm = () => {
-  const { dispatch, email } = useStoreon("email");
+  const { dispatch, loginEmail } = useStoreon("loginEmail");
 
   return (
     <div class={style.form}>
-      <label>Email</label>
-      <input
-        type="text"
-        value={email}
+      <Input
+        id="email"
+        label="E-mail"
+        type="email"
+        placeholder="E-mail"
+        value={loginEmail}
         onInput={e => {
           dispatch("login/pre-save/email", e.target.value);
         }}
       />
-      {email}
     </div>
   );
 };

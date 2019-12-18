@@ -3,10 +3,10 @@ import persistState from "@storeon/localstorage";
 
 //
 let store = store => {
-  store.on("@init", () => ({ email: "" }));
-  store.on("login/pre-save/email", (state, email) => ({ email: email }));
+  store.on("@init", () => ({ loginEmail: "" }));
+  store.on("login/pre-save/email", (state, email) => ({ loginEmail: email }));
 };
 
-const LoginStore = createStore([store, persistState(["email"])]);
+const LoginStore = createStore([store, persistState(["loginEmail"])]);
 
 export default LoginStore;

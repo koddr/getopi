@@ -3,15 +3,18 @@ import persistState from "@storeon/localstorage";
 
 //
 let store = store => {
-  store.on("@init", () => ({ email: "", name: "" }));
+  store.on("@init", () => ({ registerEmail: "", registerName: "" }));
   store.on("register/pre-save/email", (state, email) => ({
-    email: email
+    registerEmail: email
   }));
   store.on("register/pre-save/name", (state, name) => ({
-    name: name
+    registerName: name
   }));
 };
 
-const RegisterStore = createStore([store, persistState(["email", "name"])]);
+const RegisterStore = createStore([
+  store,
+  persistState(["registerEmail", "registerName"])
+]);
 
 export default RegisterStore;

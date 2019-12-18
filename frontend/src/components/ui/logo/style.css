@@ -1,0 +1,17 @@
+/* UI: Logo */
+
+.logo {
+  font-size: calc(16px * 2);
+  font-weight: 600;
+}
+
+a.logo,
+a.logo:hover {
+  color: #2c2c2c;
+  text-decoration: none;
+}
+
+.dot {
+  color: #fa7268;
+  font-weight: 800;
+}

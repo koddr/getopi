@@ -1,5 +1,7 @@
-.profile {
-	padding: 56px 20px;
-	min-height: 100%;
-	width: 100%;
+/* Routes: Register */
+
+.register {
+  background-color: #ffffff;
+  padding: 24px;
+  margin: 14px;
 }

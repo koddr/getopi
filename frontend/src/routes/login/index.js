@@ -1,14 +1,14 @@
 import { h } from "preact";
 import StoreContext from "storeon/preact/context";
 
+// Style
+import style from "./style";
+
 // Init store
 import LoginStore from "../../storages/login";
 
 // UI Component
 import LoginForm from "../../components/forms/login";
-
-// Style
-import style from "./style";
 
 const Login = () => {
   return (

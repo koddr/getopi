@@ -1,15 +1,16 @@
 import { h } from "preact";
 import { Link } from "preact-router/match";
+
+// Style
 import style from "./style.css";
+
+// UI elements
+import Logo from "../logo";
 
 const Header = () => (
   <header class={style.header}>
-    <h1>Preact App</h1>
-    <nav>
-      <Link activeClassName={style.active} href="/">
-        Home
-      </Link>
-      |
+    <Logo />
+    <nav class={style.menu}>
       <Link activeClassName={style.active} href="/login">
         Login
       </Link>

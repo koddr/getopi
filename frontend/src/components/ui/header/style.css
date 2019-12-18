@@ -1,0 +1,10 @@
+.header {
+  /* Content is centered horizontally */
+  align-items: center;
+  display: flex;
+}
+
+.menu {
+  /* Sticks to the left */
+  margin-left: auto;
+}
