@@ -5,9 +5,9 @@
   margin-bottom: calc(16px * 1.2);
 }
 
-.field .input:not(:placeholder-shown) + .label {
-  background: #ffffff;
-  padding: 0 10px;
+.input:not(:placeholder-shown) + .label {
+  /* background: #ffffff; */
+  padding: 5px 10px;
   transform: translate(0, -50%);
   opacity: 1;
 }
@@ -19,6 +19,11 @@
   padding: 16px calc(16px + 10px);
 }
 
+.input:focus {
+  outline: none;
+  border: 1px dashed #0f4c81;
+}
+
 .label {
   /* Position the label */
   color: #0f4c81;
@@ -27,5 +32,4 @@
   top: 0;
   /* Hide it by default */
   opacity: 0;
-  transition: "all 400ms";
 }

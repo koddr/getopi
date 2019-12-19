@@ -1,25 +1,25 @@
-import { h } from "preact";
-import { Link } from "preact-router/match";
-
 // Style
-import style from "./style.css";
+import style from './style';
+
+// Router link
+import { Link } from 'preact-router/match';
 
 // UI elements
-import Logo from "../logo";
+import Logo from '../logo';
 
 const Header = () => (
-  <header class={style.header}>
-    <Logo />
-    <nav class={style.menu}>
-      <Link activeClassName={style.active} href="/login">
+	<header class={style.header}>
+		<Logo />
+		<nav class={style.menu}>
+			<Link activeClassName={style.active} href="/login">
         Login
-      </Link>
+			</Link>
       |
-      <Link activeClassName={style.active} href="/register">
+			<Link activeClassName={style.active} href="/register">
         Register
-      </Link>
-    </nav>
-  </header>
+			</Link>
+		</nav>
+	</header>
 );
 
 export default Header;

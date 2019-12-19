@@ -1,13 +1,13 @@
-import { h } from "preact";
-import { Link } from "preact-router/match";
-
 // Style
-import style from "./style.css";
+import style from './style';
+
+// Router link
+import { Link } from 'preact-router/match';
 
 const Logo = () => (
-  <Link class={style.logo} href="/">
+	<Link class={style.logo} href="/">
     getopi<span class={style.dot}>.</span>
-  </Link>
+	</Link>
 );
 
 export default Logo;

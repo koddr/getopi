@@ -1,42 +1,42 @@
-import { h } from "preact";
-import useStoreon from "storeon/preact";
-
 // Style
-import style from "./style";
+import style from './style';
+
+// Use store
+import useStoreon from 'storeon/preact';
 
 // UI elements
-import Input from "../../ui/input";
+import Input from '../../ui/input';
 
 const RegisterForm = () => {
-  const { dispatch, registerEmail, registerName } = useStoreon(
-    "registerEmail",
-    "registerName"
-  );
+	const { dispatch, registerEmail, registerName } = useStoreon(
+		'registerEmail',
+		'registerName'
+	);
 
-  return (
-    <form class={style.form}>
-      <Input
-        id="email"
-        label="E-mail"
-        type="email"
-        placeholder="E-mail"
-        value={registerEmail}
-        onInput={e => {
-          dispatch("register/pre-save/email", e.target.value);
-        }}
-      />
-      <Input
-        id="name"
-        label="Name"
-        type="text"
-        placeholder="Name"
-        value={registerName}
-        onInput={e => {
-          dispatch("register/pre-save/name", e.target.value);
-        }}
-      />
-    </form>
-  );
+	return (
+		<form class={style.form}>
+			<Input
+				id="email"
+				label="E-mail"
+				type="email"
+				placeholder="E-mail"
+				value={registerEmail}
+				onInput={e => {
+					dispatch('register/pre-save/email', e.target.value);
+				}}
+			/>
+			<Input
+				id="name"
+				label="Name"
+				type="text"
+				placeholder="Name"
+				value={registerName}
+				onInput={e => {
+					dispatch('register/pre-save/name', e.target.value);
+				}}
+			/>
+		</form>
+	);
 };
 
 export default RegisterForm;

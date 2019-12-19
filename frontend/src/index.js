@@ -1,4 +1,11 @@
-import "./styles";
-import GetopiApp from "./components/app";
+if (process.env.NODE_ENV === 'development') {
+	require('preact/debug');
+}
 
-export default GetopiApp;
+// Styles
+import './styles';
+
+// Init App
+import App from './components/app';
+
+export default App;

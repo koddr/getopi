@@ -7,10 +7,10 @@
     "start": "per-env",
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
-    "build": "preact build",
+    "build": "npm run lint && preact build",
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "test": "jest"
   },
   "eslintConfig": {
