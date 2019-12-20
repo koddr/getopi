@@ -1,7 +1,27 @@
 /* Routes: Login */
 
 .login {
-  background-color: #ffffff;
-  padding: 24px;
-  margin: 14px;
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh + var(--font));
+  background-color: var(--white);
+  border-top-left-radius: calc(var(--font) + 4px);
+  border-top-right-radius: calc(var(--font) + 4px);
+  box-shadow: 0 0 calc(var(--font) * 1.2) var(--gray);
+}
+
+.image,
+.form {
+  flex: 1;
+}
+
+.image {
+  background-image: url(../../assets/images/login_image.png);
+  background-size: cover;
+  background-position: center center;
+  filter: opacity(0.5);
+}
+
+.form {
+  padding: calc(var(--font) * 4) calc(var(--font) * 6);
 }

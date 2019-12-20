@@ -1,7 +1,10 @@
 .header {
+  display: flex;
+  margin-top: calc(var(--font) * 2);
+  margin-bottom: calc(var(--font));
+  padding: var(--font);
   /* Content is centered horizontally */
   align-items: center;
-  display: flex;
 }
 
 .menu {

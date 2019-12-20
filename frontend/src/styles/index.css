@@ -1,9 +1,24 @@
 @import "_fonts.css";
-@import "_colors.css";
 
 :root {
-  background-color: #fafafa;
+  /* Base color */
+  --base-blue: 208;
+  --base-red: 4;
+  /* Colors */
+  --white: hsla(0, 0%, 100%, 1);
+  --smoke-white: hsla(0, 0%, 98%, 1);
+  --gray: hsla(0, 0%, 88%, 1);
+  --smoke-gray: hsla(0, 0%, 68%, 1);
+  --black: hsla(0, 0%, 18%, 1);
+  --red: hsla(var(--base-red), 94%, 69%, 1);
+  --blue: hsla(var(--base-blue), 79%, 28%, 1);
+  /* Init element colors */
+  color: var(--black);
+  background-color: var(--smoke-white);
+  /* Theme switcher, default: light */
   filter: invert(0%);
+  /* Init font size */
+  --font: 16px;
 }
 
 /* Reset */
@@ -31,8 +46,7 @@ body {
 
 html,
 body {
-  color: #2c2c2c;
-  font-size: 16px;
+  font-size: var(--font);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,28 +57,28 @@ body {
 /* Heading */
 
 h1 {
-  font-size: calc(16px * 2.8);
+  font-size: calc(var(--font) * 2.8);
   font-weight: 800;
 }
 
 h2 {
-  font-size: calc(16px * 2);
+  font-size: calc(var(--font) * 2);
 }
 
 h3 {
-  font-size: calc(16px * 1.8);
+  font-size: calc(var(--font) * 1.8);
 }
 
 h4 {
-  font-size: calc(16px * 1.6);
+  font-size: calc(var(--font) * 1.6);
 }
 
 h5 {
-  font-size: calc(16px * 1.4);
+  font-size: calc(var(--font) * 1.4);
 }
 
 h6 {
-  font-size: calc(16px * 1.2);
+  font-size: calc(var(--font) * 1.2);
 }
 
 h2,
@@ -81,11 +95,33 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: calc(16px * 1.2);
+  margin-bottom: calc(var(--font) * 1.6);
 }
 
 /* Content */
 
+a,
+a:hover {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a {
+  border-bottom: 1px solid var(--blue);
+}
+
+a:hover {
+  color: var(--black);
+  border-bottom: 0;
+}
+
 p {
-  margin-bottom: calc(16px * 1.2);
+  margin-bottom: calc(var(--font) * 1.4);
+}
+
+/* Wrapper */
+
+.wrapper {
+  margin-left: calc(var(--font) * 2);
+  margin-right: calc(var(--font) * 2);
 }
