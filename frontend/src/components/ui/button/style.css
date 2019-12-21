@@ -8,6 +8,8 @@
   border-radius: calc(var(--font) * 2);
   background: none;
   border: 0;
+  cursor: pointer;
+  outline: none;
 }
 
 .icon {
@@ -19,7 +21,15 @@
   color: var(--white);
 }
 
+.primary:focus {
+  box-shadow: 0 0 calc(var(--font)) var(--blue);
+}
+
 .secondary {
   background-color: var(--red);
   color: var(--white);
+}
+
+.secondary:focus {
+  box-shadow: 0 0 calc(var(--font)) var(--red);
 }

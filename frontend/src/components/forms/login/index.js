@@ -27,9 +27,9 @@ const LoginForm = () => {
         id="password"
         label="Enter your password"
         type="password"
-        placeholder="● ● ● ● ● ● ●"
+        placeholder="○ ○ ○ ○ ○"
       />
-      <Button name="Login" design="secondary" onClick={() => alert("OK!")} />
+      <Button name="Enter" onClick={() => alert("OK!")} />
     </div>
   );
 };

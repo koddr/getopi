@@ -119,6 +119,12 @@ p {
   margin-bottom: calc(var(--font) * 1.4);
 }
 
+/* Helpers */
+
+.spacer {
+  min-height: calc(var(--font) * 2);
+}
+
 /* Wrapper */
 
 .wrapper {

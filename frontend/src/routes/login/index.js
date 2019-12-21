@@ -27,8 +27,9 @@ const Login = () => {
           <p>
             &larr;&nbsp;<Link href="/">Back to Home</Link>
           </p>
+          <div class="spacer"></div>
           <h1>Login to Account</h1>
-          <p>This is the Login component.</p>
+          <div class="spacer"></div>
           <LoginForm />
         </div>
       </div>

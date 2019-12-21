@@ -27,7 +27,3 @@
   border: 1px solid var(--black);
   box-shadow: 0 0 calc(var(--font)) var(--gray);
 }
-
-.label {
-  color: var(--smoke-gray);
-}
