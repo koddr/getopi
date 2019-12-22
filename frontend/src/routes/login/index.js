@@ -13,6 +13,8 @@ import { Link } from "preact-router/match";
 
 // UI Component
 import LoginForm from "../../components/forms/login";
+import Separator from "../../components/ui/separator";
+import Button from "../../components/ui/button";
 
 const Login = () => {
   useEffect(() => {
@@ -27,10 +29,18 @@ const Login = () => {
           <p>
             &larr;&nbsp;<Link href="/">Back to Home</Link>
           </p>
-          <div class="spacer"></div>
+          <Separator />
           <h1>Login to Account</h1>
-          <div class="spacer"></div>
+          <Separator />
           <LoginForm />
+          <Separator text="Don't have an Account?" />
+          <Button
+            name="Join now. It's free!"
+            icon=":)"
+            design="secondary"
+            fullwidth={true}
+            onClick={() => alert("OK!")}
+          />
         </div>
       </div>
     </StoreContext.Provider>

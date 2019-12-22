@@ -1,0 +1,64 @@
+/* UI: Notify */
+
+.notify {
+  display: flex;
+  position: fixed;
+  bottom: calc(var(--font) * 3);
+  left: calc(var(--font) * 2);
+  right: calc(var(--font) * 2);
+  padding: var(--font);
+  color: var(--white);
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.info {
+  background-color: var(--opacity-blue);
+}
+
+.success {
+  background-color: var(--opacity-green);
+}
+
+.error {
+  background-color: var(--opacity-red);
+}
+
+.text {
+  font-size: var(--font);
+  padding-right: var(--font);
+}
+
+.close {
+  position: relative;
+  height: calc(var(--font) * 1.4);
+  width: calc(var(--font) * 1.4);
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.line_1 {
+  background-color: var(--white);
+  /* Position */
+  left: 0px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%) rotate(45deg);
+  /* Size */
+  height: 1px;
+  width: 100%;
+}
+
+.line_2 {
+  background-color: var(--white);
+  /* Position */
+  left: 50%;
+  position: absolute;
+  top: 0px;
+  transform: translate(-50%, 0%) rotate(45deg);
+  /* Size */
+  height: 100%;
+  width: 1px;
+}

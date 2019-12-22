@@ -5,7 +5,7 @@ const Input = props => (
   <div class={style.field}>
     <p>
       <label for={props.id} class={style.label}>
-        {props.label}&nbsp;&darr;
+        {props.label}:
       </label>
     </p>
     <input

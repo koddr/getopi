@@ -3,22 +3,28 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  font-size: calc(var(--font) * 1.4);
+  font-size: calc(var(--font) * 1.2);
   padding: var(--font) calc(var(--font) * 2.4);
   border-radius: calc(var(--font) * 2);
   background: none;
   border: 0;
   cursor: pointer;
   outline: none;
+  font-weight: 600;
 }
 
 .icon {
+  padding-left: var(--font);
   width: var(--font);
 }
 
 .primary {
   background-color: var(--blue);
   color: var(--white);
+}
+
+.primary:hover {
+  background-color: var(--opacity-blue);
 }
 
 .primary:focus {
@@ -30,6 +36,28 @@
   color: var(--white);
 }
 
+.secondary:hover {
+  background-color: var(--opacity-red);
+}
+
 .secondary:focus {
   box-shadow: 0 0 calc(var(--font)) var(--red);
+}
+
+.success {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.success:hover {
+  background-color: var(--opacity-green);
+}
+
+.success:focus {
+  box-shadow: 0 0 calc(var(--font)) var(--green);
+}
+
+.fullwidth {
+  margin: 0 auto;
+  width: 80%;
 }

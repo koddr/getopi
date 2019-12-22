@@ -3,7 +3,7 @@
 .login {
   display: flex;
   overflow: hidden;
-  height: calc(100vh + var(--font));
+  height: 100%;
   background-color: var(--white);
   border-top-left-radius: calc(var(--font) + 4px);
   border-top-right-radius: calc(var(--font) + 4px);

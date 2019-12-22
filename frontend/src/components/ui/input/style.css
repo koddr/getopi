@@ -5,8 +5,7 @@
 }
 
 .field p {
-  padding-left: calc(var(--font) - 6px);
-  margin-bottom: calc(var(--font) - 8px);
+  margin-bottom: calc(var(--font) / 2);
 }
 
 .input,

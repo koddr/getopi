@@ -1,0 +1,29 @@
+.separator {
+  display: flex;
+  margin: calc(var(--font) * 1.5) 0;
+  /* Content is centered horizontally */
+  align-items: center;
+  /* Used to set the position of text */
+  position: relative;
+}
+
+.text {
+  color: var(--smoke-gray);
+  background: var(--white);
+  padding: 0 var(--font);
+  text-align: center;
+  text-transform: uppercase;
+  /* Displayed at the center of container */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.line {
+  margin-top: calc(var(--font) * 3);
+  margin-bottom: calc(var(--font) * 3);
+  border-bottom: 1px solid var(--smoke-gray);
+  height: 1px;
+  width: 100%;
+}
