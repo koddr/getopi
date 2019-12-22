@@ -16,7 +16,7 @@
 .input {
   width: 100%;
   border: 1px solid var(--smoke-gray);
-  border-radius: calc(var(--font) - 4px);
+  border-radius: calc(var(--font) / 2);
   padding: var(--font) calc(var(--font) + 10px);
   background-color: var(--smoke-white);
 }

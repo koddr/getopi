@@ -4,48 +4,38 @@ import style from "./style";
 // Hooks
 import { useEffect } from "preact/hooks";
 
+// Router link
+import { Link } from "preact-router/match";
+
 // Init store
 import StoreContext from "storeon/preact/context";
 import LoginStore from "../../storages/login";
 
-// Router link
-import { Link } from "preact-router/match";
-
 // UI Component
-import LoginForm from "../../components/forms/login";
 import Separator from "../../components/ui/separator";
-import { ButtonLink } from "../../components/ui/button";
+import ForgetPasswordForm from "../../components/forms/forget-pass";
 
-const Login = () => {
+const ForgetPassword = () => {
   useEffect(() => {
-    document.title = "Login to Account | getopi.";
+    document.title = "Forget password | getopi.";
   }, []);
 
   return (
     <StoreContext.Provider value={LoginStore}>
-      <div class={style.login}>
+      <div class={style.forget_password}>
         <div class={style.image}></div>
         <div class={style.form}>
           <p>
             &larr;&nbsp;<Link href="/">Back to Home</Link>
           </p>
           <Separator />
-          <h1>Login to Account</h1>
+          <h1>Forget Password?</h1>
           <Separator />
-          <LoginForm />
-          <Separator text="Don't have an Account?" />
-          <ButtonLink
-            name="Create your own Account!"
-            icon=":)"
-            color="green"
-            fullwidth={true}
-            outline={true}
-            href="/register"
-          />
+          <ForgetPasswordForm />
         </div>
       </div>
     </StoreContext.Provider>
   );
 };
 
-export default Login;
+export default ForgetPassword;

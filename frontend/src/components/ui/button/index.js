@@ -1,26 +1,30 @@
 // Style
 import style from "./style";
 
-const Button = props => {
-  let design, fullwidth;
+// Router link
+import { Link } from "preact-router/match";
 
-  switch (props.design) {
-    case "secondary":
-      design = style.secondary;
+export const Button = props => {
+  let color, fullwidth, outline;
+
+  switch (props.color) {
+    case "red":
+      color = style.red;
       break;
-    case "success":
-      design = style.success;
+    case "green":
+      color = style.green;
       break;
     default:
-      design = style.primary;
+      color = style.blue;
       break;
   }
 
   if (props.fullwidth === true) fullwidth = style.fullwidth;
+  if (props.outline === true) outline = style.outline;
 
   return (
     <button
-      class={`${style.button} ${design} ${fullwidth}`}
+      class={`${style.button} ${color} ${fullwidth || ""} ${outline || ""}`}
       onClick={props.onClick}
     >
       <span class={style.name}>{props.name}</span>
@@ -29,4 +33,32 @@ const Button = props => {
   );
 };
 
-export default Button;
+export const ButtonLink = props => {
+  let color, fullwidth, outline;
+
+  switch (props.color) {
+    case "red":
+      color = style.red;
+      break;
+    case "green":
+      color = style.green;
+      break;
+    default:
+      color = style.blue;
+      break;
+  }
+
+  if (props.fullwidth === true) fullwidth = style.fullwidth;
+  if (props.outline === true) outline = style.outline;
+
+  return (
+    <Link
+      class={`${style.button} ${color} ${fullwidth || ""} ${outline || ""}`}
+      href={props.href}
+      redirect={props.redirect}
+    >
+      <span class={style.name}>{props.name}</span>
+      {props.icon ? <span class={style.icon}>{props.icon}</span> : ""}
+    </Link>
+  );
+};

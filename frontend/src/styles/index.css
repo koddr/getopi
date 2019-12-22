@@ -4,24 +4,30 @@
   /* Base color */
   --base-white: 0, 0%, 100%;
   --base-black: 0, 0%, 18%;
-  --base-blue: 208, 79%, 28%;
+  --base-gray: 0, 0%, 88%;
   --base-red: 4, 94%, 69%;
-  --base-green: 81, 41%, 51%;
+  --base-green: 118, 69%, 38%;
+  --base-blue: 208, 89%, 38%;
+  /* Smoke colors */
+  --smoke-white: hsla(0, 0%, 98%, 1);
+  --smoke-gray: hsla(0, 0%, 68%, 1);
+  /* Dark colors */
+  --dark-red: hsla(4, 94%, 59%, 1);
+  --dark-green: hsla(118, 69%, 28%, 1);
+  --dark-blue: hsla(208, 89%, 28%, 1);
   /* Colors */
   --white: hsla(var(--base-white), 1);
-  --smoke-white: hsla(0, 0%, 98%, 1);
-  --gray: hsla(0, 0%, 88%, 1);
-  --smoke-gray: hsla(0, 0%, 68%, 1);
+  --gray: hsla(var(--base-gray), 1);
   --black: hsla(var(--base-black), 1);
   --red: hsla(var(--base-red), 1);
-  --blue: hsla(var(--base-blue), 1);
   --green: hsla(var(--base-green), 1);
+  --blue: hsla(var(--base-blue), 1);
   /* Opacity colors */
   --opacity-black: hsla(var(--base-black), 0.8);
   --opacity-white: hsla(var(--base-white), 0.8);
   --opacity-red: hsla(var(--base-red), 0.8);
-  --opacity-blue: hsla(var(--base-blue), 0.8);
   --opacity-green: hsla(var(--base-green), 0.8);
+  --opacity-blue: hsla(var(--base-blue), 0.8);
   /* Init element colors */
   color: var(--black);
   background-color: var(--smoke-white);
@@ -57,10 +63,10 @@ html,
 body {
   font-size: var(--font);
   font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Heading */

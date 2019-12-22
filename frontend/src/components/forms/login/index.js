@@ -12,7 +12,7 @@ import { Link } from "preact-router/match";
 
 // UI elements
 import Input from "../../ui/input";
-import Button from "../../ui/button";
+import { Button } from "../../ui/button";
 import Notify from "../../ui/notify";
 
 const LoginForm = () => {
@@ -20,7 +20,7 @@ const LoginForm = () => {
   const { dispatch, loginEmail } = useStoreon("loginEmail");
 
   return (
-    <div class={style.form}>
+    <form class={style.form}>
       {showNotify && (
         <Notify
           text="OK! This is info message!"
@@ -29,7 +29,7 @@ const LoginForm = () => {
       )}
       <Input
         id="email"
-        label="Enter your e-mail"
+        label="Your e-mail"
         type="email"
         placeholder="mail@example.com"
         value={loginEmail}
@@ -39,23 +39,23 @@ const LoginForm = () => {
       />
       <Input
         id="password"
-        label="Enter your password"
+        label="Your password"
         type="password"
         placeholder="○ ○ ○ ○ ○"
       />
       <div class={style.group}>
         <div class={style.item}>
           <Button
-            name="Go to Account"
+            name="Login to Account"
             icon="&rarr;"
             onClick={() => setShowNotify(true)}
           />
         </div>
         <div class={(style.item, style.right)}>
-          <Link href="/">Forgot password?</Link>
+          <Link href="/forget-password">Forgot password?</Link>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

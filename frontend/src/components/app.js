@@ -9,6 +9,7 @@ import Footer from "./ui/footer";
 import Home from "../routes/home";
 import Login from "../routes/login";
 import Register from "../routes/register";
+import ForgetPassword from "../routes/forget-pass";
 
 class App extends Component {
   /** Gets fired when the route changes.
@@ -28,6 +29,7 @@ class App extends Component {
             <Home path="/" />
             <Login path="/login" />
             <Register path="/register" />
+            <ForgetPassword path="/forget-password" />
           </Router>
           <Footer />
         </div>

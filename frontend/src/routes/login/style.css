@@ -16,7 +16,7 @@
 }
 
 .image {
-  background-image: url(../../assets/images/login_image.png);
+  background-image: url(../../assets/images/register_image.jpg);
   background-size: cover;
   background-position: center center;
   filter: opacity(0.5);
