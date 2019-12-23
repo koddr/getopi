@@ -31,6 +31,7 @@ const ForgetPasswordForm = () => {
         id="email"
         label="Enter your e-mail"
         type="email"
+        icon="mail"
         placeholder="e.g. mail@example.com"
         value={loginEmail}
       />

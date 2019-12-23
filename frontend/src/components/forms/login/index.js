@@ -33,6 +33,7 @@ const LoginForm = () => {
         type="email"
         placeholder="mail@example.com"
         value={loginEmail}
+        icon="mail"
         onInput={e => {
           dispatch("login/pre-save/email", e.target.value);
         }}
@@ -41,6 +42,7 @@ const LoginForm = () => {
         id="password"
         label="Your password"
         type="password"
+        icon="lock"
         placeholder="○ ○ ○ ○ ○"
       />
       <div class={style.group}>

@@ -33,6 +33,7 @@ const RegisterForm = () => {
         type="email"
         placeholder="e.g. mail@example.com"
         value={registerEmail}
+        icon="mail"
         onInput={e => {
           dispatch("register/pre-save/email", e.target.value);
         }}
@@ -43,6 +44,7 @@ const RegisterForm = () => {
         type="text"
         placeholder="e.g. John Smith"
         value={registerName}
+        icon="contact"
         onInput={e => {
           dispatch("register/pre-save/name", e.target.value);
         }}

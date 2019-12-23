@@ -8,6 +8,13 @@
   --base-red: 4, 94%, 69%;
   --base-green: 118, 69%, 38%;
   --base-blue: 208, 89%, 38%;
+  /* Normal colors */
+  --white: hsla(var(--base-white), 1);
+  --gray: hsla(var(--base-gray), 1);
+  --black: hsla(var(--base-black), 1);
+  --red: hsla(var(--base-red), 1);
+  --green: hsla(var(--base-green), 1);
+  --blue: hsla(var(--base-blue), 1);
   /* Smoke colors */
   --smoke-white: hsla(0, 0%, 98%, 1);
   --smoke-gray: hsla(0, 0%, 68%, 1);
@@ -15,13 +22,8 @@
   --dark-red: hsla(4, 94%, 59%, 1);
   --dark-green: hsla(118, 69%, 28%, 1);
   --dark-blue: hsla(208, 89%, 28%, 1);
-  /* Colors */
-  --white: hsla(var(--base-white), 1);
-  --gray: hsla(var(--base-gray), 1);
-  --black: hsla(var(--base-black), 1);
-  --red: hsla(var(--base-red), 1);
-  --green: hsla(var(--base-green), 1);
-  --blue: hsla(var(--base-blue), 1);
+  /* Light colors */
+  --light-blue: hsla(208, 89%, 88%, 1);
   /* Opacity colors */
   --opacity-black: hsla(var(--base-black), 0.8);
   --opacity-white: hsla(var(--base-white), 0.8);
@@ -59,11 +61,14 @@ body {
   }
 }
 
+html {
+  height: 100%;
+}
+
 html,
 body {
   font-size: var(--font);
   font-weight: 400;
-  height: 100%;
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -139,4 +144,41 @@ p {
 .wrapper {
   margin-left: calc(var(--font) * 2);
   margin-right: calc(var(--font) * 2);
+}
+
+/* Media queries */
+
+@media screen and (min-width: 1280px) {
+  .wrapper {
+    margin-left: calc(var(--font) * 3);
+    margin-right: calc(var(--font) * 3);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    margin-left: calc(var(--font) * 4);
+    margin-right: calc(var(--font) * 4);
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .wrapper {
+    margin-left: calc(var(--font) * 5);
+    margin-right: calc(var(--font) * 5);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .wrapper {
+    margin-left: calc(var(--font) * 6);
+    margin-right: calc(var(--font) * 6);
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .wrapper {
+    margin-left: calc(var(--font) * 7);
+    margin-right: calc(var(--font) * 7);
+  }
 }
