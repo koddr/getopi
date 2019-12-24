@@ -24,8 +24,7 @@
 
 .input:focus {
   outline: none;
-  border: 1px solid var(--smoke-gray);
-  box-shadow: 0 0 calc(var(--font)) var(--gray);
+  border: 1px solid var(--blue);
 }
 
 .icon {

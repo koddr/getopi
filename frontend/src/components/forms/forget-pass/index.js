@@ -29,7 +29,7 @@ const ForgetPasswordForm = () => {
       )}
       <Input
         id="email"
-        label="Enter your e-mail"
+        label="Enter your E-mail"
         type="email"
         icon="mail"
         placeholder="e.g. mail@example.com"

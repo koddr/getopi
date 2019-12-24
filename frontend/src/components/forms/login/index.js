@@ -29,7 +29,7 @@ const LoginForm = () => {
       )}
       <Input
         id="email"
-        label="Your e-mail"
+        label="Your E-mail"
         type="email"
         placeholder="mail@example.com"
         value={loginEmail}
@@ -40,7 +40,7 @@ const LoginForm = () => {
       />
       <Input
         id="password"
-        label="Your password"
+        label="Your Password"
         type="password"
         icon="lock"
         placeholder="○ ○ ○ ○ ○"

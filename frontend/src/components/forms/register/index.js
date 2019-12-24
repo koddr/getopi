@@ -40,7 +40,7 @@ const RegisterForm = () => {
       />
       <Input
         id="name"
-        label="Enter your Name"
+        label="Enter your Full name"
         type="text"
         placeholder="e.g. John Smith"
         value={registerName}
