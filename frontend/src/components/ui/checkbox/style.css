@@ -1,0 +1,55 @@
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.input {
+  appearance: none;
+}
+
+.input:focus + .box {
+  border: 1px solid var(--white);
+  box-shadow: 0 0 0 3px var(--blue);
+  outline: 3px solid transparent;
+}
+
+.input:checked + * .line_1,
+.input:checked + * .line_2 {
+  background-color: var(--blue);
+}
+
+.box {
+  position: relative;
+  width: calc(var(--font) * 2);
+  height: calc(var(--font) * 2);
+  background-color: var(--light-blue);
+  border: 1px solid var(--blue);
+  border-radius: calc(var(--font) / 4);
+}
+
+.text {
+  padding-left: calc(var(--font) / 1.2);
+}
+
+.line_1,
+.line_2 {
+  background-color: transparent;
+  position: absolute;
+}
+
+.line_1 {
+  transform: translate(0%, -50%) rotate(45deg);
+  left: 0px;
+  top: 50%;
+  height: calc(var(--font) / 8);
+  width: 100%;
+}
+
+.line_2 {
+  transform: translate(-50%, 0%) rotate(45deg);
+  left: 50%;
+  top: 0px;
+  height: 100%;
+  width: calc(var(--font) / 8);
+}

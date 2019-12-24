@@ -11,9 +11,14 @@ import useStoreon from "storeon/preact";
 import Input from "../../ui/input";
 import { Button } from "../../ui/button";
 import Notify from "../../ui/notify";
+import Checkbox from "../../ui/checkbox";
+
+// Tools
+import Validation from "../../../tools/validation";
 
 const RegisterForm = () => {
   const [showNotify, setShowNotify] = useState(false);
+  const [validationStatus, setValidationStatus] = useState("init");
   const { dispatch, registerEmail, registerName } = useStoreon(
     "registerEmail",
     "registerName"
@@ -34,7 +39,12 @@ const RegisterForm = () => {
         placeholder="e.g. mail@example.com"
         value={registerEmail}
         icon="mail"
+        validation_status={validationStatus}
+        validation_error_text="Error!"
         onInput={e => {
+          Validation("email", e.target.value)
+            ? setValidationStatus("success")
+            : setValidationStatus("error");
           dispatch("register/pre-save/email", e.target.value);
         }}
       />
@@ -56,7 +66,11 @@ const RegisterForm = () => {
             color="green"
             icon="&rarr;"
             onClick={() => setShowNotify(true)}
+            isDisabled={validationStatus === "error" && true}
           />
+        </div>
+        <div class={`${style.item} ${style.right}`}>
+          <Checkbox text="I'm agree Terms of use" checked={true} />
         </div>
       </div>
     </form>

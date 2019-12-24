@@ -39,26 +39,24 @@
   cursor: pointer;
 }
 
-.line_1 {
+.line_1,
+.line_2 {
   background-color: var(--white);
-  /* Position */
-  left: 0px;
   position: absolute;
-  top: 50%;
+}
+
+.line_1 {
   transform: translate(0%, -50%) rotate(45deg);
-  /* Size */
-  height: 1px;
+  left: 0px;
+  top: 50%;
+  height: calc(var(--font) / 8);
   width: 100%;
 }
 
 .line_2 {
-  background-color: var(--white);
-  /* Position */
-  left: 50%;
-  position: absolute;
-  top: 0px;
   transform: translate(-50%, 0%) rotate(45deg);
-  /* Size */
+  left: 50%;
+  top: 0px;
   height: 100%;
-  width: 1px;
+  width: calc(var(--font) / 8);
 }

@@ -16,7 +16,7 @@ import { Button } from "../../ui/button";
 import Notify from "../../ui/notify";
 
 const LoginForm = () => {
-  const [showNotify, setShowNotify] = useState(false);
+  const [showNotify, setNotify] = useState(false);
   const { dispatch, loginEmail } = useStoreon("loginEmail");
 
   return (
@@ -24,7 +24,7 @@ const LoginForm = () => {
       {showNotify && (
         <Notify
           text="OK! This is info message!"
-          onClose={() => setShowNotify(false)}
+          onClose={() => setNotify(false)}
         />
       )}
       <Input
@@ -32,6 +32,7 @@ const LoginForm = () => {
         label="Your E-mail"
         type="email"
         placeholder="mail@example.com"
+        required={true}
         value={loginEmail}
         icon="mail"
         onInput={e => {
@@ -44,16 +45,17 @@ const LoginForm = () => {
         type="password"
         icon="lock"
         placeholder="○ ○ ○ ○ ○"
+        required={true}
       />
       <div class={style.group}>
         <div class={style.item}>
           <Button
             name="Login to Account"
             icon="&rarr;"
-            onClick={() => setShowNotify(true)}
+            onClick={() => setNotify(true)}
           />
         </div>
-        <div class={(style.item, style.right)}>
+        <div class={`${style.item} ${style.right}`}>
           <Link href="/forget-password">Forgot password?</Link>
         </div>
       </div>

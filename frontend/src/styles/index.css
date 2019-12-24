@@ -22,8 +22,11 @@
   --dark-red: hsla(4, 94%, 59%, 1);
   --dark-green: hsla(118, 69%, 28%, 1);
   --dark-blue: hsla(208, 89%, 28%, 1);
+  --dark-gray: hsla(0, 0%, 68%, 1);
   /* Light colors */
-  --light-blue: hsla(208, 89%, 88%, 1);
+  --dark-red: hsla(4, 94%, 98%, 1);
+  --light-green: hsla(118, 69%, 98%, 1);
+  --light-blue: hsla(208, 89%, 98%, 1);
   /* Opacity colors */
   --opacity-black: hsla(var(--base-black), 0.8);
   --opacity-white: hsla(var(--base-white), 0.8);

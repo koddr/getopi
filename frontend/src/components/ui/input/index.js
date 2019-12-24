@@ -2,7 +2,7 @@
 import style from "./style";
 
 const Input = props => {
-  let icon_path;
+  let icon_path, validation_status, validation_help_text;
 
   switch (props.icon) {
     case "mail":
@@ -27,12 +27,23 @@ const Input = props => {
       break;
   }
 
+  switch (props.validation_status) {
+    case "success":
+      validation_status = style.success;
+      break;
+    case "error":
+      validation_status = style.error;
+      break;
+    default:
+      break;
+  }
+
   return (
     <div class={style.field}>
       <label for={props.id} class={style.label}>
         {props.label}:
       </label>
-      <div class={style.group}>
+      <div class={`${style.group} ${validation_status}`}>
         <input
           id={props.id}
           class={style.input}
@@ -40,6 +51,7 @@ const Input = props => {
           placeholder={props.placeholder}
           value={props.value}
           onInput={props.onInput}
+          required={props.required}
         />
         {props.icon &&
           h(
@@ -52,6 +64,9 @@ const Input = props => {
             icon_path
           )}
       </div>
+      {props.validation_status === "error" && (
+        <div class={style.error_text}>{props.validation_error_text}</div>
+      )}
     </div>
   );
 };
