@@ -16,14 +16,14 @@
 
 .input {
   width: 100%;
-  border: 1px solid var(--opacity-blue);
+  border: 2px solid var(--opacity-blue);
   border-radius: calc(var(--font) / 2);
   padding: var(--font) calc(var(--font) + 10px);
   background-color: var(--light-blue);
 }
 
 .input:focus {
-  border: 1px solid var(--blue);
+  border: 2px solid var(--blue);
   background-color: var(--white);
   box-shadow: 0 0 0 3px var(--blue);
   outline: 3px solid transparent;
@@ -42,7 +42,7 @@
 
 .group.success .input {
   background-color: var(--light-green);
-  border: 1px solid var(--opacity-green);
+  border: 2px solid var(--opacity-green);
 }
 
 .group.success .input:focus {
@@ -57,7 +57,7 @@
 
 .group.error .input {
   background-color: var(--light-red);
-  border: 1px solid var(--opacity-red);
+  border: 2px solid var(--opacity-red);
 }
 
 .group.error .input:focus {
@@ -78,7 +78,7 @@
   background-color: var(--smoke-white);
   margin: 0 calc(var(--font) / 2);
   padding: var(--font);
-  border: 1px solid var(--opacity-red);
+  border: 2px solid var(--opacity-red);
   border-top: 0;
   border-radius: 0 0 calc(var(--font) / 2) calc(var(--font) / 2);
 }

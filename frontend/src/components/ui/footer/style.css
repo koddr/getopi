@@ -1,13 +1,10 @@
 .footer {
   display: flex;
-  position: sticky;
-  bottom: 0;
   padding: var(--font);
   background-color: var(--black);
   color: var(--gray);
   /* Content is centered horizontally */
   align-items: center;
-  z-index: 3;
 }
 
 .footer a,
