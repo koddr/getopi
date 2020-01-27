@@ -1,3 +1,4 @@
+@import "_reset.css";
 @import "_fonts.css";
 
 :root {
@@ -42,14 +43,6 @@
   --font: 16px;
 }
 
-/* Reset */
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 /* General */
 
 html,
@@ -72,9 +65,6 @@ html,
 body {
   font-size: var(--font);
   font-weight: 400;
-  width: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Heading */
