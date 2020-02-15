@@ -44,6 +44,7 @@ const LoginForm = () => {
         label="Your Password"
         type="password"
         icon="lock"
+        autocomplete="off"
         placeholder="○ ○ ○ ○ ○"
         required={true}
       />

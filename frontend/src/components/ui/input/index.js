@@ -52,6 +52,7 @@ const Input = props => {
           value={props.value}
           onInput={props.onInput}
           required={props.required}
+          autocomplete={props.autocomplete}
         />
         {props.icon &&
           h(
