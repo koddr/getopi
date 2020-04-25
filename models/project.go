@@ -14,6 +14,7 @@ type Project struct {
 	IsPrivate   bool      `json:"is_private"`
 	Name        string    `json:"name"`
 	Reward      int       `json:"reward"`
+	Quantity    int       `json:"quantity"`
 	Description string    `json:"description"`
 	Links       []string  `json:"links"`
 	Goals       []string  `json:"goals"`
@@ -22,9 +23,12 @@ type Project struct {
 	// Author
 	AuthorID int `json:"author_id"`
 
-	// Needed skills
+	// Skills list
 	Skills []int `json:"skills"`
 
-	// Tasks
+	// Tasks list
 	Tasks []int `json:"tasks"`
+
+	// Opinions list
+	Opinions []int `json:"opinions"`
 }
