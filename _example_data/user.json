@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "created_at": "2020-04-23T20:50:00Z+03:00",
+    "updated_at": "2020-04-23T20:50:00Z+03:00",
+    "status": "active",
+    "is_private": false,
+    "alias": "johndoe_2001",
+    "picture": "https://u.getopi.com/a/u_1-SJDKAkwjwd.jpg",
+    "first_name": "John",
+    "last_name": "Doe Jr.",
+    "about": "Difference in luminance or color that makes an object.",
+    "links": {
+      "website": "http://example.com",
+      "github": "https://github.com/google",
+      "dribbble": "https://dribbble.com/google",
+      "behance": "",
+      "facebook": "https://facebook.com/google",
+      "instagram": ""
+    },
+    "skills": [
+      {
+        "id": 1,
+        "name": "UX specialist"
+      },
+      {
+        "id": 4,
+        "name": "Web Designer"
+      }
+    ],
+    "projects": [
+      {
+        "id": 1,
+        "created_at": "2020-04-23T20:50:00Z+03:00",
+        "updated_at": "2020-04-23T20:50:00Z+03:00",
+        "status": "complete",
+        "is_private": false,
+        "name": "New UI",
+        "description": "Difference in luminance or color that makes an object.",
+        "reward": 100,
+        "tasks_count": 5
+      }
+    ]
+  }
+]
