@@ -1,13 +1,17 @@
-.PHONY: front-start
+.PHONY: back-start
+
+back-start:
+	go run main.go
 
 front-start:
 	@cd ./frontend && npm start
-	@echo "[OK] Preact app is running!"
+	@echo "[OK] Preact app is running!
 
-front-lint:
-	@cd ./frontend && npm run lint
-	@echo "[OK] Preact app was linted!"
+migrate-up:
+	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" up
 
-front-build-prod:
-	@cd ./frontend && npm run build
-	@echo "[OK] Preact app was builded!"
+migrate-down:
+	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" down
+
+migrate-force:
+	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" force $(VERSION)
