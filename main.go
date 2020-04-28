@@ -1,55 +1,75 @@
 package main
 
 import (
-	"context"
 	"log"
-	"os"
+	"time"
 
-	"github.com/jackc/pgx/v4"
+	"github.com/gofiber/fiber"
+	"github.com/gofiber/logger"
+	"github.com/google/uuid"
 	"github.com/koddr/getopi/models"
+	"github.com/koddr/getopi/postgres"
 )
 
 func main() {
-	db, err := pgx.Connect(context.Background(), "postgres://koddr@localhost/koddr?sslmode=disable")
+	// Fiber app
+	app := fiber.New()
+
+	// DB Store
+	store, err := postgres.NewStore("host=localhost dbname=koddr sslmode=disable")
 	if err != nil {
-		log.Fatalf("Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	defer db.Close(context.Background())
-
-	// Initialize a new User struct and add some values.
-	user := new(models.User)
-	user.Email = "test@example.com"
-	user.PasswordHash = "secret"
-
-	// Initialize a new Attrs struct and add some values.
-	attrs := new(models.Attrs)
-	attrs.Username = "john_doe_2001"
-	attrs.Skills = []string{"Basil", "Garlic", "Parmesan", "Pine nuts", "Olive oil"}
-
-	// The database driver will call the Value() method and and marshall the
-	// attrs struct to JSON before the INSERT.
-	_, err = db.Exec(
-		context.Background(),
-		`INSERT INTO users (email, password_hash, attrs) VALUES ($1, $2, $3)`,
-		user.Email,
-		user.PasswordHash,
-		attrs,
-	)
-	if err != nil {
-		log.Fatalf("Can not insert user: %v\n", err)
+		log.Fatal("error opening database")
 	}
 
-	// Similarly, we can also fetch data from the database, and the driver
-	// will call the Scan() method to unmarshal the data to an Attr struct.
-	err = db.QueryRow(
-		context.Background(),
-		`SELECT id, attrs FROM users ORDER BY id DESC LIMIT 1`,
-	).Scan(&user.ID, &user.Attrs)
-	if err != nil {
-		log.Fatal(err)
+	// Settings
+	loggerConfig := logger.Config{
+		Format:     "${time} - ${method} ${path}\n",
+		TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
 	}
 
-	// You can then use the struct fields as normal...
-	log.Printf("ID: %d, Username: %s", user.ID, user.Attrs.Username)
+	// Logger
+	app.Use(logger.New(loggerConfig))
+
+	// Routes
+	app.Post("/user", func(c *fiber.Ctx) {
+		// id := uuid.MustParse("62aa9a05-a329-43c5-b864-3f36b27e5888")
+
+		if err := store.CreateUser(
+			&models.User{
+				ID:           uuid.New(),
+				CreatedAt:    time.Now(),
+				UpdatedAt:    time.Time{},
+				Email:        "example@example.com",
+				PasswordHash: "secret",
+				Username:     "example",
+				UserStatus:   1,
+				UserAttrs: models.UserAttrs{
+					FirstName: "John",
+				},
+			},
+		); err != nil {
+			c.JSON(fiber.Map{
+				"error":       true,
+				"description": err.Error(),
+			})
+			c.Status(500)
+			return
+		}
+
+		c.JSON(fiber.Map{
+			"error":       false,
+			"description": "ok",
+		})
+	})
+
+	app.Get("/users", func(c *fiber.Ctx) {
+		users, err := store.Users()
+		if err != nil {
+			c.Status(500)
+		}
+
+		c.JSON(fiber.Map{"users": users})
+	})
+
+	app.Listen(":3000")
 }

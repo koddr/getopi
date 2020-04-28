@@ -8,17 +8,19 @@ import (
 
 // Task ...
 type Task struct {
-	// Main info
-	ID          uuid.UUID `db:"id" json:"id"`
-	CreatedAt   time.Time `db:"created_at" json:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
-	Skip        bool      `db:"skip" json:"skip"`
-	Status      string    `db:"status" json:"status"`
-	Model       string    `db:"model" json:"model"`
-	Description string    `db:"description" json:"description"`
+	ID         uuid.UUID `son:"id"`
+	ProjectID  uuid.UUID `json:"project_id"`
+	CreatedAt  time.Time `json:"created_at"`
+	TaskStatus int       `json:"task_status"`
+	TaskAttrs  TaskAttrs `json:"task_attrs"`
+}
 
-	// Pointer to project
-	ProjectID uuid.UUID `db:"project_id" json:"project_id"`
+// TaskAttrs ...
+type TaskAttrs struct {
+	Priority    int    `json:"priority"`
+	Model       int    `json:"model"`
+	IsSkip      bool   `json:"is_skip"`
+	Description string `json:"description"`
 }
 
 // TaskStore ...

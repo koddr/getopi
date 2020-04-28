@@ -8,24 +8,26 @@ import (
 
 // Project ...
 type Project struct {
-	// Main info
-	ID          uuid.UUID `db:"id" json:"id"`
-	CreatedAt   time.Time `db:"created_at" json:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
-	Status      string    `db:"status" json:"status"`
-	IsPrivate   bool      `db:"is_private" json:"is_private"`
-	Alias       string    `db:"alias" json:"alias"`
-	Title       string    `db:"title" json:"title"`
-	Reward      int       `db:"reward" json:"reward"`
-	Quantity    int       `db:"quantity" json:"quantity"`
-	Description string    `db:"description" json:"description"`
-	Links       []string  `db:"links" json:"links"`
-	Goals       []string  `db:"goals" json:"goals"`
-	Tags        []string  `db:"tags" json:"tags"`
-	Skills      []string  `db:"skills" json:"skills"`
+	ID            uuid.UUID    `json:"id"`
+	AuthorID      uuid.UUID    `json:"author_id"`
+	CreatedAt     time.Time    `json:"created_at"`
+	UpdatedAt     time.Time    `json:"updated_at"`
+	Alias         string       `json:"alias"`
+	ProjectStatus int          `json:"project_status"`
+	ProjectAttrs  ProjectAttrs `json:"project_attrs"`
+}
 
-	// Author
-	AuthorID uuid.UUID `db:"author_id" json:"author_id"`
+// ProjectAttrs ...
+type ProjectAttrs struct {
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
+	Reward      int      `json:"reward"`
+	Quantity    int      `json:"quantity"`
+	IsPrivate   bool     `json:"is_private"`
+	Links       []string `json:"links"`
+	Goals       []string `json:"goals"`
+	Tags        []string `json:"tags"`
+	Skills      []string `json:"skills"`
 }
 
 // ProjectStore ...

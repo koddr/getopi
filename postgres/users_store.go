@@ -35,11 +35,15 @@ func (s *UserStore) Users() ([]models.User, error) {
 func (s *UserStore) CreateUser(u *models.User) error {
 	if err := s.Get(
 		u,
-		`INSERT INTO users VALUES ($1, $2, $3, $4) RETURNING *`,
+		`INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
 		u.ID,
+		u.CreatedAt,
+		u.UpdatedAt,
 		u.Email,
 		u.PasswordHash,
-		u.Attrs,
+		u.Username,
+		u.UserStatus,
+		u.UserAttrs,
 	); err != nil {
 		return fmt.Errorf("error creating user: %v", err)
 	}
@@ -50,9 +54,9 @@ func (s *UserStore) CreateUser(u *models.User) error {
 func (s *UserStore) UpdateUser(u *models.User) error {
 	if err := s.Get(
 		u,
-		`UPDATE users SET email = $1, attrs = $2 WHERE id = $3 RETURNING *`,
+		`UPDATE users SET email = $1, user_attrs = $2 WHERE id = $3 RETURNING *`,
 		u.Email,
-		u.Attrs,
+		u.UserAttrs,
 		u.ID,
 	); err != nil {
 		return fmt.Errorf("error updating user: %v", err)
