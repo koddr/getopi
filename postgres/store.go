@@ -7,9 +7,9 @@ import (
 	_ "github.com/lib/pq" // ...
 )
 
-// NewStore ...
-func NewStore(dataSourceName string) (*Store, error) {
-	db, err := sqlx.Open("postgres", dataSourceName)
+// OpenStore ...
+func OpenStore() (*Store, error) {
+	db, err := sqlx.Open("postgres", "host=localhost dbname=koddr sslmode=disable")
 	if err != nil {
 		return nil, fmt.Errorf("error opening database: %w", err)
 	}
