@@ -26,7 +26,7 @@ func (s *UserStore) User(id uuid.UUID) (models.User, error) {
 func (s *UserStore) Users() ([]models.User, error) {
 	var users []models.User
 	if err := s.Select(&users, `SELECT * FROM users`); err != nil {
-		return []models.User{}, fmt.Errorf("error getting user: %w", err)
+		return []models.User{}, fmt.Errorf("error getting users: %w", err)
 	}
 	return users, nil
 }

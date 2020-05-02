@@ -15,26 +15,24 @@ func main() {
 	// Fiber app
 	app := fiber.New()
 
-	// DB Store
-	store, err := postgres.NewStore("host=localhost dbname=koddr sslmode=disable")
+	// Connect to DB
+	s, err := postgres.NewStore("host=localhost dbname=koddr sslmode=disable")
 	if err != nil {
 		log.Fatal("error opening database")
 	}
 
 	// Settings
 	loggerConfig := logger.Config{
-		Format:     "${time} - ${method} ${path}\n",
+		Format:     "${time} [${status}] ${method} ${path}\n",
 		TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
 	}
 
 	// Logger
 	app.Use(logger.New(loggerConfig))
 
-	// Routes
+	// POST
 	app.Post("/user", func(c *fiber.Ctx) {
-		// id := uuid.MustParse("62aa9a05-a329-43c5-b864-3f36b27e5888")
-
-		if err := store.CreateUser(
+		if err := s.CreateUser(
 			&models.User{
 				ID:           uuid.New(),
 				CreatedAt:    time.Now(),
@@ -48,27 +46,34 @@ func main() {
 				},
 			},
 		); err != nil {
-			c.JSON(fiber.Map{
-				"error":       true,
-				"description": err.Error(),
-			})
-			c.Status(500)
+			c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
 			return
 		}
 
-		c.JSON(fiber.Map{
-			"error":       false,
-			"description": "ok",
-		})
+		c.JSON(fiber.Map{"error": false, "description": "ok"})
 	})
 
-	app.Get("/users", func(c *fiber.Ctx) {
-		users, err := store.Users()
+	// GET by UUID
+	app.Get("/user/:uuid", func(c *fiber.Ctx) {
+		id := uuid.MustParse(c.Params("uuid"))
+		user, err := s.User(id)
 		if err != nil {
-			c.Status(500)
+			c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+			return
 		}
 
-		c.JSON(fiber.Map{"users": users})
+		c.JSON(fiber.Map{"error": false, "description": "ok", "user": user})
+	})
+
+	// GET All
+	app.Get("/users", func(c *fiber.Ctx) {
+		users, err := s.Users()
+		if err != nil {
+			c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+			return
+		}
+
+		c.JSON(fiber.Map{"error": false, "description": "ok", "users": users})
 	})
 
 	app.Listen(":3000")

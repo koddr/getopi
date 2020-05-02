@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{"+1Jk":function(n,e,o){"use strict";o.r(e);var c=o("hosL"),s=o("FA6U"),t=o.n(s);e.default=()=>Object(c.h)("div",{class:t.a.home},Object(c.h)("h2",null,"Home"),Object(c.h)("p",null,"This is the Home component."))},FA6U:function(){}}]);
-//# sourceMappingURL=route-home.chunk.68a78.esm.js.map

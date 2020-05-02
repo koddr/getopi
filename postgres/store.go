@@ -19,11 +19,13 @@ func NewStore(dataSourceName string) (*Store, error) {
 	}
 
 	return &Store{
-		UserStore: &UserStore{DB: db},
+		UserStore:    &UserStore{DB: db},
+		ProjectStore: &ProjectStore{DB: db},
 	}, nil
 }
 
 // Store ...
 type Store struct {
 	*UserStore
+	*ProjectStore
 }
