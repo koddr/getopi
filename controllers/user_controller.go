@@ -3,6 +3,7 @@ package controllers
 import (
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
 	"github.com/koddr/getopi/models"
@@ -166,4 +167,55 @@ func UserUpdateController(c *fiber.Ctx) {
 
 	// OK result
 	c.JSON(fiber.Map{"error": false, "msg": "ok"})
+}
+
+// UserDeleteController ...
+//
+// TODO: Add description
+//
+func UserDeleteController(c *fiber.Ctx) {
+	// Check JWT for admin == true
+	auth := c.Locals("user").(*jwt.Token)
+	claims := auth.Claims.(jwt.MapClaims)
+	isAdmin := claims["admin"].(bool)
+
+	if isAdmin {
+		db, err := stores.OpenStore()
+		if err != nil {
+			// DB connection error
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			return
+		}
+
+		// Create new User struct
+		user := new(models.User)
+
+		// Check received JSON data
+		if err := c.BodyParser(user); err != nil {
+			// Incorrect data
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			return
+		}
+
+		// Check ID (UUID) for empty value
+		if user.ID == uuid.Nil {
+			// User not found
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect ID"})
+			return
+		}
+
+		// Deleter user
+		if err := db.DeleteUser(user.ID); err != nil {
+			// Not inserted new user to DB
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			return
+		}
+
+		// OK result
+		c.JSON(fiber.Map{"error": false, "msg": "ok"})
+	} else {
+		// If it's not admin
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "permission denied"})
+		return
+	}
 }
