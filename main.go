@@ -1,9 +1,6 @@
 package main
 
 import (
-	"time"
-
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/compression"
 	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
@@ -11,7 +8,9 @@ import (
 	jwtware "github.com/gofiber/jwt"
 	"github.com/gofiber/logger"
 	"github.com/gofiber/recover"
+	"github.com/google/uuid"
 	"github.com/koddr/getopi/controllers"
+	"github.com/koddr/getopi/utils"
 )
 
 func main() {
@@ -19,23 +18,10 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/token", func(c *fiber.Ctx) {
-		// Create token
-		token := jwt.New(jwt.SigningMethodHS256)
-
-		// Set claims
-		claims := token.Claims.(jwt.MapClaims)
-		claims["name"] = "John Doe"
-		claims["admin"] = true
-		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-		// Generate encoded token and send it as response.
-		t, err := token.SignedString([]byte("secret"))
-		if err != nil {
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-			return
-		}
-
-		c.JSON(fiber.Map{"token": t})
+		// Convert string to UUID
+		uuid, _ := uuid.Parse("45cb822b-65f4-410c-9d9d-0ccd0a8ba73e")
+		token, _ := utils.GenerateJWT("admin", uuid)
+		c.JSON(fiber.Map{"token": token})
 	})
 
 	// Middlewares
@@ -53,7 +39,7 @@ func main() {
 			},
 		}),
 		jwtware.New(jwtware.Config{
-			SigningKey: []byte("secret"),
+			SigningKey: []byte(utils.GetDotEnvValue("JWT_SECRET_TOKEN")),
 			ErrorHandler: func(c *fiber.Ctx, err error) {
 				c.Status(403).JSON(fiber.Map{"error": true, "msg": err.Error()})
 			},
@@ -81,5 +67,6 @@ func main() {
 		c.Status(404).JSON(fiber.Map{"error": true, "msg": "endpoint not found"})
 	})
 
-	app.Listen(":3000")
+	// Run server
+	app.Listen(utils.GetDotEnvValue("SERVER_PORT"))
 }

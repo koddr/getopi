@@ -1,9 +1,12 @@
-// macOS
+# macOS
 .DS_Store
 
-// Folders
+# Folders
 **/node_modules/
 
-// Files
+# Logs
 **/*.log
 **/*.lock
+
+# Env
+.env

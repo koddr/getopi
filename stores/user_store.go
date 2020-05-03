@@ -18,7 +18,19 @@ type UserStore struct {
 //
 // TODO: Add description
 //
-func (s *UserStore) User(username string) (models.User, error) {
+func (s *UserStore) User(id uuid.UUID) (models.User, error) {
+	var user models.User
+	if err := s.Get(&user, `SELECT * FROM users WHERE id = $1`, id); err != nil {
+		return models.User{}, err
+	}
+	return user, nil
+}
+
+// UserByUsername ...
+//
+// TODO: Add description
+//
+func (s *UserStore) UserByUsername(username string) (models.User, error) {
 	var user models.User
 	if err := s.Get(&user, `SELECT * FROM users WHERE username = $1`, username); err != nil {
 		return models.User{}, err

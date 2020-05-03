@@ -35,6 +35,7 @@ type UserAttrs struct {
 // UserMethods ...
 type UserMethods interface {
 	User(id uuid.UUID) (User, error)
+	UserByUsername(username string) (User, error)
 	Users() ([]User, error)
 	CreateUser(u *User) error
 	UpdateUser(u *User) error

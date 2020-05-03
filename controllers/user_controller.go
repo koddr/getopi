@@ -27,7 +27,7 @@ func UserController(c *fiber.Ctx) {
 	username := c.Params("username")
 
 	// Select user by username
-	user, err := db.User(username)
+	user, err := db.UserByUsername(username)
 	if err != nil {
 		// User not found
 		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
@@ -124,6 +124,11 @@ func UserCreateController(c *fiber.Ctx) {
 // TODO: Add description
 //
 func UserUpdateController(c *fiber.Ctx) {
+	// Get data from JWT
+	token := c.Locals("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+	currentUserID, _ := uuid.Parse(claims["id"].(string))
+
 	db, err := stores.OpenStore()
 	if err != nil {
 		// DB connection error
@@ -142,31 +147,37 @@ func UserUpdateController(c *fiber.Ctx) {
 	}
 
 	// Check ID (UUID) and Username (string) for empty values
-	if user.ID == uuid.Nil || user.Username == "" {
+	if user.ID == uuid.Nil {
 		// User not found
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect ID or Username"})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect ID"})
 		return
 	}
 
 	// Check if user with given Username is exists
-	if _, err := db.User(user.Username); err != nil {
+	if _, err := db.User(user.ID); err != nil {
 		// User not found
 		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
 		return
 	}
 
-	// Set user data to update
-	user.UpdatedAt = time.Now()
+	if currentUserID == user.ID {
+		// Set user data to update
+		user.UpdatedAt = time.Now()
 
-	// Update user
-	if err := db.UpdateUser(user); err != nil {
-		// Not inserted new user to DB
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		// Update user
+		if err := db.UpdateUser(user); err != nil {
+			// Not inserted new user to DB
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			return
+		}
+
+		// OK result
+		c.JSON(fiber.Map{"error": false, "msg": "ok"})
+	} else {
+		// If it's not owner
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "permission denied"})
 		return
 	}
-
-	// OK result
-	c.JSON(fiber.Map{"error": false, "msg": "ok"})
 }
 
 // UserDeleteController ...
@@ -174,11 +185,12 @@ func UserUpdateController(c *fiber.Ctx) {
 // TODO: Add description
 //
 func UserDeleteController(c *fiber.Ctx) {
-	// Check JWT for admin == true
-	auth := c.Locals("user").(*jwt.Token)
-	claims := auth.Claims.(jwt.MapClaims)
-	isAdmin := claims["admin"].(bool)
+	// Get data from JWT
+	token := c.Locals("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+	isAdmin := claims["is_admin"].(bool)
 
+	// Check, if current user request's from admin
 	if isAdmin {
 		db, err := stores.OpenStore()
 		if err != nil {
