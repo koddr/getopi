@@ -6,79 +6,159 @@ import (
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
 	"github.com/koddr/getopi/models"
-	"github.com/koddr/getopi/postgres"
+	"github.com/koddr/getopi/stores"
+	"github.com/koddr/getopi/utils"
 )
 
 // UserController ...
+//
+// TODO: Add description
+//
 func UserController(c *fiber.Ctx) {
-	store, err := postgres.OpenStore()
+	db, err := stores.OpenStore()
 	if err != nil {
 		// DB connection error
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
-	id, err := uuid.Parse(c.Params("uuid"))
-	if err != nil {
-		// Wrong UUID format
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-		return
-	}
+	// Get username from URL
+	username := c.Params("username")
 
-	user, err := store.User(id)
+	// Select user by username
+	user, err := db.User(username)
 	if err != nil {
-		// Not found
+		// User not found
 		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
 		return
 	}
+
+	// Hide PasswordHash field from JSON output
+	user.PasswordHash = ""
 
 	// OK result
 	c.JSON(fiber.Map{"error": false, "msg": "ok", "user": user})
 }
 
 // UsersController ...
+//
+// TODO: Add description
+//
 func UsersController(c *fiber.Ctx) {
-	store, err := postgres.OpenStore()
+	db, err := stores.OpenStore()
 	if err != nil {
 		// DB connection error
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
-	users, err := store.Users()
+	// Select all users
+	users, err := db.Users()
 	if err != nil {
-		// Not found
+		// Users not found
 		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
 		return
 	}
 
+	// Hide PasswordHash field from JSON output
+	for index := range users {
+		users[index].PasswordHash = ""
+	}
+
 	// OK result
-	c.JSON(fiber.Map{"error": false, "msg": "ok", "users": users})
+	c.JSON(fiber.Map{"error": false, "msg": "ok", "count": len(users), "users": users})
 }
 
 // UserCreateController ...
+//
+// TODO: Add description
+//
 func UserCreateController(c *fiber.Ctx) {
-	store, err := postgres.OpenStore()
+	db, err := stores.OpenStore()
 	if err != nil {
 		// DB connection error
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
-	if err := store.CreateUser(
-		&models.User{
-			ID:           uuid.New(),
-			CreatedAt:    time.Now(),
-			UpdatedAt:    time.Time{},
-			Email:        "example@example.com",
-			PasswordHash: "secret",
-			Username:     "example",
-			UserStatus:   1,
-			UserAttrs: models.UserAttrs{
-				FirstName: "John",
-			},
-		},
-	); err != nil {
+	// Create new User struct
+	user := new(models.User)
+
+	// Check received JSON data
+	if err := c.BodyParser(user); err != nil {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		return
+	}
+
+	// Check Email for empty value
+	if user.Email == "" || user.PasswordHash == "" {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect Email or Password"})
+		return
+	}
+
+	// Set init user data
+	user.ID = uuid.New()
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Time{}
+	user.Username = user.ID.String()[:13] // first 13 letters of ID
+	user.PasswordHash = utils.GeneratePassword(user.PasswordHash)
+	user.UserStatus = 1
+	user.UserAttrs = models.UserAttrs{}
+
+	// Create new user
+	if err := db.CreateUser(user); err != nil {
+		// Not inserted new user to DB
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		return
+	}
+
+	// OK result
+	c.JSON(fiber.Map{"error": false, "msg": "ok"})
+}
+
+// UserUpdateController ...
+//
+// TODO: Add description
+//
+func UserUpdateController(c *fiber.Ctx) {
+	db, err := stores.OpenStore()
+	if err != nil {
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		return
+	}
+
+	// Create new User struct
+	user := new(models.User)
+
+	// Check received JSON data
+	if err := c.BodyParser(user); err != nil {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		return
+	}
+
+	// Check ID (UUID) and Username (string) for empty values
+	if user.ID == uuid.Nil || user.Username == "" {
+		// User not found
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect ID or Username"})
+		return
+	}
+
+	// Check if user with given Username is exists
+	if _, err := db.User(user.Username); err != nil {
+		// User not found
+		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
+		return
+	}
+
+	// Set user data to update
+	user.UpdatedAt = time.Now()
+
+	// Update user
+	if err := db.UpdateUser(user); err != nil {
 		// Not inserted new user to DB
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return

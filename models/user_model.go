@@ -15,19 +15,10 @@ type User struct {
 	CreatedAt    time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt    time.Time `db:"updated_at" json:"updated_at"`
 	Email        string    `db:"email" json:"email"`
-	PasswordHash string    `db:"password_hash" json:"-"`
+	PasswordHash string    `db:"password_hash" json:"password_hash,omitempty"`
 	Username     string    `db:"username" json:"username"`
 	UserStatus   int       `db:"user_status" json:"user_status"`
 	UserAttrs    UserAttrs `db:"user_attrs" json:"user_attrs"`
-}
-
-// UserMethods ...
-type UserMethods interface {
-	User(id uuid.UUID) (User, error)
-	Users() ([]User, error)
-	CreateUser(u *User) error
-	UpdateUser(u *User) error
-	DeleteUser(id uuid.UUID) error
 }
 
 // UserAttrs ...
@@ -39,6 +30,15 @@ type UserAttrs struct {
 	About     string            `json:"about"`
 	Links     map[string]string `json:"links"`
 	Skills    []string          `json:"skills"`
+}
+
+// UserMethods ...
+type UserMethods interface {
+	User(id uuid.UUID) (User, error)
+	Users() ([]User, error)
+	CreateUser(u *User) error
+	UpdateUser(u *User) error
+	DeleteUser(id uuid.UUID) error
 }
 
 // Value ...

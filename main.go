@@ -20,18 +20,21 @@ func main() {
 	app.Use(logger.New(loggerConfig))
 
 	// GET
-	app.Get("/user/:uuid", controllers.UserController)
+	app.Get("/user/:username", controllers.UserController)
 	app.Get("/users", controllers.UsersController)
 
 	// POST
 	app.Post("/user", controllers.UserCreateController)
 
 	// PATCH
-	// app.Patch("/user/:uuid", controllers.UserUpdateController)
+	app.Patch("/user", controllers.UserUpdateController)
+
+	// DELETE
+	// app.Delete("/user", controllers.UserDeleteController)
 
 	// 404 Not Found
 	app.Use(func(c *fiber.Ctx) {
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": "not found"})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "endpoint not found"})
 	})
 
 	app.Listen(":3000")

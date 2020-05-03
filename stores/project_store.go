@@ -1,4 +1,4 @@
-package postgres
+package stores
 
 import (
 	"github.com/jmoiron/sqlx"

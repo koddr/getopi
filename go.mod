@@ -9,5 +9,6 @@ require (
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/lib/pq v1.4.0
+	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79
 	google.golang.org/appengine v1.6.6 // indirect
 )
