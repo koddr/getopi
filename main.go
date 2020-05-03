@@ -31,7 +31,7 @@ func main() {
 
 	// 404 Not Found
 	app.Use(func(c *fiber.Ctx) {
-		c.Status(404).JSON(fiber.Map{"error": true, "description": "not found"})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "not found"})
 	})
 
 	app.Listen(":3000")

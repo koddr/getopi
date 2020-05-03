@@ -13,47 +13,55 @@ import (
 func UserController(c *fiber.Ctx) {
 	store, err := postgres.OpenStore()
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
 	id, err := uuid.Parse(c.Params("uuid"))
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// Wrong UUID format
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
 	user, err := store.User(id)
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// Not found
+		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
 		return
 	}
 
-	c.JSON(fiber.Map{"error": false, "description": "ok", "user": user})
+	// OK result
+	c.JSON(fiber.Map{"error": false, "msg": "ok", "user": user})
 }
 
 // UsersController ...
 func UsersController(c *fiber.Ctx) {
 	store, err := postgres.OpenStore()
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
 	users, err := store.Users()
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// Not found
+		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
 		return
 	}
 
-	c.JSON(fiber.Map{"error": false, "description": "ok", "users": users})
+	// OK result
+	c.JSON(fiber.Map{"error": false, "msg": "ok", "users": users})
 }
 
 // UserCreateController ...
 func UserCreateController(c *fiber.Ctx) {
 	store, err := postgres.OpenStore()
 	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
@@ -71,9 +79,11 @@ func UserCreateController(c *fiber.Ctx) {
 			},
 		},
 	); err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "description": err.Error()})
+		// Not inserted new user to DB
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 
-	c.JSON(fiber.Map{"error": false, "description": "ok"})
+	// OK result
+	c.JSON(fiber.Map{"error": false, "msg": "ok"})
 }
