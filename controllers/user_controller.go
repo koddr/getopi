@@ -156,7 +156,7 @@ func UserUpdateController(c *fiber.Ctx) {
 	// Check if user with given Username is exists
 	if _, err := db.User(user.ID); err != nil {
 		// User not found
-		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
 		return
 	}
 

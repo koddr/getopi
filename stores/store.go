@@ -4,12 +4,25 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/koddr/getopi/utils"
 	_ "github.com/lib/pq" // ...
 )
 
+// Store ...
+//
+// TODO: Add description
+//
+type Store struct {
+	*UserStore
+	*ProjectStore
+}
+
 // OpenStore ...
+//
+// TODO: Add description
+//
 func OpenStore() (*Store, error) {
-	db, err := sqlx.Open("postgres", "host=localhost dbname=koddr sslmode=disable")
+	db, err := sqlx.Open("postgres", utils.GetDotEnvValue("POSTGRES_SERVER_URL"))
 	if err != nil {
 		return nil, fmt.Errorf("error opening database: %w", err)
 	}
@@ -22,10 +35,4 @@ func OpenStore() (*Store, error) {
 		UserStore:    &UserStore{DB: db},
 		ProjectStore: &ProjectStore{DB: db},
 	}, nil
-}
-
-// Store ...
-type Store struct {
-	*UserStore
-	*ProjectStore
 }
