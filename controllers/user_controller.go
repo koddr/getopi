@@ -30,7 +30,7 @@ func UserController(c *fiber.Ctx) {
 	user, err := db.UserByUsername(username)
 	if err != nil {
 		// User not found
-		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": err.Error(), "user": models.User{}})
 		return
 	}
 
@@ -57,7 +57,7 @@ func UsersController(c *fiber.Ctx) {
 	users, err := db.Users()
 	if err != nil {
 		// Users not found
-		c.Status(404).JSON(fiber.Map{"error": false, "msg": err.Error()})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": err.Error(), "users": []models.User{}})
 		return
 	}
 
