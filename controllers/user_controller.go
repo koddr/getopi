@@ -127,8 +127,15 @@ func UserUpdateController(c *fiber.Ctx) {
 	// Get data from JWT
 	token := c.Locals("user").(*jwt.Token)
 	claims := token.Claims.(jwt.MapClaims)
-	currentUserID, _ := uuid.Parse(claims["id"].(string))
 
+	// Check UUID from current user
+	currentUserID, err := uuid.Parse(claims["id"].(string))
+	if err != nil {
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		return
+	}
+
+	// Create DB connection
 	db, err := stores.OpenStore()
 	if err != nil {
 		// DB connection error
