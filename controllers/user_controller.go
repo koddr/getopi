@@ -167,6 +167,7 @@ func UserUpdateController(c *fiber.Ctx) {
 		return
 	}
 
+	// Only owner can update itself
 	if currentUserID == user.ID {
 		// Set user data to update
 		user.UpdatedAt = time.Now()

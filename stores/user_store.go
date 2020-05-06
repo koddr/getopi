@@ -77,13 +77,12 @@ func (s *UserStore) CreateUser(u *models.User) error {
 //
 func (s *UserStore) UpdateUser(u *models.User) error {
 	if _, err := s.Exec(
-		`UPDATE users SET updated_at = $1, email = $2, password_hash = $3, username = $4, user_attrs = $5 WHERE id = $6`,
+		`UPDATE users SET updated_at = $2, email = $3, username = $4, user_attrs = $5 WHERE id = $1`,
+		u.ID,
 		u.UpdatedAt,
 		u.Email,
-		u.PasswordHash,
 		u.Username,
 		u.UserAttrs,
-		u.ID,
 	); err != nil {
 		return err
 	}
