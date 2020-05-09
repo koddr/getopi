@@ -30,7 +30,7 @@ func main() {
 		helmet.New(),
 		compression.New(),
 		logger.New(logger.Config{
-			Format:     "${time} [${status}] ${method} ${path}\n",
+			Format:     "${time} [${status}] ${method} ${path} (${latency})\n",
 			TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
 		}),
 		recover.New(recover.Config{
