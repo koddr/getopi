@@ -11,13 +11,13 @@ import (
 
 // User ...
 type User struct {
-	ID           uuid.UUID `db:"id" json:"id"`
+	ID           uuid.UUID `db:"id" json:"id" validate:"required,uuid"`
 	CreatedAt    time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt    time.Time `db:"updated_at" json:"updated_at"`
-	Email        string    `db:"email" json:"email"`
+	Email        string    `db:"email" json:"email" validate:"required,email"`
 	PasswordHash string    `db:"password_hash" json:"password_hash,omitempty"`
-	Username     string    `db:"username" json:"username"`
-	UserStatus   int       `db:"user_status" json:"user_status"`
+	Username     string    `db:"username" json:"username" validate:"required"`
+	UserStatus   int       `db:"user_status" json:"user_status" validate:"required"`
 	UserAttrs    UserAttrs `db:"user_attrs" json:"user_attrs"`
 }
 
@@ -34,9 +34,9 @@ type UserAttrs struct {
 
 // UserMethods ...
 type UserMethods interface {
-	User(id uuid.UUID) (User, error)
-	UserByUsername(username string) (User, error)
-	Users() ([]User, error)
+	FindUserByID(id uuid.UUID) (User, error)
+	FindUserByUsername(username string) (User, error)
+	GetUsers() ([]User, error)
 	CreateUser(u *User) error
 	UpdateUser(u *User) error
 	DeleteUser(id uuid.UUID) error

@@ -7,8 +7,6 @@ import (
 	"github.com/gofiber/helmet"
 	jwtware "github.com/gofiber/jwt"
 	"github.com/gofiber/logger"
-	"github.com/gofiber/recover"
-	"github.com/google/uuid"
 	"github.com/koddr/getopi/controllers"
 	"github.com/koddr/getopi/utils"
 )
@@ -17,50 +15,58 @@ func main() {
 	// Fiber app
 	app := fiber.New()
 
-	app.Get("/token", func(c *fiber.Ctx) {
-		// Convert string to UUID
-		uuid, _ := uuid.Parse("45cb822b-65f4-410c-9d9d-0ccd0a8ba73e")
-		token, _ := utils.GenerateJWT("admin", uuid)
-		c.JSON(fiber.Map{"token": token})
-	})
+	// Configs
+	jwtwareConfig := jwtware.Config{
+		SigningKey: []byte(utils.GetDotEnvValue("JWT_SECRET_TOKEN")),
+		ErrorHandler: func(c *fiber.Ctx, err error) {
+			c.Status(403).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		},
+	}
+	loggerConfig := logger.Config{
+		Format:     "${time} [${status}] ${method} ${path} (${latency})\n",
+		TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
+	}
+	// recoverConfig := recover.Config{
+	// 	Handler: func(c *fiber.Ctx, err error) {
+	// 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+	// 	},
+	// }
 
 	// Middlewares
 	app.Use(
 		cors.New(),
 		helmet.New(),
 		compression.New(),
-		logger.New(logger.Config{
-			Format:     "${time} [${status}] ${method} ${path} (${latency})\n",
-			TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
-		}),
-		recover.New(recover.Config{
-			Handler: func(c *fiber.Ctx, err error) {
-				c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-			},
-		}),
-		jwtware.New(jwtware.Config{
-			SigningKey: []byte(utils.GetDotEnvValue("JWT_SECRET_TOKEN")),
-			ErrorHandler: func(c *fiber.Ctx, err error) {
-				c.Status(403).JSON(fiber.Map{"error": true, "msg": err.Error()})
-			},
-		}),
+		logger.New(loggerConfig),
+		// recover.New(recoverConfig),
 	)
 
-	// API v1 group
-	v1 := app.Group("/api/v1")
+	// Auth
+	// app.Post("/auth")
+
+	// Private API group
+	privateAPI := app.Group("/api", jwtware.New(jwtwareConfig))
 
 	// GET
-	v1.Get("/user/:username", controllers.UserController)
-	v1.Get("/users", controllers.UsersController)
+	privateAPI.Get("/user/:username", controllers.ShowUserByUsername)
+	privateAPI.Get("/users", controllers.ShowUsers)
+	// privateAPI.Get("/project/:alias", controllers.ShowProjectByAlias)
+	// privateAPI.Get("/projects", controllers.ShowProjects)
 
 	// POST
-	v1.Post("/user", controllers.UserCreateController)
+	privateAPI.Post("/user", controllers.CreateUser)
+	// privateAPI.Post("/project", controllers.CreateProject)
+	// privateAPI.Post("/task", controllers.CreateTask)
 
 	// PATCH
-	v1.Patch("/user", controllers.UserUpdateController)
+	privateAPI.Patch("/user", controllers.UpdateUser)
+	// privateAPI.Patch("/project", controllers.UpdateProject)
+	// privateAPI.Patch("/task", controllers.UpdateTask)
 
 	// DELETE
-	v1.Delete("/user", controllers.UserDeleteController)
+	privateAPI.Delete("/user", controllers.DeleteUser)
+	// privateAPI.Delete("/project", controllers.DeleteProject)
+	// privateAPI.Delete("/task", controllers.DeleteTask)
 
 	// 404 Not Found
 	app.Use(func(c *fiber.Ctx) {

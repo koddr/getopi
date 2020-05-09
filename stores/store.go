@@ -3,9 +3,9 @@ package stores
 import (
 	"fmt"
 
+	_ "github.com/jackc/pgx/v4/stdlib" // ...
 	"github.com/jmoiron/sqlx"
 	"github.com/koddr/getopi/utils"
-	_ "github.com/lib/pq" // ...
 )
 
 // Store ...
@@ -22,7 +22,7 @@ type Store struct {
 // TODO: Add description
 //
 func OpenStore() (*Store, error) {
-	db, err := sqlx.Open("postgres", utils.GetDotEnvValue("POSTGRES_SERVER_URL"))
+	db, err := sqlx.Connect("pgx", utils.GetDotEnvValue("POSTGRES_SERVER_URL"))
 	if err != nil {
 		return nil, fmt.Errorf("error opening database: %w", err)
 	}

@@ -14,11 +14,11 @@ type UserStore struct {
 	*sqlx.DB
 }
 
-// User ...
+// FindUserByID ...
 //
 // TODO: Add description
 //
-func (s *UserStore) User(id uuid.UUID) (models.User, error) {
+func (s *UserStore) FindUserByID(id uuid.UUID) (models.User, error) {
 	var user models.User
 	if err := s.Get(&user, `SELECT * FROM users WHERE id = $1`, id); err != nil {
 		return models.User{}, err
@@ -26,11 +26,11 @@ func (s *UserStore) User(id uuid.UUID) (models.User, error) {
 	return user, nil
 }
 
-// UserByUsername ...
+// FindUserByUsername ...
 //
 // TODO: Add description
 //
-func (s *UserStore) UserByUsername(username string) (models.User, error) {
+func (s *UserStore) FindUserByUsername(username string) (models.User, error) {
 	var user models.User
 	if err := s.Get(&user, `SELECT * FROM users WHERE username = $1`, username); err != nil {
 		return models.User{}, err
@@ -38,11 +38,23 @@ func (s *UserStore) UserByUsername(username string) (models.User, error) {
 	return user, nil
 }
 
-// Users ...
+// FindUserByEmail ...
 //
 // TODO: Add description
 //
-func (s *UserStore) Users() ([]models.User, error) {
+func (s *UserStore) FindUserByEmail(email string) (models.User, error) {
+	var user models.User
+	if err := s.Get(&user, `SELECT * FROM users WHERE email = $1`, email); err != nil {
+		return models.User{}, err
+	}
+	return user, nil
+}
+
+// GetUsers ...
+//
+// TODO: Add description
+//
+func (s *UserStore) GetUsers() ([]models.User, error) {
 	var users []models.User
 	if err := s.Select(&users, `SELECT * FROM users`); err != nil {
 		return []models.User{}, err
