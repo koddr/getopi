@@ -9,9 +9,9 @@ CREATE TABLE users (
     id UUID DEFAULT uuid_generate_v4 () PRIMARY KEY,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW (),
     updated_at TIMESTAMP NULL,
-    email VARCHAR NOT NULL UNIQUE,
+    email VARCHAR (254) NOT NULL UNIQUE,
     password_hash VARCHAR NOT NULL,
-    username VARCHAR NOT NULL UNIQUE,
+    username VARCHAR (13) NOT NULL UNIQUE,
     user_status INT NOT NULL,
     user_attrs JSONB NOT NULL
 );
@@ -22,7 +22,7 @@ CREATE TABLE projects (
     author_id UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW (),
     updated_at TIMESTAMP NULL,
-    alias VARCHAR NOT NULL UNIQUE,
+    alias VARCHAR (17) NOT NULL UNIQUE,
     project_status INT NOT NULL,
     project_attrs JSONB NOT NULL
 );

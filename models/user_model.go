@@ -11,13 +11,13 @@ import (
 
 // User ...
 type User struct {
-	ID           uuid.UUID `db:"id" json:"id" validate:"required,uuid"`
+	ID           uuid.UUID `db:"id" json:"id" validate:"required,id"`
 	CreatedAt    time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt    time.Time `db:"updated_at" json:"updated_at"`
 	Email        string    `db:"email" json:"email" validate:"required,email"`
 	PasswordHash string    `db:"password_hash" json:"password_hash,omitempty"`
-	Username     string    `db:"username" json:"username" validate:"required"`
-	UserStatus   int       `db:"user_status" json:"user_status" validate:"required"`
+	Username     string    `db:"username" json:"username" validate:"required,username"`
+	UserStatus   int       `db:"user_status" json:"user_status"`
 	UserAttrs    UserAttrs `db:"user_attrs" json:"user_attrs"`
 }
 

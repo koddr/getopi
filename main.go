@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/helmet"
 	jwtware "github.com/gofiber/jwt"
 	"github.com/gofiber/logger"
+	"github.com/gofiber/recover"
 	"github.com/koddr/getopi/controllers"
 	"github.com/koddr/getopi/utils"
 )
@@ -26,11 +27,11 @@ func main() {
 		Format:     "${time} [${status}] ${method} ${path} (${latency})\n",
 		TimeFormat: "Mon, 2 Jan 2006 15:04:05 MST",
 	}
-	// recoverConfig := recover.Config{
-	// 	Handler: func(c *fiber.Ctx, err error) {
-	// 		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-	// 	},
-	// }
+	recoverConfig := recover.Config{
+		Handler: func(c *fiber.Ctx, err error) {
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		},
+	}
 
 	// Middlewares
 	app.Use(
@@ -38,7 +39,7 @@ func main() {
 		helmet.New(),
 		compression.New(),
 		logger.New(loggerConfig),
-		// recover.New(recoverConfig),
+		recover.New(recoverConfig),
 	)
 
 	// Auth

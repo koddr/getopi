@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
 	"github.com/koddr/getopi/models"
@@ -12,15 +11,13 @@ import (
 	"github.com/koddr/getopi/utils"
 )
 
-// ShowUserByUsername ...
-//
-// TODO: Add description
-//
+// ShowUserByUsername show exists user by username or 404 error
 func ShowUserByUsername(c *fiber.Ctx) {
-	db, err := stores.OpenStore()
-	if err != nil {
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
 		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
 
@@ -28,10 +25,10 @@ func ShowUserByUsername(c *fiber.Ctx) {
 	username := c.Params("username")
 
 	// Find user by username
-	user, err := db.FindUserByUsername(username)
-	if err != nil {
+	user, errFindUserByUsername := db.FindUserByUsername(username)
+	if errFindUserByUsername != nil {
 		// User not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": err.Error(), "user": nil})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": errFindUserByUsername.Error(), "user": nil})
 		return
 	}
 
@@ -42,23 +39,21 @@ func ShowUserByUsername(c *fiber.Ctx) {
 	c.JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 }
 
-// ShowUsers ...
-//
-// TODO: Add description
-//
+// ShowUsers show all exists users or 404 error
 func ShowUsers(c *fiber.Ctx) {
-	db, err := stores.OpenStore()
-	if err != nil {
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
 		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
 
 	// Select all users
-	users, err := db.GetUsers()
-	if err != nil {
+	users, errGetUsers := db.GetUsers()
+	if errGetUsers != nil {
 		// Users not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": err.Error(), "count": 0, "users": nil})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": errGetUsers.Error(), "count": 0, "users": nil})
 		return
 	}
 
@@ -71,36 +66,27 @@ func ShowUsers(c *fiber.Ctx) {
 	c.JSON(fiber.Map{"error": false, "msg": nil, "count": len(users), "users": users})
 }
 
-// CreateUser ...
-//
-// TODO: Add description
-//
+// CreateUser create new DB connection, gets JSON from request body, validate data,
+// set init user values, clear password hash and create new user
 func CreateUser(c *fiber.Ctx) {
-	db, err := stores.OpenStore()
-	if err != nil {
-		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// Show DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
+
+	// Create new validator
+	validate := utils.Validate("user")
 
 	// Create new User struct
 	user := &models.User{}
 
-	// Check received JSON data
-	if err := c.BodyParser(user); err != nil {
-		// Incorrect data
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-		return
-	}
-
-	// Validate data
-	validate := validator.New()
-	if err := validate.Struct(user); err != nil {
-		errorFields := map[string]interface{}{}
-		for _, err := range err.(validator.ValidationErrors) {
-			errorFields[err.Field()] = "need " + err.Type().Name() + " got " + err.Kind().String()
-		}
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errorFields})
+	// Check received data from JSON body
+	if errBodyParser := c.BodyParser(user); errBodyParser != nil {
+		// Show incorrect JSON data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
 
@@ -113,10 +99,17 @@ func CreateUser(c *fiber.Ctx) {
 	user.UserStatus = 1
 	user.UserAttrs = models.UserAttrs{}
 
-	// Create new user
-	if err := db.CreateUser(user); err != nil {
-		// Not inserted new user to DB
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+	// Check fields validation
+	if errValidate := validate.Struct(user); errValidate != nil {
+		// Return invalid fields
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+		return
+	}
+
+	// Create new user with validated data
+	if errCreateUser := db.CreateUser(user); errCreateUser != nil {
+		// Show insert new row error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errCreateUser.Error()})
 		return
 	}
 
@@ -124,59 +117,70 @@ func CreateUser(c *fiber.Ctx) {
 	user.PasswordHash = ""
 
 	// OK result
-	c.JSON(fiber.Map{"error": false, "msg": nil, "user": user})
+	c.Status(201).JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 }
 
-// UpdateUser ...
-//
-// TODO: Add description
-//
+// UpdateUser update user (by only its owner) by ID or 500 error
 func UpdateUser(c *fiber.Ctx) {
 	// Get data from JWT
 	token := c.Locals("user").(*jwt.Token)
 	claims := token.Claims.(jwt.MapClaims)
 
+	// Check admin status
+	isAdmin := claims["is_admin"].(bool)
+
 	// Check UUID from current user
-	currentUserID, err := uuid.Parse(claims["id"].(string))
-	if err != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+	currentUserID, errParse := uuid.Parse(claims["id"].(string))
+	if errParse != nil {
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errParse.Error()})
 		return
 	}
 
 	// Create DB connection
-	db, err := stores.OpenStore()
-	if err != nil {
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
 		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
+
+	// Create new validator
+	validate := utils.Validate("user")
 
 	// Create new User struct
 	user := &models.User{}
 
 	// Check received JSON data
-	if err := c.BodyParser(user); err != nil {
+	if errBodyParser := c.BodyParser(user); errBodyParser != nil {
 		// Incorrect data
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
 
-	// Check if user with given Username is exists
-	if _, err := db.FindUserByID(user.ID); err != nil {
-		// User not found
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-		return
-	}
+	// Only if owner can update itself or it's admin
+	if currentUserID == user.ID || isAdmin {
 
-	// Only owner can update itself
-	if currentUserID == user.ID {
+		// Check fields validation
+		if errValidate := validate.Struct(user); errValidate != nil {
+			// Return invalid fields
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+			return
+		}
+
+		// Check if user with given Username is exists
+		if _, errFindUserByID := db.FindUserByID(user.ID); errFindUserByID != nil {
+			// User not found
+			c.Status(404).JSON(fiber.Map{"error": true, "msg": errFindUserByID.Error()})
+			return
+		}
+
 		// Set user data to update
 		user.UpdatedAt = time.Now()
 
 		// Update user
-		if err := db.UpdateUser(user); err != nil {
-			// Not inserted new user to DB
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+		if errUpdateUser := db.UpdateUser(user); errUpdateUser != nil {
+			// Fail update user in DB
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errUpdateUser.Error()})
 			return
 		}
 
@@ -184,10 +188,10 @@ func UpdateUser(c *fiber.Ctx) {
 		user.PasswordHash = ""
 
 		// OK result
-		c.JSON(fiber.Map{"error": false, "msg": nil, "user": user})
+		c.Status(202).JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 	} else {
 		// If it's not owner
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
+		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
 		return
 	}
 }
@@ -204,10 +208,10 @@ func DeleteUser(c *fiber.Ctx) {
 
 	// Check, if current user request's from admin
 	if isAdmin {
-		db, err := stores.OpenStore()
-		if err != nil {
+		db, errConnectDB := stores.OpenStore()
+		if errConnectDB != nil {
 			// DB connection error
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 			return
 		}
 
@@ -215,23 +219,16 @@ func DeleteUser(c *fiber.Ctx) {
 		user := &models.User{}
 
 		// Check received JSON data
-		if err := c.BodyParser(user); err != nil {
+		if errBodyParser := c.BodyParser(user); errBodyParser != nil {
 			// Incorrect data
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
-			return
-		}
-
-		// Check ID (UUID) for empty value
-		if user.ID == uuid.Nil {
-			// User not found
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": "incorrect ID"})
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 			return
 		}
 
 		// Deleter user
-		if err := db.DeleteUser(user.ID); err != nil {
+		if errDeleteUser := db.DeleteUser(user.ID); errDeleteUser != nil {
 			// Not inserted new user to DB
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": err.Error()})
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errDeleteUser.Error()})
 			return
 		}
 

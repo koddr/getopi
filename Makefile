@@ -14,4 +14,7 @@ migrate-down:
 	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" down
 
 migrate-force:
-	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" force $(VERSION)
+	migrate -path migrations -database "postgres://koddr@localhost/koddr?sslmode=disable" force $(v)
+
+tests:
+	godotenv -f .env go test -v ./... -cover
