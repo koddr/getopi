@@ -28,7 +28,7 @@ func ShowUserByUsername(c *fiber.Ctx) {
 	user, errFindUserByUsername := db.FindUserByUsername(username)
 	if errFindUserByUsername != nil {
 		// User not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": errFindUserByUsername.Error(), "user": nil})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found", "user": nil})
 		return
 	}
 
@@ -53,7 +53,7 @@ func ShowUsers(c *fiber.Ctx) {
 	users, errGetUsers := db.GetUsers()
 	if errGetUsers != nil {
 		// Users not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": errGetUsers.Error(), "count": 0, "users": nil})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "users not found", "count": 0, "users": nil})
 		return
 	}
 
@@ -157,6 +157,13 @@ func UpdateUser(c *fiber.Ctx) {
 		return
 	}
 
+	// Check if user with given ID is exists
+	if _, errFindUserByID := db.FindUserByID(user.ID); errFindUserByID != nil {
+		// User not found
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found"})
+		return
+	}
+
 	// Only if owner can update itself or it's admin
 	if currentUserID == user.ID || isAdmin {
 
@@ -164,13 +171,6 @@ func UpdateUser(c *fiber.Ctx) {
 		if errValidate := validate.Struct(user); errValidate != nil {
 			// Return invalid fields
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
-			return
-		}
-
-		// Check if user with given Username is exists
-		if _, errFindUserByID := db.FindUserByID(user.ID); errFindUserByID != nil {
-			// User not found
-			c.Status(404).JSON(fiber.Map{"error": true, "msg": errFindUserByID.Error()})
 			return
 		}
 
@@ -204,6 +204,8 @@ func DeleteUser(c *fiber.Ctx) {
 	// Get data from JWT
 	token := c.Locals("user").(*jwt.Token)
 	claims := token.Claims.(jwt.MapClaims)
+
+	// Check admin status
 	isAdmin := claims["is_admin"].(bool)
 
 	// Check, if current user request's from admin
@@ -225,7 +227,7 @@ func DeleteUser(c *fiber.Ctx) {
 			return
 		}
 
-		// Deleter user
+		// Delete user
 		if errDeleteUser := db.DeleteUser(user.ID); errDeleteUser != nil {
 			// Not inserted new user to DB
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": errDeleteUser.Error()})

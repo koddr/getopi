@@ -4,11 +4,10 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/google/uuid"
 )
 
 // GenerateJWT ...
-func GenerateJWT(permission string, id uuid.UUID) (string, error) {
+func GenerateJWT(permission, id string) (string, error) {
 	// Get secret JWT token from .env
 	secretToken := GetDotEnvValue("JWT_SECRET_TOKEN")
 
@@ -25,7 +24,7 @@ func GenerateJWT(permission string, id uuid.UUID) (string, error) {
 	}
 
 	// Set public claims
-	claims["id"] = id.String()
+	claims["id"] = id
 	claims["expire"] = time.Now().Add(72 * time.Hour).Unix()
 
 	// Generate encoded token and send it as response.

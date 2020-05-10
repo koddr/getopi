@@ -43,7 +43,7 @@ func main() {
 	)
 
 	// Auth
-	// app.Post("/auth")
+	app.Post("/auth", controllers.Authentication)
 
 	// Private API group
 	privateAPI := app.Group("/api", jwtware.New(jwtwareConfig))

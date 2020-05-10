@@ -9,6 +9,10 @@ import (
 	"github.com/google/uuid"
 )
 
+const (
+	emailRegexpPattern string = `^.+@.+\..+$`
+)
+
 // Validate create a new validator for expected fields,
 // register function to get tag name from `json` tags
 // and add validation to expected fields
@@ -26,7 +30,20 @@ func Validate(obj string) *validator.Validate {
 	})
 
 	switch obj {
-	// User fields
+
+	case "auth":
+		// Check for regexp parrtern and length (varchar(255))
+		validate.RegisterValidation("email", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			return regexp.MustCompile(emailRegexpPattern).MatchString(field) && len(field) <= 254
+		})
+
+		// Check for length
+		validate.RegisterValidation("password", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			return len(field) >= 6
+		})
+
 	case "user":
 		// Check for valid UUID
 		validate.RegisterValidation("id", func(fl validator.FieldLevel) bool {
@@ -37,13 +54,13 @@ func Validate(obj string) *validator.Validate {
 			return false
 		})
 
-		// Check for regexp parrtern, length (varchar(255)) and empty string
+		// Check for regexp parrtern and length (varchar(255))
 		validate.RegisterValidation("email", func(fl validator.FieldLevel) bool {
 			field := fl.Field().String()
-			return regexp.MustCompile(`^.+@.+\..+$`).MatchString(field) && len(field) <= 254
+			return regexp.MustCompile(emailRegexpPattern).MatchString(field) && len(field) <= 254
 		})
 
-		// Check for length (varchar(13)) and empty string
+		// Check for length (varchar(13))
 		validate.RegisterValidation("username", func(fl validator.FieldLevel) bool {
 			field := fl.Field().String()
 			return len(field) <= 13
