@@ -7,7 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/gofiber/compression v0.0.3
 	github.com/gofiber/cors v0.0.3
-	github.com/gofiber/fiber v1.9.5
+	github.com/gofiber/fiber v1.9.6
 	github.com/gofiber/helmet v0.0.3
 	github.com/gofiber/jwt v0.0.6
 	github.com/gofiber/logger v0.0.6
@@ -19,7 +19,7 @@ require (
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
-	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79
+	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 )
