@@ -3,6 +3,7 @@
 
 # Folders
 **/node_modules/
+**/build/
 
 # Logs
 **/*.log
