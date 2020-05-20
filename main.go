@@ -71,7 +71,7 @@ func main() {
 
 	// 404 Not Found
 	app.Use(func(c *fiber.Ctx) {
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": "endpoint not found"})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "sorry, endpoint not found"})
 	})
 
 	// Run server

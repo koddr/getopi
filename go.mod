@@ -10,8 +10,8 @@ require (
 	github.com/gofiber/fiber v1.9.6
 	github.com/gofiber/helmet v0.0.3
 	github.com/gofiber/jwt v0.0.6
-	github.com/gofiber/logger v0.0.6
-	github.com/gofiber/recover v0.0.4
+	github.com/gofiber/logger v0.0.9
+	github.com/gofiber/recover v0.0.5
 	github.com/google/uuid v1.1.1
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/jmoiron/sqlx v1.2.0

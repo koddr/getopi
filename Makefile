@@ -1,4 +1,7 @@
-.PHONY: back-start
+.PHONY: air-hot-reload
+
+air-hot-reload:
+	air -d
 
 back-start: build-api-server test-api-server
 	./build/api_server
