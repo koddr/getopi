@@ -3,7 +3,7 @@
 air-hot-reload:
 	air -d
 
-back-start: build-api-server test-api-server
+back-start: test-api-server build-api-server
 	./build/api_server
 
 build-api-server:
