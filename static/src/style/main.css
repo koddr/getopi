@@ -1,0 +1,88 @@
+:root {
+  /* Font */
+  --font-family: "Inter", sans-serif;
+  --font-size: 16px;
+  --line-height: calc(var(--font-size) * 1.5);
+
+  /* Colors */
+  --white: hsla(255, 100%, 100%, 1);
+  --black: hsla(0, 0%, 27%, 1);
+  --gray: hsla(0, 0%, 96%, 1);
+  --gray-dark: hsla(0, 0%, 92%, 1);
+  --blue: hsl(218, 91%, 54%, 1);
+  --blue-dark: hsl(252, 91%, 54%, 1);
+  --blue-light: hsl(218, 44%, 74%, 1);
+  --green: hsla(146, 78%, 42%, 1);
+  --green-light: hsla(146, 63%, 86%, 1);
+  --red: hsla(0, 78%, 42%, 1);
+  --yellow: hsla(45, 86%, 62%, 1);
+}
+
+/* Main */
+
+html,
+body {
+  background: var(--gray);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: var(--black);
+  font-weight: 400;
+}
+
+/* Links */
+
+a {
+  color: var(--blue);
+  border-bottom: 1px solid var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 0;
+}
+
+a:visited {
+  color: var(--blue-dark);
+  border-bottom: 1px solid var(--blue-dark);
+}
+
+/* Text styles */
+
+strong {
+  font-weight: 500;
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h3,
+h4 {
+  color: var(--blue-light);
+}
+
+h1 {
+  font-size: calc(var(--font-size) + 32px);
+  line-height: calc(var(--font-size) + 32px);
+}
+
+h2 {
+  font-size: calc(var(--font-size) + 24px);
+  line-height: calc(var(--font-size) + 24px);
+}
+
+h3 {
+  font-size: calc(var(--font-size) + 16px);
+  line-height: calc(var(--font-size) + 16px);
+}
+
+h4 {
+  font-size: calc(var(--font-size) + 8px);
+  line-height: calc(var(--font-size) + 8px);
+}

@@ -1,5 +1,5 @@
 # macOS
-.DS_Store
+**/.DS_Store
 
 # Folders
 **/node_modules/
@@ -9,6 +9,9 @@
 # Logs
 **/*.log
 **/*.lock
+
+# Lock files
+**/package-lock.json
 
 # Env
 .env
