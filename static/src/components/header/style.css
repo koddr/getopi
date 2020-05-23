@@ -2,7 +2,7 @@
 
 header {
   display: grid;
-  grid-template-columns: min-content max-content;
+  grid-template-columns: min-content 1fr;
   column-gap: 24px;
   align-items: center;
   background-color: var(--white);
@@ -11,6 +11,7 @@ header {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  overflow-x: scroll;
 }
 
 /* Logo */
@@ -21,15 +22,48 @@ header > nav > a {
 }
 
 header > .logo > a > img {
-  width: 56px;
+  width: 52px;
 }
 
 /* Navigation */
 
 header > nav {
-  text-align: right;
+  display: grid;
+  grid-template-columns: repeat(5, min-content);
+  column-gap: 20px;
+  align-items: center;
+  justify-content: right;
 }
 
 header > nav > a > img {
   width: 32px;
+}
+
+header > nav > a:last-child > img {
+  width: 48px;
+}
+
+/* Media */
+
+@media screen and (max-width: 320px) {
+  header {
+    column-gap: 16px;
+    padding: 8px 16px;
+  }
+
+  header > .logo > a > img {
+    width: 38px;
+  }
+
+  header > nav {
+    column-gap: 14px;
+  }
+
+  header > nav > a > img {
+    width: 28px;
+  }
+
+  header > nav > a:last-child > img {
+    width: 34px;
+  }
 }
