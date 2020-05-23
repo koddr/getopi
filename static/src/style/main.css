@@ -1,21 +1,33 @@
+/* Variables */
+
 :root {
   /* Font */
   --font-family: "Inter", sans-serif;
   --font-size: 16px;
   --line-height: calc(var(--font-size) * 1.5);
 
-  /* Colors */
+  /* Normal colors */
   --white: hsla(255, 100%, 100%, 1);
-  --black: hsla(0, 0%, 27%, 1);
+  --black: hsla(0, 0%, 26%, 1);
   --gray: hsla(0, 0%, 96%, 1);
-  --gray-dark: hsla(0, 0%, 92%, 1);
-  --blue: hsl(218, 91%, 54%, 1);
-  --blue-dark: hsl(252, 91%, 54%, 1);
-  --blue-light: hsl(218, 44%, 74%, 1);
+  --blue: hsla(218, 91%, 54%, 1);
   --green: hsla(146, 78%, 42%, 1);
-  --green-light: hsla(146, 63%, 86%, 1);
-  --red: hsla(0, 78%, 42%, 1);
   --yellow: hsla(45, 86%, 62%, 1);
+  --red: hsla(0, 78%, 42%, 1);
+
+  /* Light colors */
+  --blue-light: hsla(218, 44%, 74%, 1);
+  --green-light: hsla(146, 63%, 86%, 1);
+
+  /* Dark colors */
+  --gray-dark: hsla(0, 0%, 86%, 1);
+  --blue-dark: hsla(252, 91%, 54%, 1);
+  --green-dark: hsla(146, 78%, 32%, 1);
+  --yellow-dark: hsla(45, 86%, 52%, 1);
+  --red-dark: hsla(0, 78%, 32%, 1);
+
+  /* Shadows */
+  --box-shadow: 0px 0px 24px var(--gray-dark);
 }
 
 /* Main */
@@ -62,27 +74,78 @@ h4 {
   font-weight: 700;
 }
 
-h3,
-h4 {
-  color: var(--blue-light);
-}
-
 h1 {
   font-size: calc(var(--font-size) + 32px);
   line-height: calc(var(--font-size) + 32px);
+  margin-bottom: calc(var(--font-size) + 16px);
 }
 
 h2 {
   font-size: calc(var(--font-size) + 24px);
   line-height: calc(var(--font-size) + 24px);
+  margin-bottom: calc(var(--font-size) + 8px);
 }
 
 h3 {
   font-size: calc(var(--font-size) + 16px);
   line-height: calc(var(--font-size) + 16px);
+  margin-bottom: calc(var(--font-size) + 4px);
 }
 
 h4 {
   font-size: calc(var(--font-size) + 8px);
   line-height: calc(var(--font-size) + 8px);
+  margin-bottom: calc(var(--font-size) + 2px);
+}
+
+/* Paragraph */
+
+p {
+  margin-bottom: calc(var(--font-size) + 16px);
+}
+
+/* Helpers */
+
+.divider-24px {
+  height: calc(var(--font-size) + 8px);
+}
+
+.divider-32px {
+  height: calc(var(--font-size) + 16px);
+}
+
+/* Media */
+
+@media screen and (max-width: 320px) {
+  h1 {
+    font-size: calc(var(--font-size) + 16px);
+    line-height: calc(var(--font-size) + 16px);
+    margin-bottom: calc(var(--font-size) + 4px);
+  }
+
+  h2 {
+    font-size: calc(var(--font-size) + 12px);
+    line-height: calc(var(--font-size) + 12px);
+    margin-bottom: calc(var(--font-size) + 2px);
+  }
+
+  h3 {
+    font-size: calc(var(--font-size) + 8px);
+    line-height: calc(var(--font-size) + 8px);
+    margin-bottom: var(--font-size);
+  }
+
+  h4 {
+    font-size: calc(var(--font-size) + 4px);
+    line-height: calc(var(--font-size) + 4px);
+    margin-bottom: calc(var(--font-size) - 2px);
+  }
+
+  .divider-24px {
+    height: var(--font-size);
+  }
+
+  .divider-32px {
+    height: calc(var(--font-size) + 8px);
+  }
 }

@@ -1,0 +1,74 @@
+/* Button */
+
+button {
+  border: 3px solid var(--gray);
+  padding: 18px 34px;
+  border-radius: 24px;
+  font-size: calc(var(--font-size) + 4px);
+  line-height: calc(var(--font-size) + 4px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+/* Default button */
+
+button.default {
+  background-color: var(--gray);
+  color: var(--black);
+}
+
+button.default:hover {
+  background-color: var(--gray-dark);
+}
+
+/* Primary button */
+
+button.primary {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+button.primary:hover {
+  background-color: var(--blue-dark);
+}
+
+/* Success */
+
+button.success {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+button.success:hover {
+  background-color: var(--green-dark);
+}
+
+/* Warning */
+
+button.warning {
+  background-color: var(--yellow);
+  color: var(--white);
+}
+
+button.warning:hover {
+  background-color: var(--yellow-dark);
+}
+
+/* Danger */
+
+button.danger {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+button.danger:hover {
+  background-color: var(--red-dark);
+}
+
+@media screen and (max-width: 320px) {
+  button {
+    font-size: var(--font-size);
+    line-height: var(--font-size);
+  }
+}

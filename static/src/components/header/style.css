@@ -6,7 +6,7 @@ header {
   column-gap: 24px;
   align-items: center;
   background-color: var(--white);
-  box-shadow: 0px 0px 24px var(--gray-dark);
+  box-shadow: var(--box-shadow);
   padding: 16px 32px;
   position: -webkit-sticky;
   position: sticky;
@@ -48,7 +48,7 @@ header > nav > a:last-child > img {
 @media screen and (max-width: 320px) {
   header {
     column-gap: 16px;
-    padding: 8px 16px;
+    padding: 8px;
   }
 
   header > .logo > a > img {
