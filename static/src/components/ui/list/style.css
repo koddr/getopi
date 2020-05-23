@@ -1,0 +1,21 @@
+/* List */
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 8px;
+}
+
+/* List item */
+
+.list > .list_item {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 8px;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.list > * * > img {
+  width: 20px;
+}

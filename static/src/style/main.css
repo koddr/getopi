@@ -104,16 +104,6 @@ p {
   margin-bottom: calc(var(--font-size) + 16px);
 }
 
-/* Helpers */
-
-.divider-24px {
-  height: calc(var(--font-size) + 8px);
-}
-
-.divider-32px {
-  height: calc(var(--font-size) + 16px);
-}
-
 /* Media */
 
 @media screen and (max-width: 320px) {
@@ -139,13 +129,5 @@ p {
     font-size: calc(var(--font-size) + 4px);
     line-height: calc(var(--font-size) + 4px);
     margin-bottom: calc(var(--font-size) - 2px);
-  }
-
-  .divider-24px {
-    height: var(--font-size);
-  }
-
-  .divider-32px {
-    height: calc(var(--font-size) + 8px);
   }
 }

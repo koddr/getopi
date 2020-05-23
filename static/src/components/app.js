@@ -4,6 +4,7 @@ import { h, Component } from "preact";
 import { Router } from "preact-router";
 
 import Header from "./header";
+import Footer from "./footer";
 
 // Code-splitting is automated for routes
 import Project from "../routes/project";
@@ -20,8 +21,9 @@ export default class App extends Component {
       <div id="app">
         <Header />
         <Router onChange={this.handleRoute}>
-          <Project path="/" />
+          <Project path="/project/:alias" />
         </Router>
+        <Footer />
       </div>
     );
   }

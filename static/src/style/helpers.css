@@ -1,0 +1,29 @@
+/* Helpers */
+
+.divider-24px {
+  height: calc(var(--font-size) + 8px);
+}
+
+.divider-32px {
+  height: calc(var(--font-size) + 16px);
+}
+
+.divider-48px {
+  height: calc(var(--font-size) + 24px);
+}
+
+/* Media */
+
+@media screen and (max-width: 320px) {
+  .divider-24px {
+    height: calc(var(--font-size) - 8px);
+  }
+
+  .divider-32px {
+    height: var(--font-size);
+  }
+
+  .divider-48px {
+    height: calc(var(--font-size) + 8px);
+  }
+}
