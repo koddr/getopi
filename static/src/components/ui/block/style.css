@@ -27,6 +27,25 @@
   font-weight: 700;
 }
 
+/* Type: author */
+
+.block > .block_author {
+  display: grid;
+  column-gap: 16px;
+  grid-template-columns: min-content 1fr;
+  align-items: center;
+}
+
+.block > .block_author > img {
+  width: 72px;
+  border-radius: 50%;
+  border: 3px solid var(--gray);
+}
+
+.block > .block_author > * > strong {
+  font-size: calc(var(--font-size) + 4px);
+}
+
 /* Media */
 
 @media screen and (max-width: 320px) {

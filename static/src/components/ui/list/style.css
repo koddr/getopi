@@ -3,7 +3,7 @@
 .list {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 8px;
+  row-gap: 10px;
 }
 
 /* List item */
@@ -13,9 +13,21 @@
   grid-template-columns: min-content 1fr;
   column-gap: 8px;
   align-items: center;
-  margin-left: 4px;
+  margin-left: 12px;
 }
 
 .list > * * > img {
   width: 20px;
+}
+
+.list > * *:last-child {
+  line-height: var(--font-size);
+}
+
+/* Media */
+
+@media screen and (max-width: 320px) {
+  .list > .list_item {
+    margin-left: 8px;
+  }
 }

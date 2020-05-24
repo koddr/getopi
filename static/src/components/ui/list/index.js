@@ -14,10 +14,10 @@ const List = (props) => {
       break;
   }
   return (
-    <div class={style.list}>
+    <div class={style.list} role="list">
       {props.items.map((item) => {
         return (
-          <div class={style.list_item}>
+          <div class={style.list_item} role="listitem">
             <div>
               <img src={listType} alt="list icon" />
             </div>

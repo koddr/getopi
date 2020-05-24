@@ -20,7 +20,8 @@ ol[class],
 figure,
 blockquote,
 dl,
-dd {
+dd,
+svg {
   margin: 0;
 }
 
@@ -45,6 +46,7 @@ a:not([class]) {
   text-decoration-skip-ink: auto;
 }
 
+svg,
 img {
   width: 100%;
   display: block;

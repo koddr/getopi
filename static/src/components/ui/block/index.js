@@ -18,6 +18,10 @@ const Block = (props) => {
       blockType = style.block_reward;
       blockContent = props.content;
       break;
+    case "author":
+      blockType = style.block_author;
+      blockContent = props.children; // throw all children elements into <Block/>
+      break;
     default:
       blockContent = props.children; // throw all children elements into <Block/>
       break;

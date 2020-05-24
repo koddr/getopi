@@ -21,10 +21,13 @@
 
   /* Dark colors */
   --gray-dark: hsla(0, 0%, 86%, 1);
-  --blue-dark: hsla(252, 91%, 54%, 1);
+  --blue-dark: hsla(218, 91%, 44%, 1);
   --green-dark: hsla(146, 78%, 32%, 1);
   --yellow-dark: hsla(45, 86%, 52%, 1);
   --red-dark: hsla(0, 78%, 32%, 1);
+
+  /* Elements specify color */
+  --blue-visited-links: hsla(252, 91%, 54%, 1);
 
   /* Shadows */
   --box-shadow: 0px 0px 24px var(--gray-dark);
@@ -55,8 +58,8 @@ a:hover {
 }
 
 a:visited {
-  color: var(--blue-dark);
-  border-bottom: 1px solid var(--blue-dark);
+  color: var(--blue-visited-links);
+  border-bottom: 1px solid var(--blue-visited-links);
 }
 
 /* Text styles */
@@ -129,5 +132,11 @@ p {
     font-size: calc(var(--font-size) + 4px);
     line-height: calc(var(--font-size) + 4px);
     margin-bottom: calc(var(--font-size) - 2px);
+  }
+}
+
+@media screen and (min-width: 1680px) {
+  :root {
+    --font-size: 18px;
   }
 }
