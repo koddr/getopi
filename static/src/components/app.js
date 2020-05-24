@@ -18,11 +18,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <div id="app">
+      <div id="getoppi_app">
         <Header />
-        <Router onChange={this.handleRoute}>
-          <Project path="/project/:alias" />
-        </Router>
+        <div class="wrapper">
+          <Router onChange={this.handleRoute}>
+            <Project path="/project/:alias" />
+          </Router>
+        </div>
         <Footer />
       </div>
     );
