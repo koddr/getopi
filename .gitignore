@@ -9,6 +9,7 @@
 # Logs
 **/*.log
 **/*.lock
+**/size-plugin.json
 
 # Lock files
 **/package-lock.json
