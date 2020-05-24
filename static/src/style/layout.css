@@ -54,15 +54,9 @@
   grid-template-columns: 2fr 1.3fr;
 }
 
-/* Align items to top */
-
-.align__items_start {
-  align-items: flex-start;
-}
-
 /* Media */
 
-@media screen and (max-width: 320px) {
+@media all and (min-width: 320px) and (max-width: 480px) {
   .column_0_7__2,
   .column_0_8__2,
   .column_1__1,
@@ -73,10 +67,5 @@
   .column_2__1_2,
   .column_2__1_3 {
     grid-template-columns: 1fr;
-  }
-
-  .m__align__content_center {
-    justify-content: center;
-    text-align: center;
   }
 }

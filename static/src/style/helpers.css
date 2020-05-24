@@ -1,5 +1,7 @@
 /* Helpers */
 
+/* Divider */
+
 .divider-24px {
   height: calc(var(--font-size) + 8px);
 }
@@ -12,9 +14,15 @@
   height: calc(var(--font-size) + 24px);
 }
 
+/* Align items */
+
+.align__items_start {
+  align-items: flex-start;
+}
+
 /* Media */
 
-@media screen and (max-width: 320px) {
+@media all and (min-width: 320px) and (max-width: 480px) {
   .divider-24px {
     height: calc(var(--font-size) - 8px);
   }
@@ -25,5 +33,11 @@
 
   .divider-48px {
     height: calc(var(--font-size) + 8px);
+  }
+
+  /* Only mobile: align content to center */
+  .m__align__content_center {
+    justify-content: center;
+    text-align: center;
   }
 }
