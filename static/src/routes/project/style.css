@@ -4,9 +4,35 @@
   padding: 64px 0;
 }
 
+/* Wrapper */
+
+.project > .wrapper {
+  max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Heading */
+
+.project > * > .heading {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-gap: 24px;
+  align-items: center;
+}
+
+.project > * > .heading > img {
+  width: 32px;
+  cursor: pointer;
+}
+
+.project > * > .heading > h1 {
+  margin-bottom: 0;
+}
+
 /* Section */
 
-.project > section {
+.project > * > section {
   display: grid;
   grid-auto-rows: auto;
   grid-auto-columns: auto;
@@ -16,15 +42,15 @@
 
 /* Article, Aside */
 
-.project > section > article,
-.project > section > aside {
+.project > * > section > article,
+.project > * > section > aside {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 32px;
 }
 
-.project > section > article > .item,
-.project > section > aside > .item {
+.project > * > section > article > .item,
+.project > * > section > aside > .item {
   display: grid;
   row-gap: 32px;
   background-color: var(--white);
@@ -40,17 +66,17 @@
     padding: 32px 8px;
   }
 
-  .project > section {
+  .project > * > section {
     row-gap: 16px;
   }
 
-  .project > section > article,
-  .project > section > aside {
+  .project > * > section > article,
+  .project > * > section > aside {
     row-gap: 16px;
   }
 
-  .project > section > article > .item,
-  .project > section > aside > .item {
+  .project > * > section > article > .item,
+  .project > * > section > aside > .item {
     row-gap: 16px;
     padding: 24px;
   }

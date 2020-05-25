@@ -2,30 +2,24 @@
 
 import { h, Component } from "preact";
 import { Router } from "preact-router";
+import AsyncRoute from "preact-async-route";
 
-import Header from "./header";
-import Footer from "./footer";
-
-// Code-splitting is automated for routes
-import Project from "../routes/project";
+// Components
+import Loader from "./ui/loader";
 
 export default class App extends Component {
-  /** Gets fired when the route changes.
-   *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
-   *	@param {string} event.url	The newly routed URL
-   */
-  handleRoute = (e) => (this.currentUrl = e.url);
-
   render() {
     return (
       <div id="getopi_app">
-        <Header />
-        <div class="wrapper">
-          <Router onChange={this.handleRoute}>
-            <Project path="/project/:alias" />
-          </Router>
-        </div>
-        <Footer />
+        <Router onChange={(e) => (this.currentUrl = e.url)}>
+          <AsyncRoute
+            path="/project/:alias"
+            getComponent={() =>
+              import("../routes/project").then((module) => module.default)
+            }
+            loading={() => <Loader />}
+          />
+        </Router>
       </div>
     );
   }

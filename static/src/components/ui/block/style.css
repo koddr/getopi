@@ -12,6 +12,7 @@
 .block > .block_title {
   font-size: calc(var(--font-size) + 12px);
   line-height: calc(var(--font-size) + 12px);
+  font-weight: 500;
 }
 
 /* Type: reward */
