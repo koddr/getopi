@@ -91,7 +91,7 @@ const Project = (props) => {
               <div class={style.item}>
                 <Block type="author" label="Author">
                   <img src="/assets/icons/no-avatar.svg" alt="no avatar icon" />
-                  <div class="mobile__align_content_center">
+                  <div>
                     <strong>John Doe</strong>
                     <div>
                       <Link href="/">@john_doe_1987</Link>
@@ -109,9 +109,16 @@ const Project = (props) => {
               <div class={style.item}>
                 <Block type="locked-tasks">
                   <img src="/assets/icons/lock.svg" alt="lock icon" />
-                  <strong>
-                    Click to “Give opinion” to open all research tasks
-                  </strong>
+                  <div>
+                    Click to “Give opinion” to open{" "}
+                    <strong>all research tasks</strong> and receive{" "}
+                    <strong>
+                      {+props.alias === 1
+                        ? `${props.alias} credit`
+                        : `${props.alias} credits`}
+                    </strong>
+                    !
+                  </div>
                   <Button name="Give opinion" type="secondary" />
                 </Block>
               </div>

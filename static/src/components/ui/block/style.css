@@ -60,8 +60,8 @@
   width: 56px;
 }
 
-.block > .block_locked_tasks > strong {
-  font-size: calc(var(--font-size) + 6px);
+.block > .block_locked_tasks > div {
+  font-size: calc(var(--font-size) + 4px);
 }
 
 /* Media */
@@ -85,9 +85,9 @@
     width: 48px;
   }
 
-  .block > .block_locked_tasks > strong {
+  .block > .block_locked_tasks > div {
     grid-area: text;
-    font-size: calc(var(--font-size) + 2px);
+    font-size: var(--font-size);
   }
 
   .block > .block_locked_tasks > button {
