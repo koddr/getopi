@@ -33,6 +33,20 @@ button.primary:hover {
   background-color: var(--blue-dark);
 }
 
+/* Secondary button */
+
+button.secondary {
+  border: 3px solid var(--blue);
+  background-color: var(--white);
+  color: var(--blue);
+}
+
+button.secondary:hover {
+  border: 3px solid var(--blue-dark);
+  background-color: var(--blue-dark);
+  color: var(--white);
+}
+
 /* Success */
 
 button.success {

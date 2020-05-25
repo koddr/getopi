@@ -22,6 +22,10 @@ const Block = (props) => {
       blockType = style.block_author;
       blockContent = props.children; // throw all children elements into <Block/>
       break;
+    case "locked-tasks":
+      blockType = style.block_locked_tasks;
+      blockContent = props.children; // throw all children elements into <Block/>
+      break;
     default:
       blockContent = props.children; // throw all children elements into <Block/>
       break;

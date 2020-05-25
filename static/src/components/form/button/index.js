@@ -9,6 +9,9 @@ const Button = (props) => {
     case "primary":
       buttonType = style.primary;
       break;
+    case "secondary":
+      buttonType = style.secondary;
+      break;
     case "success":
       buttonType = style.success;
       break;

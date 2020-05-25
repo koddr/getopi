@@ -47,7 +47,10 @@ const Project = (props) => {
                 <Block
                   type="reward"
                   label="Opinion reward"
-                  content={[<span>{props.alias}</span>, " credits"]} // TODO: replace with project reward
+                  content={[
+                    <span>{props.alias}</span>,
+                    +props.alias === 1 ? " credit" : " credits", // TODO: replace with project reward
+                  ]}
                 />
                 <Button name="Give opinion" type="primary" />
               </div>
@@ -87,7 +90,7 @@ const Project = (props) => {
               </div>
               <div class={style.item}>
                 <Block type="author" label="Author">
-                  <img src="/assets/icons/no-avatar.svg" alt="no avatar" />
+                  <img src="/assets/icons/no-avatar.svg" alt="no avatar icon" />
                   <div class="mobile__align_content_center">
                     <strong>John Doe</strong>
                     <div>
@@ -101,6 +104,19 @@ const Project = (props) => {
           <div class="divider-48px" />
           <h2>Tasks</h2>
           <div class="divider-24px" />
+          <section>
+            <aside>
+              <div class={style.item}>
+                <Block type="locked-tasks">
+                  <img src="/assets/icons/lock.svg" alt="lock icon" />
+                  <strong>
+                    Click to “Give opinion” to open all research tasks
+                  </strong>
+                  <Button name="Give opinion" type="secondary" />
+                </Block>
+              </div>
+            </aside>
+          </section>
         </div>
       </main>
       <Footer />

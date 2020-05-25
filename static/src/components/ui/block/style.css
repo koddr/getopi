@@ -33,7 +33,7 @@
 .block > .block_author {
   display: grid;
   column-gap: 16px;
-  grid-template-columns: min-content 1fr;
+  grid-template-columns: min-content auto;
   align-items: center;
 }
 
@@ -47,11 +47,50 @@
   font-size: calc(var(--font-size) + 4px);
 }
 
+/* Type: locked tasks */
+
+.block > .block_locked_tasks {
+  display: grid;
+  column-gap: 16px;
+  grid-template-columns: min-content 2fr auto;
+  align-items: center;
+}
+
+.block > .block_locked_tasks > img {
+  width: 56px;
+}
+
+.block > .block_locked_tasks > strong {
+  font-size: calc(var(--font-size) + 6px);
+}
+
 /* Media */
 
 @media all and (min-width: 320px) and (max-width: 480px) {
   .block > .block_title {
     font-size: calc(var(--font-size) + 8px);
     line-height: calc(var(--font-size) + 8px);
+  }
+
+  .block > .block_locked_tasks {
+    row-gap: 16px;
+    grid-template-columns: min-content 1fr;
+    grid-template-areas:
+      "img text"
+      "button button";
+  }
+
+  .block > .block_locked_tasks > img {
+    grid-area: img;
+    width: 48px;
+  }
+
+  .block > .block_locked_tasks > strong {
+    grid-area: text;
+    font-size: calc(var(--font-size) + 2px);
+  }
+
+  .block > .block_locked_tasks > button {
+    grid-area: button;
   }
 }
