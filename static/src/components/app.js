@@ -18,7 +18,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div id="getoppi_app">
+      <div id="getopi_app">
         <Header />
         <div class="wrapper">
           <Router onChange={this.handleRoute}>
