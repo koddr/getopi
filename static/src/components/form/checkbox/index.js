@@ -5,17 +5,14 @@ import { useState } from "preact/hooks";
 import style from "./style";
 
 const Checkbox = (props) => {
+  // Connect to local state
   const [checkboxState, setCheckboxState] = useState({
     checked: props.default_state,
   });
+
+  // Define style
   let checkboxType;
   switch (props.type) {
-    case "primary":
-      checkboxType = style.primary;
-      break;
-    case "secondary":
-      checkboxType = style.secondary;
-      break;
     case "success":
       checkboxType = style.success;
       break;
@@ -25,15 +22,16 @@ const Checkbox = (props) => {
     case "danger":
       checkboxType = style.danger;
       break;
-    default:
-      checkboxType = style.default;
-      break;
   }
+
+  // Toggle checked state
   const toggleCheckboxState = () => {
     let checked = !checkboxState.checked;
     setCheckboxState({ checked });
     if (props.callback) props.callback();
   };
+
+  // Render checkbox
   return (
     <div
       onClick={toggleCheckboxState}

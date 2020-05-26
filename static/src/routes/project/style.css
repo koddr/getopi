@@ -34,8 +34,6 @@
 
 .project > * > section {
   display: grid;
-  grid-auto-rows: auto;
-  grid-auto-columns: auto;
   column-gap: 32px;
   row-gap: 32px;
 }
@@ -100,5 +98,9 @@
   .project > * > section > aside > .item {
     row-gap: 16px;
     padding: 24px;
+  }
+
+  .project > * > .tasks {
+    column-gap: 16px;
   }
 }

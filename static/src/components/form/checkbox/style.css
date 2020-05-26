@@ -5,6 +5,7 @@
   grid-template-columns: min-content auto;
   column-gap: 16px;
   align-items: center;
+  color: var(--black);
 }
 
 .checkbox > * {
@@ -22,6 +23,18 @@
   border: 3px solid var(--blue-light);
 }
 
+.checkbox.success > .checkbox_label {
+  border-color: var(--green-light);
+}
+
+.checkbox.warning > .checkbox_label {
+  border-color: var(--yellow-light);
+}
+
+.checkbox.danger > .checkbox_label {
+  border-color: var(--red-light);
+}
+
 /* Circle: OFF */
 
 .checkbox > * > .checkbox_circle {
@@ -29,12 +42,19 @@
   border-radius: 50px;
   background-color: var(--blue-light);
   border: 3px solid var(--white);
+  transition-duration: 0.5s;
 }
 
-/* Text: OFF */
+.checkbox.success > * > .checkbox_circle {
+  background-color: var(--green-light);
+}
 
-.checkbox > .checkbox_text {
-  color: var(--blue-light);
+.checkbox.warning > * > .checkbox_circle {
+  background-color: var(--yellow-light);
+}
+
+.checkbox.danger > * > .checkbox_circle {
+  background-color: var(--red-light);
 }
 
 /* Label: ON */
@@ -45,21 +65,58 @@
   justify-content: flex-end; /* Push the circle to the right */
 }
 
+.checkbox.checkbox_checked.success > .checkbox_label {
+  border-color: var(--green);
+}
+
+.checkbox.checkbox_checked.warning > .checkbox_label {
+  border-color: var(--yellow);
+}
+
+.checkbox.checkbox_checked.danger > .checkbox_label {
+  border-color: var(--red);
+}
+
 /* Circle: ON */
 
 .checkbox.checkbox_checked > * > .checkbox_circle {
   background-color: var(--blue);
   border: 3px solid var(--white);
+  transition-duration: 0.5s;
 }
 
-/* Text: OFF */
+.checkbox.checkbox_checked.success > * > .checkbox_circle {
+  background-color: var(--green);
+}
 
-.checkbox.checkbox_checked > .checkbox_text {
-  color: var(--blue);
+.checkbox.checkbox_checked.warning > * > .checkbox_circle {
+  background-color: var(--yellow);
+}
+
+.checkbox.checkbox_checked.danger > * > .checkbox_circle {
+  background-color: var(--red);
 }
 
 /* Input (service) */
 
 .checkbox > * > .checkbox_input {
   display: none;
+}
+
+/* Media */
+
+@media all and (min-width: 320px) and (max-width: 480px) {
+  .checkbox {
+    font-size: calc(var(--font-size) - 3px);
+    column-gap: 8px;
+  }
+
+  .checkbox > .checkbox_label {
+    height: 32px;
+    width: 44px;
+  }
+
+  .checkbox > * > .checkbox_circle {
+    width: 26px;
+  }
 }

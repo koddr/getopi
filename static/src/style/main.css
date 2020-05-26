@@ -18,6 +18,8 @@
   /* Light colors */
   --blue-light: hsla(218, 90%, 77%, 1);
   --green-light: hsla(146, 63%, 86%, 1);
+  --yellow-light: hsla(45, 67%, 76%, 1);
+  --red-light: hsla(0, 48%, 65%, 1);
 
   /* Dark colors */
   --gray-dark: hsla(0, 0%, 86%, 1);

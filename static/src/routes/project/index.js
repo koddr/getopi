@@ -40,7 +40,7 @@ const Project = (props) => {
             <h1>Overview</h1>
           </div>
           <div class="divider-48px" />
-          <section class="column_2__1_3">
+          <section class="column_2__1_3 align__items_start">
             <article>
               <div class={style.item}>
                 <Block
@@ -60,7 +60,7 @@ const Project = (props) => {
                     +props.alias === 1 ? " credit" : " credits", // TODO: replace with project reward
                   ]}
                 />
-                <Button name="Give opinion" type="primary" />
+                <Button name="Give opinion" />
               </div>
             </aside>
           </section>
@@ -115,14 +115,14 @@ const Project = (props) => {
             <Checkbox
               name="check"
               text="Show completed tasks"
+              type="success"
               default_state={showCompletedTasks}
-              callback={() => {
-                dispatch("show completed tasks", !showCompletedTasks);
-                console.log("TODO: add function for show completed tasks");
-              }}
+              callback={
+                () => dispatch("show completed tasks", !showCompletedTasks) // TODO: add function for show completed tasks
+              }
             />
           </section>
-          <div class="divider-24px" />
+          <div class="divider-48px" />
           <section>
             <aside>
               <div class={style.item}>

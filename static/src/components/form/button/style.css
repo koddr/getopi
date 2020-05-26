@@ -6,30 +6,14 @@ button {
   border-radius: 24px;
   font-size: calc(var(--font-size) + 4px);
   line-height: calc(var(--font-size) + 4px);
+  background-color: var(--blue);
+  color: var(--white);
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
 }
 
-/* Default button */
-
-button.default {
-  background-color: var(--gray);
-  color: var(--black);
-}
-
-button.default:hover {
-  background-color: var(--gray-dark);
-}
-
-/* Primary button */
-
-button.primary {
-  background-color: var(--blue);
-  color: var(--white);
-}
-
-button.primary:hover {
+button:hover {
   background-color: var(--blue-dark);
 }
 
@@ -80,9 +64,11 @@ button.danger:hover {
   background-color: var(--red-dark);
 }
 
+/* Media */
+
 @media all and (min-width: 320px) and (max-width: 480px) {
   button {
-    font-size: var(--font-size);
-    line-height: var(--font-size);
+    font-size: calc(var(--font-size) + 1px);
+    line-height: calc(var(--font-size) + 1px);
   }
 }

@@ -23,7 +23,7 @@ const List = (props) => {
             </div>
             <div>
               {props.type === "external-link" ? (
-                <a href={item} target="_blank">
+                <a href={item} target="_blank" rel="noreferrer">
                   {item.length > 25 ? `${item.substr(0, 23)}...` : item}
                 </a>
               ) : (
