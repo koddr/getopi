@@ -3,6 +3,7 @@
 import { h } from "preact";
 import { useEffect } from "preact/hooks";
 import { Link } from "preact-router/match";
+import { useStoreon } from "storeon/preact";
 
 // Styles
 import style from "./style";
@@ -12,12 +13,19 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Block from "../../components/ui/block";
 import Button from "../../components/form/button";
+import Checkbox from "../../components/form/checkbox";
 import List from "../../components/ui/list";
 
 const Project = (props) => {
+  // Connect to store
+  const { dispatch, showCompletedTasks } = useStoreon("showCompletedTasks");
+
+  // Set META attributes
   useEffect(() => {
     document.title = props.alias; // TODO: replace with project title
   }, [props.alias, props.title]);
+
+  // Render component
   return (
     <>
       <Header />
@@ -25,7 +33,7 @@ const Project = (props) => {
         <div class={style.wrapper}>
           <div class={style.heading}>
             <img
-              onClick={() => history.back()}
+              onClick={() => history.back()} // back to prev page from browser history
               src="/assets/icons/back.svg"
               alt="back icon"
             />
@@ -102,7 +110,18 @@ const Project = (props) => {
             </aside>
           </section>
           <div class="divider-48px" />
-          <h2>Tasks</h2>
+          <section class={style.tasks}>
+            <h2>Tasks</h2>
+            <Checkbox
+              name="check"
+              text="Show completed tasks"
+              default_state={showCompletedTasks}
+              callback={() => {
+                dispatch("show completed tasks", !showCompletedTasks);
+                console.log("TODO: add function for show completed tasks");
+              }}
+            />
+          </section>
           <div class="divider-24px" />
           <section>
             <aside>

@@ -1,0 +1,65 @@
+/* Checkbox */
+
+.checkbox {
+  display: grid;
+  grid-template-columns: min-content auto;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.checkbox > * {
+  cursor: pointer;
+}
+
+/* Label: OFF */
+
+.checkbox > .checkbox_label {
+  display: flex;
+  height: 40px;
+  width: 56px;
+  border-radius: 50px;
+  background-color: var(--white);
+  border: 3px solid var(--blue-light);
+}
+
+/* Circle: OFF */
+
+.checkbox > * > .checkbox_circle {
+  width: 34px;
+  border-radius: 50px;
+  background-color: var(--blue-light);
+  border: 3px solid var(--white);
+}
+
+/* Text: OFF */
+
+.checkbox > .checkbox_text {
+  color: var(--blue-light);
+}
+
+/* Label: ON */
+
+.checkbox.checkbox_checked > .checkbox_label {
+  background-color: var(--white);
+  border: 3px solid var(--blue);
+  justify-content: flex-end; /* Push the circle to the right */
+}
+
+/* Circle: ON */
+
+.checkbox.checkbox_checked > * > .checkbox_circle {
+  background-color: var(--blue);
+  border: 3px solid var(--white);
+}
+
+/* Text: OFF */
+
+.checkbox.checkbox_checked > .checkbox_text {
+  color: var(--blue);
+}
+
+/* Input (service) */
+
+.checkbox > * > .checkbox_input {
+  display: none;
+}

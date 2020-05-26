@@ -1,3 +1,9 @@
+/* Column grid auto + 2 */
+
+.column_auto__2 {
+  grid-template-columns: auto 2fr;
+}
+
 /* Column grid 0.7 + 2 */
 
 .column_0_7__2 {

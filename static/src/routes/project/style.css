@@ -59,6 +59,19 @@
   padding: 32px;
 }
 
+/* Tasks */
+
+.project > * > .tasks {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 32px;
+  align-items: center;
+}
+
+.project > * > .tasks > h2 {
+  margin-bottom: 0;
+}
+
 /* Media */
 
 @media all and (min-width: 320px) and (max-width: 480px) {
