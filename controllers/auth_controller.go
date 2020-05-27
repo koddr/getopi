@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber"
 	"github.com/koddr/getopi/stores"
 	"github.com/koddr/getopi/utils"
@@ -50,16 +52,33 @@ func Authentication(c *fiber.Ctx) {
 		return
 	}
 
+	// Check password
 	if utils.ComparePasswords(user.PasswordHash, auth.Password) {
-		// Create JWT token
-		token, errGenerateJWT := utils.GenerateJWT("user", user.ID.String())
-		if errGenerateJWT != nil {
+		// Create JWT access_token
+		accessToken, errGenerateAccessJWT := utils.GenerateAccessJWT("user", user.ID.String())
+		if errGenerateAccessJWT != nil {
 			// Fail create JWT token
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": errGenerateJWT.Error()})
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errGenerateAccessJWT.Error()})
 			return
 		}
 
-		c.JSON(fiber.Map{"error": true, "msg": nil, "token": token})
+		// Create JWT refresh_token
+		refreshToken, errGenerateRefreshJWT := utils.GenerateRefreshJWT(accessToken)
+		if errGenerateRefreshJWT != nil {
+			// Fail create JWT token
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errGenerateRefreshJWT.Error()})
+			return
+		}
+
+		c.JSON(fiber.Map{
+			"error": false,
+			"msg":   nil,
+			"jwt": fiber.Map{
+				"access_token":  accessToken,
+				"refresh_token": refreshToken,
+				"expires_in":    time.Now().Add(72 * time.Hour).Unix(),
+			},
+		})
 	} else {
 		// Fail authentication
 		c.Status(401).JSON(fiber.Map{"error": true, "msg": "incorrect email or password"})

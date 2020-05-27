@@ -5,13 +5,13 @@ go 1.14
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-playground/validator/v10 v10.3.0
-	github.com/gofiber/compression v0.0.3
-	github.com/gofiber/cors v0.0.3
-	github.com/gofiber/fiber v1.10.0
-	github.com/gofiber/helmet v0.0.3
-	github.com/gofiber/jwt v0.0.6
-	github.com/gofiber/logger v0.1.1
-	github.com/gofiber/recover v0.0.5
+	github.com/gofiber/compression v0.1.0
+	github.com/gofiber/cors v0.1.0
+	github.com/gofiber/fiber v1.10.1
+	github.com/gofiber/helmet v0.1.0
+	github.com/gofiber/jwt v0.1.0
+	github.com/gofiber/logger v0.2.0
+	github.com/gofiber/recover v0.1.0
 	github.com/google/uuid v1.1.1
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/jmoiron/sqlx v1.2.0

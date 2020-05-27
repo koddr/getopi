@@ -38,8 +38,8 @@ func main() {
 		cors.New(),
 		helmet.New(),
 		compression.New(),
-		logger.New(loggerConfig),
 		recover.New(recoverConfig),
+		logger.New(loggerConfig),
 	)
 
 	// Auth

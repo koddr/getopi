@@ -1,13 +1,14 @@
 package utils
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
-// GenerateJWT ...
-func GenerateJWT(permission, id string) (string, error) {
+// GenerateAccessJWT ...
+func GenerateAccessJWT(permission, id string) (string, error) {
 	// Get secret JWT token from .env
 	secretToken := GetDotEnvValue("JWT_SECRET_TOKEN")
 
@@ -25,7 +26,6 @@ func GenerateJWT(permission, id string) (string, error) {
 
 	// Set public claims
 	claims["id"] = id
-	claims["expire"] = time.Now().Add(72 * time.Hour).Unix()
 
 	// Generate encoded token and send it as response.
 	t, err := token.SignedString([]byte(secretToken))
@@ -33,5 +33,11 @@ func GenerateJWT(permission, id string) (string, error) {
 		return "", err
 	}
 
+	return t, nil
+}
+
+// GenerateRefreshJWT ...
+func GenerateRefreshJWT(accessToken string) (string, error) {
+	t := strconv.Itoa(int(time.Now().Unix())) + "." + accessToken[145:155] + accessToken[45:55]
 	return t, nil
 }
