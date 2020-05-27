@@ -74,6 +74,16 @@ func main() {
 		c.Status(404).JSON(fiber.Map{"error": true, "msg": "sorry, endpoint not found"})
 	})
 
+	// AutoCert
+	// tls := utils.AutoCertSSLGenerator(
+	// 	true, // TODO: Dry-run Let's Encrypt is now enabled
+	// 	utils.GetDotEnvValue("EMAIL"),
+	// 	[]string{
+	// 		utils.GetDotEnvValue("DOMAIN_WITH_WWW"),
+	// 		utils.GetDotEnvValue("DOMAIN_WITHOUT_WWW"),
+	// 	},
+	// )
+
 	// Run server
 	app.Listen(utils.GetDotEnvValue("SERVER_PORT"))
 }
