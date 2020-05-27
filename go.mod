@@ -7,7 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/gofiber/compression v0.0.3
 	github.com/gofiber/cors v0.0.3
-	github.com/gofiber/fiber v1.9.6
+	github.com/gofiber/fiber v1.10.0
 	github.com/gofiber/helmet v0.0.3
 	github.com/gofiber/jwt v0.0.6
 	github.com/gofiber/logger v0.0.9
