@@ -36,6 +36,15 @@ CREATE TABLE tasks (
     task_attrs JSONB NOT NULL
 );
 
+-- Create tokens table
+CREATE TABLE tokens (
+    id UUID DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW (),
+    expired_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    access_token VARCHAR NOT NULL
+);
+
 -- Add indexes
 CREATE INDEX active_users ON users (username) WHERE user_status = 1;
 CREATE INDEX active_projects ON projects (alias) WHERE project_status = 1;

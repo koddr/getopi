@@ -15,6 +15,7 @@ import (
 type Store struct {
 	*UserStore
 	*ProjectStore
+	*TokenStore
 }
 
 // OpenStore ...
@@ -34,5 +35,6 @@ func OpenStore() (*Store, error) {
 	return &Store{
 		UserStore:    &UserStore{DB: db},
 		ProjectStore: &ProjectStore{DB: db},
+		TokenStore:   &TokenStore{DB: db},
 	}, nil
 }

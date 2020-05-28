@@ -1,9 +1,6 @@
 package utils
 
 import (
-	"strconv"
-	"time"
-
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -33,11 +30,5 @@ func GenerateAccessJWT(permission, id string) (string, error) {
 		return "", err
 	}
 
-	return t, nil
-}
-
-// GenerateRefreshJWT ...
-func GenerateRefreshJWT(accessToken string) (string, error) {
-	t := strconv.Itoa(int(time.Now().Unix())) + "." + accessToken[145:155] + accessToken[45:55]
 	return t, nil
 }

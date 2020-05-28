@@ -42,8 +42,9 @@ func main() {
 		logger.New(loggerConfig),
 	)
 
-	// Auth
+	// Public API
 	app.Post("/auth", controllers.Authentication)
+	app.Post("/register", controllers.CreateUser)
 
 	// Private API group
 	privateAPI := app.Group("/api", jwtware.New(jwtwareConfig))
@@ -55,7 +56,7 @@ func main() {
 	// privateAPI.Get("/projects", controllers.ShowProjects)
 
 	// POST
-	privateAPI.Post("/user", controllers.CreateUser)
+	privateAPI.Post("/auth/refresh-token", controllers.RefreshToken)
 	// privateAPI.Post("/project", controllers.CreateProject)
 	// privateAPI.Post("/task", controllers.CreateTask)
 
