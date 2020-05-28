@@ -45,6 +45,7 @@ func main() {
 	// Public API
 	app.Post("/auth", controllers.Authentication)
 	app.Post("/register", controllers.CreateUser)
+	app.Post("/forget-password", controllers.ForgetPassword)
 
 	// Private API group
 	privateAPI := app.Group("/api", jwtware.New(jwtwareConfig))

@@ -9,6 +9,7 @@ import (
 	"github.com/koddr/getopi/models"
 	"github.com/koddr/getopi/stores"
 	"github.com/koddr/getopi/utils"
+	nanoid "github.com/matoous/go-nanoid"
 )
 
 // Authentication ...
@@ -163,4 +164,69 @@ func RefreshToken(c *fiber.Ctx) {
 		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
 		return
 	}
+}
+
+// ForgetPassword email string..error.
+func ForgetPassword(c *fiber.Ctx) {
+	// Struct for restore password by email
+	type forgetData struct {
+		Email string `json:"email" validate:"required,email"`
+	}
+
+	// Create new forget password struct
+	forget := &forgetData{}
+
+	// Create new validator
+	validate := utils.Validate("forget-password")
+
+	// Check received JSON data
+	if errBodyParser := c.BodyParser(forget); errBodyParser != nil {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
+		return
+	}
+
+	// Check fields validation
+	if errValidate := validate.Struct(forget); errValidate != nil {
+		// Return invalid fields
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+		return
+	}
+
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// Fail DB connection
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
+		return
+	}
+
+	// Find user by email
+	_, errFindUserByEmail := db.FindUserByEmail(forget.Email)
+	if errFindUserByEmail != nil {
+		// User not found
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found", "user": nil})
+		return
+	}
+
+	// Create restore code
+	restoreCode, errRestoreCode := nanoid.Generate("123456abcdef", 6)
+	if errRestoreCode != nil {
+		// Fail create restore code
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errRestoreCode.Error()})
+		return
+	}
+
+	// Send email with restore code
+	sendEmailConfig := utils.SendEmailConfig([]string{forget.Email}, "Your restore code")
+	if errSendEmail := sendEmailConfig.WithHTMLTemplate(
+		"templates/email-forgot-password.html",
+		fiber.Map{"code": restoreCode},
+	); errSendEmail != nil {
+		// Fail send restore code to email
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errSendEmail.Error()})
+		return
+	}
+
+	c.JSON(fiber.Map{"error": false, "msg": nil, "restore_code": restoreCode})
 }

@@ -30,7 +30,6 @@ func Validate(obj string) *validator.Validate {
 	})
 
 	switch obj {
-
 	case "auth":
 		// Check for regexp parrtern and length (varchar(255))
 		validate.RegisterValidation("email", func(fl validator.FieldLevel) bool {
@@ -43,7 +42,12 @@ func Validate(obj string) *validator.Validate {
 			field := fl.Field().String()
 			return len(field) >= 6
 		})
-
+	case "forget-password":
+		// Check for regexp parrtern and length (varchar(255))
+		validate.RegisterValidation("email", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			return regexp.MustCompile(emailRegexpPattern).MatchString(field) && len(field) <= 254
+		})
 	case "user":
 		// Check for valid UUID
 		validate.RegisterValidation("id", func(fl validator.FieldLevel) bool {
