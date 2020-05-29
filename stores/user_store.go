@@ -105,7 +105,7 @@ func (s *UserStore) UpdateUser(u *models.User) error {
 //
 // TODO: Add description
 //
-func (s *UserStore) UpdatePassword(id uuid.UUID, passwordHash string) error {
+func (s *UserStore) UpdateUserPassword(id uuid.UUID, passwordHash string) error {
 	if _, err := s.Exec(
 		`UPDATE users SET password_hash = $2 WHERE id = $1`, id, passwordHash,
 	); err != nil {

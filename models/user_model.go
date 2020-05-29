@@ -32,14 +32,15 @@ type UserAttrs struct {
 	Skills    []string          `json:"skills"`
 }
 
-// UserMethods ...
-type UserMethods interface {
+// UserStore ...
+type UserStore interface {
 	FindUserByID(id uuid.UUID) (User, error)
 	FindUserByUsername(username string) (User, error)
 	FindUserByEmail(email string) (User, error)
 	GetUsers() ([]User, error)
 	CreateUser(u *User) error
 	UpdateUser(u *User) error
+	UpdateUserPassword(id uuid.UUID, passwordHash string) error
 	DeleteUser(id uuid.UUID) error
 }
 

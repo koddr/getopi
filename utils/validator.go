@@ -13,7 +13,8 @@ const (
 	emailRegexpPattern string = `^.+@.+\..+$`
 )
 
-// Validate create a new validator for expected fields,
+// Validate ...
+// create a new validator for expected fields,
 // register function to get tag name from `json` tags
 // and add validation to expected fields
 func Validate(obj string) *validator.Validate {
@@ -59,6 +60,15 @@ func Validate(obj string) *validator.Validate {
 		validate.RegisterValidation("password", func(fl validator.FieldLevel) bool {
 			field := fl.Field().String()
 			return len(field) >= 6
+		})
+	case "token":
+		// Check for valid UUID
+		validate.RegisterValidation("id", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			if _, errParseUUID := uuid.Parse(field); errParseUUID != nil {
+				return true
+			}
+			return false
 		})
 	case "user":
 		// Check for valid UUID

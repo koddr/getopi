@@ -1,6 +1,7 @@
 package stores
 
 import (
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/koddr/getopi/models"
 )
@@ -43,6 +44,15 @@ func (s *AuthStore) FindResetPasswordIssueByCode(code string) error {
 // Delete restore password issue by code
 func (s *AuthStore) DeleteResetPasswordIssueByCode(code string) error {
 	if _, err := s.Exec(`DELETE FROM reset_codes WHERE reset_code = $1`, code); err != nil {
+		return err
+	}
+	return nil
+}
+
+// DeleteResetPasswordIssueByUserID ...
+// Delete restore password issue by User ID
+func (s *AuthStore) DeleteResetPasswordIssueByUserID(id uuid.UUID) error {
+	if _, err := s.Exec(`DELETE FROM reset_codes WHERE user_id = $1`, id); err != nil {
 		return err
 	}
 	return nil

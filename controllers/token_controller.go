@@ -34,11 +34,28 @@ func RefreshToken(c *fiber.Ctx) {
 		return
 	}
 
+	// Create new validator
+	validate := utils.Validate("token")
+
+	// Check fields validation
+	if errValidate := validate.Struct(arrivedToken); errValidate != nil {
+		// Return invalid fields
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+		return
+	}
+
 	// Create DB connection
 	db, errConnectDB := stores.OpenStore()
 	if errConnectDB != nil {
 		// DB connection error
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
+		return
+	}
+
+	// Check if user with given ID is exists
+	if _, errFindUserByID := db.FindUserByID(currentUserID); errFindUserByID != nil {
+		// User not found
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found"})
 		return
 	}
 
@@ -53,7 +70,7 @@ func RefreshToken(c *fiber.Ctx) {
 	// Only equal JWT refresh_token can be refreshed
 	if arrivedToken.ID == storedToken.ID {
 		// Create new JWT access_token
-		accessToken, errGenerateAccessJWT := utils.GenerateAccessJWT("user", claims["id"].(string))
+		accessToken, errGenerateAccessJWT := utils.GenerateAccessJWT("user", currentUserID.String())
 		if errGenerateAccessJWT != nil {
 			// Fail create JWT token
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": errGenerateAccessJWT.Error()})
@@ -61,7 +78,7 @@ func RefreshToken(c *fiber.Ctx) {
 		}
 
 		// Create new JWT token data
-		newToken := &models.Token{
+		newTokenData := &models.Token{
 			ID:          uuid.New(),
 			UserID:      currentUserID,
 			CreatedAt:   time.Now(),
@@ -69,9 +86,17 @@ func RefreshToken(c *fiber.Ctx) {
 			AccessToken: accessToken,
 		}
 
+		// Delete exists JWT token
+		errDeleteTokenByID := db.DeleteTokenByID(storedToken.ID)
+		if errDeleteTokenByID != nil {
+			// Fail create new JWT token
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": "token not deleted", "auth": nil})
+			return
+		}
+
 		// Create new JWT token
-		errRefreshTokenByID := db.RefreshTokenByID(storedToken.ID, newToken)
-		if errRefreshTokenByID != nil {
+		newToken, errCreateToken := db.CreateToken(newTokenData)
+		if errCreateToken != nil {
 			// Fail create new JWT token
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": "token not refreshed", "auth": nil})
 			return
@@ -81,7 +106,7 @@ func RefreshToken(c *fiber.Ctx) {
 		c.JSON(fiber.Map{"error": false, "msg": nil, "auth": newToken})
 	} else {
 		// Fail refresh JWT token
-		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
+		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "auth": nil})
 		return
 	}
 }

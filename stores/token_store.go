@@ -53,28 +53,26 @@ func (s *TokenStore) FindTokenByID(id uuid.UUID) (models.Token, error) {
 	return token, nil
 }
 
-// RefreshTokenByID ...
+// DeleteTokenByID ...
 //
 // TODO: Add description
 //
-func (s *TokenStore) RefreshTokenByID(id uuid.UUID, t *models.Token) error {
+func (s *TokenStore) DeleteTokenByID(id uuid.UUID) error {
 	// Delete exists token
 	if _, err := s.Exec(`DELETE FROM tokens WHERE id = $1`, id); err != nil {
 		return err
 	}
+	return nil
+}
 
-	// Insert new token
-	if _, err := s.Exec(
-		`INSERT INTO tokens VALUES ($1, $2, $3, $4, $5)`,
-		t.ID,
-		t.UserID,
-		t.CreatedAt,
-		t.ExpiredAt,
-		t.AccessToken,
-	); err != nil {
+// DeleteTokenByUserID ...
+//
+// TODO: Add description
+//
+func (s *TokenStore) DeleteTokenByUserID(id uuid.UUID) error {
+	// Delete exists token
+	if _, err := s.Exec(`DELETE FROM tokens WHERE user_id = $1`, id); err != nil {
 		return err
 	}
-
-	// Return no errors
 	return nil
 }

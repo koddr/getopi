@@ -16,15 +16,15 @@ func Authentication(c *fiber.Ctx) {
 	// Create new User struct
 	authData := &models.Auth{}
 
-	// Create new validator
-	validate := utils.Validate("auth")
-
 	// Check received JSON data
 	if errBodyParser := c.BodyParser(authData); errBodyParser != nil {
 		// Incorrect data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
+
+	// Create new validator
+	validate := utils.Validate("auth")
 
 	// Check fields validation
 	if errValidate := validate.Struct(authData); errValidate != nil {
@@ -59,8 +59,8 @@ func Authentication(c *fiber.Ctx) {
 			return
 		}
 
-		// Create new token
-		newToken := &models.Token{
+		// Create new token data
+		newTokenData := &models.Token{
 			ID:          uuid.New(),
 			UserID:      user.ID,
 			CreatedAt:   time.Now(),
@@ -68,15 +68,23 @@ func Authentication(c *fiber.Ctx) {
 			AccessToken: accessToken,
 		}
 
+		// Delete exists JWT token
+		errDeleteTokenByUserID := db.DeleteTokenByUserID(user.ID)
+		if errDeleteTokenByUserID != nil {
+			// Fail delete exists JWT token
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": "token not deleted", "auth": nil})
+			return
+		}
+
 		// Create JWT token
-		tokenData, errCreateToken := db.CreateToken(newToken)
+		newToken, errCreateToken := db.CreateToken(newTokenData)
 		if errCreateToken != nil {
 			// User not found
 			c.Status(403).JSON(fiber.Map{"error": true, "msg": "token not created", "auth": nil})
 			return
 		}
 
-		c.JSON(fiber.Map{"error": false, "msg": nil, "auth": tokenData})
+		c.JSON(fiber.Map{"error": false, "msg": nil, "auth": newToken})
 	} else {
 		// Fail authentication
 		c.Status(401).JSON(fiber.Map{"error": true, "msg": "incorrect email or password"})
@@ -89,15 +97,15 @@ func ForgetPasswordIssue(c *fiber.Ctx) {
 	// Create new forget password struct
 	forgetData := &models.ForgetPassword{}
 
-	// Create new validator
-	validate := utils.Validate("forget-password")
-
 	// Check received JSON data
 	if errBodyParser := c.BodyParser(forgetData); errBodyParser != nil {
 		// Incorrect data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
+
+	// Create new validator
+	validate := utils.Validate("forget-password")
 
 	// Check fields validation
 	if errValidate := validate.Struct(forgetData); errValidate != nil {
@@ -137,6 +145,14 @@ func ForgetPasswordIssue(c *fiber.Ctx) {
 		ResetCode: resetCode,
 	}
 
+	// Delete reset issue by code
+	errDeleteResetPasswordIssueByUserID := db.DeleteResetPasswordIssueByUserID(user.ID)
+	if errDeleteResetPasswordIssueByUserID != nil {
+		// Fail delete reset password code
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "reset code not deleted"})
+		return
+	}
+
 	// Create new reset code issue
 	errCreateResetPasswordIssue := db.CreateResetPasswordIssue(newResetCode)
 	if errCreateResetPasswordIssue != nil {
@@ -171,15 +187,15 @@ func ForgetPasswordCheckResetCode(c *fiber.Ctx) {
 	// Create new reset code struct
 	resetCodeData := &models.ResetCode{}
 
-	// Create new validator
-	validate := utils.Validate("reset-code")
-
 	// Check received JSON data
 	if errBodyParser := c.BodyParser(resetCodeData); errBodyParser != nil {
 		// Incorrect data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
+
+	// Create new validator
+	validate := utils.Validate("reset-code")
 
 	// Check fields validation
 	if errValidate := validate.Struct(resetCodeData); errValidate != nil {

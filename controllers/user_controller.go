@@ -11,8 +11,12 @@ import (
 	"github.com/koddr/getopi/utils"
 )
 
-// ShowUserByUsername show exists user by username or 404 error
+// ShowUserByUsername ...
+// show exists user by username or 404 error
 func ShowUserByUsername(c *fiber.Ctx) {
+	// Get username from URL
+	username := c.Params("username")
+
 	// Create DB connection
 	db, errConnectDB := stores.OpenStore()
 	if errConnectDB != nil {
@@ -20,9 +24,6 @@ func ShowUserByUsername(c *fiber.Ctx) {
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
-
-	// Get username from URL
-	username := c.Params("username")
 
 	// Find user by username
 	user, errFindUserByUsername := db.FindUserByUsername(username)
@@ -35,11 +36,11 @@ func ShowUserByUsername(c *fiber.Ctx) {
 	// Hide PasswordHash field from JSON output
 	user.PasswordHash = ""
 
-	// OK result
 	c.JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 }
 
-// ShowUsers show all exists users or 404 error
+// ShowUsers ...
+// show all exists users or 404 error
 func ShowUsers(c *fiber.Ctx) {
 	// Create DB connection
 	db, errConnectDB := stores.OpenStore()
@@ -62,26 +63,18 @@ func ShowUsers(c *fiber.Ctx) {
 		users[index].PasswordHash = ""
 	}
 
-	// OK result
 	c.JSON(fiber.Map{"error": false, "msg": nil, "count": len(users), "users": users})
 }
 
-// CreateUser create new DB connection, gets JSON from request body, validate data,
+// CreateUser ...
+// create new DB connection, gets JSON from request body, validate data,
 // set init user values, clear password hash and create new user
 func CreateUser(c *fiber.Ctx) {
-	// Create DB connection
-	db, errConnectDB := stores.OpenStore()
-	if errConnectDB != nil {
-		// Show DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
-		return
-	}
+	// Create new User struct
+	user := &models.User{}
 
 	// Create new validator
 	validate := utils.Validate("user")
-
-	// Create new User struct
-	user := &models.User{}
 
 	// Check received data from JSON body
 	if errBodyParser := c.BodyParser(user); errBodyParser != nil {
@@ -106,9 +99,17 @@ func CreateUser(c *fiber.Ctx) {
 		return
 	}
 
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
+		return
+	}
+
 	// Create new user with validated data
 	if errCreateUser := db.CreateUser(user); errCreateUser != nil {
-		// Show insert new row error
+		// Fail create user
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errCreateUser.Error()})
 		return
 	}
@@ -116,11 +117,11 @@ func CreateUser(c *fiber.Ctx) {
 	// Hide PasswordHash field from JSON output
 	user.PasswordHash = ""
 
-	// OK result
 	c.Status(201).JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 }
 
-// UpdateUser update user (by only its owner) by ID or 500 error
+// UpdateUser ...
+// update user (by only its owner or admin) by ID or 500 error
 func UpdateUser(c *fiber.Ctx) {
 	// Get data from JWT
 	token := c.Locals("user").(*jwt.Token)
@@ -136,24 +137,21 @@ func UpdateUser(c *fiber.Ctx) {
 		return
 	}
 
-	// Create DB connection
-	db, errConnectDB := stores.OpenStore()
-	if errConnectDB != nil {
-		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
-		return
-	}
-
-	// Create new validator
-	validate := utils.Validate("user")
-
 	// Create new User struct
 	user := &models.User{}
 
 	// Check received JSON data
 	if errBodyParser := c.BodyParser(user); errBodyParser != nil {
-		// Incorrect data
+		// Fail parse JSON data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
+		return
+	}
+
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
 		return
 	}
 
@@ -166,6 +164,8 @@ func UpdateUser(c *fiber.Ctx) {
 
 	// Only if owner can update itself or it's admin
 	if currentUserID == user.ID || isAdmin {
+		// Create new validator
+		validate := utils.Validate("user")
 
 		// Check fields validation
 		if errValidate := validate.Struct(user); errValidate != nil {
@@ -187,10 +187,84 @@ func UpdateUser(c *fiber.Ctx) {
 		// Hide PasswordHash field from JSON output
 		user.PasswordHash = ""
 
-		// OK result
 		c.Status(202).JSON(fiber.Map{"error": false, "msg": nil, "user": user})
 	} else {
-		// If it's not owner
+		// Fail update user
+		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
+		return
+	}
+}
+
+// UpdateUserPassword ...
+// update user password (by only its owner or admin) by ID or 500 error
+func UpdateUserPassword(c *fiber.Ctx) {
+	// Get data from JWT
+	token := c.Locals("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+
+	// Check admin status
+	isAdmin := claims["is_admin"].(bool)
+
+	// Check UUID from current user
+	currentUserID, errParse := uuid.Parse(claims["id"].(string))
+	if errParse != nil {
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errParse.Error()})
+		return
+	}
+
+	// Create new User struct
+	user := &models.User{}
+
+	// Check received JSON data
+	if errBodyParser := c.BodyParser(user); errBodyParser != nil {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
+		return
+	}
+
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// DB connection error
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
+		return
+	}
+
+	// Check if user with given ID is exists
+	if _, errFindUserByID := db.FindUserByID(user.ID); errFindUserByID != nil {
+		// User not found
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found"})
+		return
+	}
+
+	// Only if owner can update itself or it's admin
+	if currentUserID == user.ID || isAdmin {
+		// Create new validator
+		validate := utils.Validate("password")
+
+		// Check fields validation
+		if errValidate := validate.Struct(user); errValidate != nil {
+			// Return invalid fields
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+			return
+		}
+
+		// Set user data to update
+		user.UpdatedAt = time.Now()
+
+		// Update user
+		if errUpdateUser := db.UpdateUser(user); errUpdateUser != nil {
+			// Fail update user in DB
+			c.Status(500).JSON(fiber.Map{"error": true, "msg": errUpdateUser.Error()})
+			return
+		}
+
+		// Hide PasswordHash field from JSON output
+		user.PasswordHash = ""
+
+		c.Status(202).JSON(fiber.Map{"error": false, "msg": nil, "user": user})
+	} else {
+		// Fail permission denied
 		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
 		return
 	}
@@ -210,6 +284,7 @@ func DeleteUser(c *fiber.Ctx) {
 
 	// Check, if current user request's from admin
 	if isAdmin {
+		// Create DB connection
 		db, errConnectDB := stores.OpenStore()
 		if errConnectDB != nil {
 			// DB connection error
@@ -222,22 +297,21 @@ func DeleteUser(c *fiber.Ctx) {
 
 		// Check received JSON data
 		if errBodyParser := c.BodyParser(user); errBodyParser != nil {
-			// Incorrect data
+			// Fail parse JSON
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 			return
 		}
 
 		// Delete user
 		if errDeleteUser := db.DeleteUser(user.ID); errDeleteUser != nil {
-			// Not inserted new user to DB
+			// Fail delete user
 			c.Status(500).JSON(fiber.Map{"error": true, "msg": errDeleteUser.Error()})
 			return
 		}
 
-		// OK result
 		c.JSON(fiber.Map{"error": false, "msg": nil})
 	} else {
-		// If it's not admin
+		// Fail permission denied
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": "permission denied"})
 		return
 	}
