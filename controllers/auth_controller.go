@@ -217,14 +217,23 @@ func ForgetPassword(c *fiber.Ctx) {
 		return
 	}
 
-	// Send email with restore code
-	sendEmailConfig := utils.SendEmailConfig([]string{forget.Email}, "Your restore code")
-	if errSendEmail := sendEmailConfig.WithHTMLTemplate(
+	// Create new email sender
+	sender := utils.NewEmailSender(
+		utils.GetDotEnvValue("SERVER_EMAIL"),
+		utils.GetDotEnvValue("SERVER_EMAIL_PASSWORD"),
+		utils.GetDotEnvValue("SMTP_SERVER"),
+		utils.GetDotEnvValue("SMTP_PORT"),
+	)
+
+	// Send email process
+	if errSendHTMLEmail := sender.SendHTMLEmail(
 		"templates/email-forgot-password.html",
+		[]string{forget.Email},
+		"Your restore code",
 		fiber.Map{"code": restoreCode},
-	); errSendEmail != nil {
+	); errSendHTMLEmail != nil {
 		// Fail send restore code to email
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errSendEmail.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errSendHTMLEmail.Error()})
 		return
 	}
 
