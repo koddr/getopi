@@ -48,6 +48,18 @@ func Validate(obj string) *validator.Validate {
 			field := fl.Field().String()
 			return regexp.MustCompile(emailRegexpPattern).MatchString(field) && len(field) <= 254
 		})
+	case "reset-code":
+		// Check for length (varchar(6))
+		validate.RegisterValidation("reset_code", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			return len(field) == 6
+		})
+	case "password":
+		// Check for length (min: 6)
+		validate.RegisterValidation("password", func(fl validator.FieldLevel) bool {
+			field := fl.Field().String()
+			return len(field) >= 6
+		})
 	case "user":
 		// Check for valid UUID
 		validate.RegisterValidation("id", func(fl validator.FieldLevel) bool {

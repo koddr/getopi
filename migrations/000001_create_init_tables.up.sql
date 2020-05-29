@@ -45,6 +45,13 @@ CREATE TABLE tokens (
     access_token VARCHAR NOT NULL
 );
 
+-- Create reset_codes table
+CREATE TABLE reset_codes (
+    id UUID DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    reset_code VARCHAR (6) NOT NULL
+);
+
 -- Add indexes
 CREATE INDEX active_users ON users (username) WHERE user_status = 1;
 CREATE INDEX active_projects ON projects (alias) WHERE project_status = 1;

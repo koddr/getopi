@@ -13,6 +13,7 @@ import (
 // TODO: Add description
 //
 type Store struct {
+	*AuthStore
 	*UserStore
 	*ProjectStore
 	*TokenStore
@@ -23,16 +24,17 @@ type Store struct {
 // TODO: Add description
 //
 func OpenStore() (*Store, error) {
-	db, err := sqlx.Connect("pgx", utils.GetDotEnvValue("POSTGRES_SERVER_URL"))
-	if err != nil {
-		return nil, fmt.Errorf("error opening database: %w", err)
+	db, errConnect := sqlx.Connect("pgx", utils.GetDotEnvValue("POSTGRES_SERVER_URL"))
+	if errConnect != nil {
+		return nil, fmt.Errorf("error opening database: %w", errConnect)
 	}
 
-	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("error connecting to database: %w", err)
+	if errPing := db.Ping(); errPing != nil {
+		return nil, fmt.Errorf("error connecting to database: %w", errPing)
 	}
 
 	return &Store{
+		AuthStore:    &AuthStore{DB: db},
 		UserStore:    &UserStore{DB: db},
 		ProjectStore: &ProjectStore{DB: db},
 		TokenStore:   &TokenStore{DB: db},

@@ -101,6 +101,19 @@ func (s *UserStore) UpdateUser(u *models.User) error {
 	return nil
 }
 
+// UpdatePassword ...
+//
+// TODO: Add description
+//
+func (s *UserStore) UpdatePassword(id uuid.UUID, passwordHash string) error {
+	if _, err := s.Exec(
+		`UPDATE users SET password_hash = $2 WHERE id = $1`, id, passwordHash,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
 // DeleteUser ...
 //
 // TODO: Add description

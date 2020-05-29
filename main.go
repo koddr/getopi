@@ -42,22 +42,28 @@ func main() {
 		logger.New(loggerConfig),
 	)
 
-	// Public API
-	app.Post("/auth", controllers.Authentication)
-	app.Post("/register", controllers.CreateUser)
-	app.Post("/forget-password", controllers.ForgetPassword)
-
-	// Private API group
-	privateAPI := app.Group("/api", jwtware.New(jwtwareConfig))
+	// Public API: for all users
+	publicAPI := app.Group("/api/public")
 
 	// GET
-	privateAPI.Get("/user/:username", controllers.ShowUserByUsername)
-	privateAPI.Get("/users", controllers.ShowUsers)
-	// privateAPI.Get("/project/:alias", controllers.ShowProjectByAlias)
-	// privateAPI.Get("/projects", controllers.ShowProjects)
+	publicAPI.Get("/users", controllers.ShowUsers)
+	publicAPI.Get("/user/:username", controllers.ShowUserByUsername)
+	// publicAPI.Get("/project/:alias", controllers.ShowProjectByAlias)
+	// publicAPI.Get("/projects", controllers.ShowProjects)
 
 	// POST
-	privateAPI.Post("/auth/refresh-token", controllers.RefreshToken)
+	publicAPI.Post("/auth", controllers.Authentication)
+	publicAPI.Post("/register", controllers.CreateUser)
+	publicAPI.Post("/forget-password", controllers.ForgetPasswordIssue)
+
+	// DELETE
+	publicAPI.Delete("/forget-password", controllers.ForgetPasswordCheckResetCode)
+
+	// Private API: only for JWT authenticated users
+	privateAPI := app.Group("/api/private", jwtware.New(jwtwareConfig))
+
+	// POST
+	privateAPI.Post("/refresh-token", controllers.RefreshToken)
 	// privateAPI.Post("/project", controllers.CreateProject)
 	// privateAPI.Post("/task", controllers.CreateTask)
 
@@ -71,7 +77,7 @@ func main() {
 	// privateAPI.Delete("/project", controllers.DeleteProject)
 	// privateAPI.Delete("/task", controllers.DeleteTask)
 
-	// 404 Not Found
+	// Error 404 Not Found
 	app.Use(func(c *fiber.Ctx) {
 		c.Status(404).JSON(fiber.Map{"error": true, "msg": "sorry, endpoint not found"})
 	})

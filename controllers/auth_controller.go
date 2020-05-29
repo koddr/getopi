@@ -3,7 +3,6 @@ package controllers
 import (
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
 	"github.com/koddr/getopi/models"
@@ -14,27 +13,21 @@ import (
 
 // Authentication ...
 func Authentication(c *fiber.Ctx) {
-	// Struct for login and password
-	type authData struct {
-		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required"`
-	}
-
 	// Create new User struct
-	auth := &authData{}
+	authData := &models.Auth{}
 
 	// Create new validator
 	validate := utils.Validate("auth")
 
 	// Check received JSON data
-	if errBodyParser := c.BodyParser(auth); errBodyParser != nil {
+	if errBodyParser := c.BodyParser(authData); errBodyParser != nil {
 		// Incorrect data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
 
 	// Check fields validation
-	if errValidate := validate.Struct(auth); errValidate != nil {
+	if errValidate := validate.Struct(authData); errValidate != nil {
 		// Return invalid fields
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
 		return
@@ -49,7 +42,7 @@ func Authentication(c *fiber.Ctx) {
 	}
 
 	// Find user by email
-	user, errFindUserByEmail := db.FindUserByEmail(auth.Email)
+	user, errFindUserByEmail := db.FindUserByEmail(authData.Email)
 	if errFindUserByEmail != nil {
 		// User not found
 		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found", "user": nil})
@@ -57,7 +50,7 @@ func Authentication(c *fiber.Ctx) {
 	}
 
 	// Check password
-	if utils.ComparePasswords(user.PasswordHash, auth.Password) {
+	if utils.ComparePasswords(user.PasswordHash, authData.Password) {
 		// Create JWT access_token
 		accessToken, errGenerateAccessJWT := utils.GenerateAccessJWT("user", user.ID.String())
 		if errGenerateAccessJWT != nil {
@@ -91,103 +84,23 @@ func Authentication(c *fiber.Ctx) {
 	}
 }
 
-// RefreshToken ...
-func RefreshToken(c *fiber.Ctx) {
-	// Get data from JWT
-	token := c.Locals("user").(*jwt.Token)
-	claims := token.Claims.(jwt.MapClaims)
-
-	// Check UUID from current user
-	currentUserID, errParse := uuid.Parse(claims["id"].(string))
-	if errParse != nil {
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errParse.Error()})
-		return
-	}
-
-	// Struct for arrived from frontend JWT token
-	arrivedToken := &models.Token{}
-
-	// Check received JSON data
-	if errBodyParser := c.BodyParser(arrivedToken); errBodyParser != nil {
-		// Incorrect data
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
-		return
-	}
-
-	// Create DB connection
-	db, errConnectDB := stores.OpenStore()
-	if errConnectDB != nil {
-		// DB connection error
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
-		return
-	}
-
-	// Check, if arrived refresh token is exists
-	storedToken, errFindTokenByID := db.FindTokenByID(arrivedToken.ID)
-	if errFindTokenByID != nil {
-		// User not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": "token not found"})
-		return
-	}
-
-	// Only equal JWT refresh_token can be refreshed
-	if arrivedToken.ID == storedToken.ID {
-		// Create new JWT access_token
-		accessToken, errGenerateAccessJWT := utils.GenerateAccessJWT("user", claims["id"].(string))
-		if errGenerateAccessJWT != nil {
-			// Fail create JWT token
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": errGenerateAccessJWT.Error()})
-			return
-		}
-
-		// Create new JWT token data
-		newToken := &models.Token{
-			ID:          uuid.New(),
-			UserID:      currentUserID,
-			CreatedAt:   time.Now(),
-			ExpiredAt:   time.Now().Add(72 * time.Hour), // 72 hours to expire
-			AccessToken: accessToken,
-		}
-
-		// Create new JWT token
-		errRefreshTokenByID := db.RefreshTokenByID(storedToken.ID, newToken)
-		if errRefreshTokenByID != nil {
-			// Fail create new JWT token
-			c.Status(500).JSON(fiber.Map{"error": true, "msg": "token not refreshed", "auth": nil})
-			return
-		}
-
-		// Return new JWT token data to frontend in JSON format
-		c.JSON(fiber.Map{"error": false, "msg": nil, "auth": newToken})
-	} else {
-		// Fail refresh JWT token
-		c.Status(403).JSON(fiber.Map{"error": true, "msg": "permission denied", "user": nil})
-		return
-	}
-}
-
-// ForgetPassword email string..error.
-func ForgetPassword(c *fiber.Ctx) {
-	// Struct for restore password by email
-	type forgetData struct {
-		Email string `json:"email" validate:"required,email"`
-	}
-
+// ForgetPasswordIssue ...
+func ForgetPasswordIssue(c *fiber.Ctx) {
 	// Create new forget password struct
-	forget := &forgetData{}
+	forgetData := &models.ForgetPassword{}
 
 	// Create new validator
 	validate := utils.Validate("forget-password")
 
 	// Check received JSON data
-	if errBodyParser := c.BodyParser(forget); errBodyParser != nil {
+	if errBodyParser := c.BodyParser(forgetData); errBodyParser != nil {
 		// Incorrect data
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
 		return
 	}
 
 	// Check fields validation
-	if errValidate := validate.Struct(forget); errValidate != nil {
+	if errValidate := validate.Struct(forgetData); errValidate != nil {
 		// Return invalid fields
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
 		return
@@ -202,18 +115,33 @@ func ForgetPassword(c *fiber.Ctx) {
 	}
 
 	// Find user by email
-	_, errFindUserByEmail := db.FindUserByEmail(forget.Email)
+	user, errFindUserByEmail := db.FindUserByEmail(forgetData.Email)
 	if errFindUserByEmail != nil {
 		// User not found
-		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found", "user": nil})
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "user not found"})
 		return
 	}
 
-	// Create restore code
-	restoreCode, errRestoreCode := nanoid.Generate("123456abcdef", 6)
-	if errRestoreCode != nil {
+	// Create reset code
+	resetCode, errResetCode := nanoid.Generate("1234567890abcdefxyz", 6)
+	if errResetCode != nil {
 		// Fail create restore code
-		c.Status(500).JSON(fiber.Map{"error": true, "msg": errRestoreCode.Error()})
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errResetCode.Error()})
+		return
+	}
+
+	// Create new reset code issue
+	newResetCode := &models.ResetCode{
+		ID:        uuid.New(),
+		UserID:    user.ID,
+		ResetCode: resetCode,
+	}
+
+	// Create new reset code issue
+	errCreateResetPasswordIssue := db.CreateResetPasswordIssue(newResetCode)
+	if errCreateResetPasswordIssue != nil {
+		// Fail create new issue
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "reset code not created"})
 		return
 	}
 
@@ -225,17 +153,64 @@ func ForgetPassword(c *fiber.Ctx) {
 		utils.GetDotEnvValue("SMTP_PORT"),
 	)
 
-	// Send email process
+	// Send email with password reset link
 	if errSendHTMLEmail := sender.SendHTMLEmail(
-		"templates/email-forgot-password.html",
-		[]string{forget.Email},
-		"Your restore code",
-		fiber.Map{"code": restoreCode},
+		"templates/email-forgot-password.html", []string{forgetData.Email},
+		"Your password reset link", fiber.Map{"code": resetCode},
 	); errSendHTMLEmail != nil {
 		// Fail send restore code to email
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errSendHTMLEmail.Error()})
 		return
 	}
 
-	c.JSON(fiber.Map{"error": false, "msg": nil, "restore_code": restoreCode})
+	c.JSON(fiber.Map{"error": false, "msg": nil})
+}
+
+// ForgetPasswordCheckResetCode ...
+func ForgetPasswordCheckResetCode(c *fiber.Ctx) {
+	// Create new reset code struct
+	resetCodeData := &models.ResetCode{}
+
+	// Create new validator
+	validate := utils.Validate("reset-code")
+
+	// Check received JSON data
+	if errBodyParser := c.BodyParser(resetCodeData); errBodyParser != nil {
+		// Incorrect data
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errBodyParser.Error()})
+		return
+	}
+
+	// Check fields validation
+	if errValidate := validate.Struct(resetCodeData); errValidate != nil {
+		// Return invalid fields
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": utils.ValidateErrors(errValidate)})
+		return
+	}
+
+	// Create DB connection
+	db, errConnectDB := stores.OpenStore()
+	if errConnectDB != nil {
+		// Fail DB connection
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": errConnectDB.Error()})
+		return
+	}
+
+	// Find reset issue by code
+	errFindResetPasswordIssueByCode := db.FindResetPasswordIssueByCode(resetCodeData.ResetCode)
+	if errFindResetPasswordIssueByCode != nil {
+		// Reset code not found
+		c.Status(404).JSON(fiber.Map{"error": true, "msg": "reset code not found"})
+		return
+	}
+
+	// Delete reset issue by code
+	errDeleteResetPasswordIssueByCode := db.DeleteResetPasswordIssueByCode(resetCodeData.ResetCode)
+	if errDeleteResetPasswordIssueByCode != nil {
+		// User not found
+		c.Status(500).JSON(fiber.Map{"error": true, "msg": "reset code not deleted"})
+		return
+	}
+
+	c.JSON(fiber.Map{"error": false, "msg": nil})
 }
