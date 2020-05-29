@@ -156,7 +156,7 @@ func ForgetPasswordIssue(c *fiber.Ctx) {
 	// Send email with password reset link
 	if errSendHTMLEmail := sender.SendHTMLEmail(
 		"templates/email-forgot-password.html", []string{forgetData.Email},
-		"Your password reset link", fiber.Map{"code": resetCode},
+		"Your password reset code", fiber.Map{"code": resetCode},
 	); errSendHTMLEmail != nil {
 		// Fail send restore code to email
 		c.Status(500).JSON(fiber.Map{"error": true, "msg": errSendHTMLEmail.Error()})
