@@ -7,16 +7,16 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/gofiber/compression v0.1.0
 	github.com/gofiber/cors v0.1.0
-	github.com/gofiber/fiber v1.10.1
+	github.com/gofiber/fiber v1.10.3
 	github.com/gofiber/helmet v0.1.0
 	github.com/gofiber/jwt v0.1.0
-	github.com/gofiber/logger v0.2.1
+	github.com/gofiber/logger v0.2.2
 	github.com/gofiber/recover v0.1.0
 	github.com/google/uuid v1.1.1
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/joho/godotenv v1.3.0
-	github.com/klauspost/compress v1.10.6 // indirect
+	github.com/klauspost/compress v1.10.7 // indirect
 	github.com/matoous/go-nanoid v1.4.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
