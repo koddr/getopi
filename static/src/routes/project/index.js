@@ -23,33 +23,29 @@ const Project = (props) => {
   const { dispatch, showCompletedTasks } = useStoreon("showCompletedTasks");
 
   // Create local state
-  const [project, setProject] = useState({});
+  const [project, setProject] = useState({
+    status: 0,
+    attrs: {},
+    author: {},
+  });
 
   useEffect(() => {
-    // Async loading project data from API
-    (async () => {
-      try {
-        // Make request to API
-        const res = await superagent.get(
-          `http://0.0.0.0:3000/api/public/project/${props.alias}`
-        );
-
-        // Append data to local project state
-        setProject(res.body.user);
-      } catch (err) {
-        // Go to page with status from err.status
-        route(`/error/${err.status}`, true);
-      }
-    })();
+    // Load project data from API
+    superagent
+      .get(`http://0.0.0.0:3000/api/public/project/${props.alias}`)
+      .then((res) => {
+        // Append project data to local state
+        setProject({
+          status: res.body.project.status,
+          attrs: res.body.project.project_attrs,
+          author: res.body.author,
+        });
+      })
+      .catch((err) => route(`/error/${err.status}`, true));
 
     // Set META attributes
-    document.title = project.project_attrs.title;
-  }, [props.alias, setProject, project]);
-
-  // Collect data from request
-  const title = project.project_attrs.title
-    ? project.project_attrs.title
-    : "Title";
+    document.title = `${project.attrs.title} by @${project.author.username} → GetOpi`;
+  }, [project.attrs.title, project.author.username, props.alias]);
 
   // Render component
   return (
@@ -69,7 +65,11 @@ const Project = (props) => {
           <section class="column_2__1_3 align__items_start">
             <article>
               <div class={style.item}>
-                <Block type="title" label="Research title" content={title} />
+                <Block
+                  type="title"
+                  label="Research title"
+                  content={project.attrs.title}
+                />
               </div>
             </article>
             <aside class="m__align__content_center">
@@ -78,8 +78,8 @@ const Project = (props) => {
                   type="reward"
                   label="Opinion reward"
                   content={[
-                    <span>{props.alias}</span>,
-                    +props.alias === 1 ? " credit" : " credits", // TODO: replace with project reward
+                    <span>{project.attrs.reward}</span>,
+                    +project.attrs.reward === 1 ? " credit" : " credits",
                   ]}
                 />
                 <Button name="Give opinion" />
@@ -93,16 +93,10 @@ const Project = (props) => {
                 <Block
                   type="text"
                   label="Research description"
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                  content={project.attrs.description}
                 />
                 <Block label="Research goals">
-                  <List
-                    type="check-circle"
-                    items={[
-                      "https github.com koddr",
-                      "https dribbble.com koddr test",
-                    ]}
-                  />
+                  <List type="check-circle" items={project.attrs.goals || []} />
                 </Block>
               </div>
             </article>
@@ -111,10 +105,7 @@ const Project = (props) => {
                 <Block label="Links">
                   <List
                     type="external-link"
-                    items={[
-                      "https://github.com/koddr",
-                      "https://dribbble.com/koddr/test",
-                    ]}
+                    items={project.attrs.links || []}
                   />
                 </Block>
               </div>
@@ -122,9 +113,11 @@ const Project = (props) => {
                 <Block type="author" label="Author">
                   <img src="/assets/icons/no-avatar.svg" alt="no avatar icon" />
                   <div>
-                    <strong>John Doe</strong>
+                    <strong>{`${project.author.first_name} ${project.author.last_name}`}</strong>
                     <div>
-                      <Link href="/">@john_doe_1987</Link>
+                      <Link href={`/user/${project.author.username}`}>
+                        @{project.author.username}
+                      </Link>
                     </div>
                   </div>
                 </Block>
@@ -154,9 +147,9 @@ const Project = (props) => {
                     Click to “Give opinion” to open{" "}
                     <strong>all research tasks</strong> and receive{" "}
                     <strong>
-                      {+props.alias === 1
-                        ? `${props.alias} credit`
-                        : `${props.alias} credits`}
+                      {+project.attrs.reward === 1
+                        ? `${project.attrs.reward} credit`
+                        : `${project.attrs.reward} credits`}
                     </strong>
                     !
                   </div>

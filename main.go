@@ -48,7 +48,7 @@ func main() {
 	// GET
 	publicAPI.Get("/users", controllers.ShowUsers)
 	publicAPI.Get("/user/:username", controllers.ShowUserByUsername)
-	// publicAPI.Get("/project/:alias", controllers.ShowProjectByAlias)
+	publicAPI.Get("/project/:alias", controllers.ShowProjectByAlias)
 	// publicAPI.Get("/projects", controllers.ShowProjects)
 
 	// POST
