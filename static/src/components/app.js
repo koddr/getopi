@@ -24,6 +24,14 @@ export default class App extends Component {
               }
               loading={() => <Loader />}
             />
+            <AsyncRoute
+              default
+              path="/error/:status?"
+              getComponent={() =>
+                import("../routes/error").then((module) => module.default)
+              }
+              loading={() => <Loader />}
+            />
           </Router>
         </StoreContext.Provider>
       </div>

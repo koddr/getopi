@@ -1,9 +1,11 @@
 /** @jsx h */
 
 import { h } from "preact";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import { route } from "preact-router";
 import { Link } from "preact-router/match";
 import { useStoreon } from "storeon/preact";
+import superagent from "superagent";
 
 // Styles
 import style from "./style";
@@ -20,10 +22,34 @@ const Project = (props) => {
   // Connect to store
   const { dispatch, showCompletedTasks } = useStoreon("showCompletedTasks");
 
-  // Set META attributes
+  // Create local state
+  const [project, setProject] = useState({});
+
   useEffect(() => {
-    document.title = props.alias; // TODO: replace with project title
-  }, [props.alias, props.title]);
+    // Async loading project data from API
+    (async () => {
+      try {
+        // Make request to API
+        const res = await superagent.get(
+          `http://0.0.0.0:3000/api/public/project/${props.alias}`
+        );
+
+        // Append data to local project state
+        setProject(res.body.user);
+      } catch (err) {
+        // Go to page with status from err.status
+        route(`/error/${err.status}`, true);
+      }
+    })();
+
+    // Set META attributes
+    document.title = project.project_attrs.title;
+  }, [props.alias, setProject, project]);
+
+  // Collect data from request
+  const title = project.project_attrs.title
+    ? project.project_attrs.title
+    : "Title";
 
   // Render component
   return (
@@ -43,11 +69,7 @@ const Project = (props) => {
           <section class="column_2__1_3 align__items_start">
             <article>
               <div class={style.item}>
-                <Block
-                  type="title"
-                  label="Research title"
-                  content="Company website research"
-                />
+                <Block type="title" label="Research title" content={title} />
               </div>
             </article>
             <aside class="m__align__content_center">
