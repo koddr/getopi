@@ -32,7 +32,7 @@ const Project = (props) => {
   useEffect(() => {
     // Load project data from API
     superagent
-      .get(`http://0.0.0.0:3000/api/public/project/${props.alias}`)
+      .get(`http://192.168.88.100:3000/api/public/project/${props.alias}`)
       .then((res) => {
         // Append project data to local state
         setProject({
@@ -111,7 +111,14 @@ const Project = (props) => {
               </div>
               <div class={style.item}>
                 <Block type="author" label="Author">
-                  <img src="/assets/icons/no-avatar.svg" alt="no avatar icon" />
+                  <img
+                    src={
+                      project.author.picture
+                        ? project.author.picture
+                        : "/assets/icons/no-avatar.svg"
+                    }
+                    alt="author avatar"
+                  />
                   <div>
                     <strong>{`${project.author.first_name} ${project.author.last_name}`}</strong>
                     <div>
