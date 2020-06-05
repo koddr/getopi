@@ -54,7 +54,7 @@
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
+@media (width <= 480px) {
   .column_0_7__2,
   .column_0_8__2,
   .column_1__1,

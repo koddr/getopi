@@ -6,13 +6,13 @@ import style from "./style";
 
 const Header = () => (
   <header class={style.header}>
-    <div class={style.wrapper}>
-      <div class={style.logo}>
+    <div class={style.header__wrapper}>
+      <div class={style.header__logo}>
         <Link href="/">
           <img src="/assets/images/getopi_short-logo.svg" alt="getopi logo" />
         </Link>
       </div>
-      <nav>
+      <nav class={style.header__nav}>
         <Link href="/">
           <img src="/assets/icons/search.svg" alt="search icon" />
         </Link>

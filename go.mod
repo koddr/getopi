@@ -16,7 +16,7 @@ require (
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/joho/godotenv v1.3.0
-	github.com/klauspost/compress v1.10.7 // indirect
+	github.com/klauspost/compress v1.10.8 // indirect
 	github.com/matoous/go-nanoid v1.4.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect

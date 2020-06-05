@@ -14,13 +14,13 @@ const Checkbox = (props) => {
   let checkboxType;
   switch (props.type) {
     case "success":
-      checkboxType = style.success;
+      checkboxType = style.checkbox__success;
       break;
     case "warning":
-      checkboxType = style.warning;
+      checkboxType = style.checkbox__warning;
       break;
     case "danger":
-      checkboxType = style.danger;
+      checkboxType = style.checkbox__danger;
       break;
   }
 
@@ -38,19 +38,19 @@ const Checkbox = (props) => {
       class={[
         style.checkbox,
         checkboxType,
-        checkboxState.checked ? style.checkbox_checked : null,
+        checkboxState.checked ? style.checkbox__checked : null,
       ].join(" ")}
     >
-      <label class={style.checkbox_label}>
+      <label class={style.checkbox__label}>
         <input
           type="checkbox"
           name={props.name}
-          class={style.checkbox_input}
+          class={style.checkbox__input}
           checked={checkboxState.checked}
         />
-        <div onClick={toggleCheckboxState} class={style.checkbox_circle} />
+        <div onClick={toggleCheckboxState} class={style.checkbox__circle} />
       </label>
-      <div class={style.checkbox_text}>{props.text}</div>
+      <div class={style.checkbox__text}>{props.text}</div>
     </div>
   );
 };

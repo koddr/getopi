@@ -1,6 +1,6 @@
 /* Block label */
 
-.block > .block_label {
+.block__label {
   color: var(--blue-light);
   font-size: calc(var(--font-size) + 2px);
   font-weight: 500;
@@ -9,7 +9,7 @@
 
 /* Type: title */
 
-.block > .block_title {
+.block__title {
   font-size: calc(var(--font-size) + 12px);
   line-height: calc(var(--font-size) + 12px);
   font-weight: 500;
@@ -17,62 +17,62 @@
 
 /* Type: reward */
 
-.block > .block_reward {
+.block__reward {
   font-size: calc(var(--font-size) + 8px);
   line-height: calc(var(--font-size) + 8px);
   font-weight: 500;
 }
 
-.block > .block_reward > span {
+.block__reward > span {
   color: var(--green);
   font-weight: 700;
 }
 
 /* Type: author */
 
-.block > .block_author {
+.block__author {
   display: grid;
   column-gap: 16px;
   grid-template-columns: min-content auto;
   align-items: center;
 }
 
-.block > .block_author > img {
+.block__author > img {
   width: 72px;
   border-radius: 50%;
   border: 3px solid var(--gray);
 }
 
-.block > .block_author > * > strong {
+.block__author > * > strong {
   font-size: calc(var(--font-size) + 4px);
 }
 
 /* Type: locked tasks */
 
-.block > .block_locked_tasks {
+.block__locked_tasks {
   display: grid;
   column-gap: 16px;
   grid-template-columns: min-content 2fr auto;
   align-items: center;
 }
 
-.block > .block_locked_tasks > img {
+.block__locked_tasks > img {
   width: 56px;
 }
 
-.block > .block_locked_tasks > div {
+.block__locked_tasks > div {
   font-size: calc(var(--font-size) + 4px);
 }
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
-  .block > .block_title {
+@media (width <= 480px) {
+  .block__title {
     font-size: calc(var(--font-size) + 8px);
     line-height: calc(var(--font-size) + 8px);
   }
 
-  .block > .block_locked_tasks {
+  .block__locked_tasks {
     row-gap: 16px;
     grid-template-columns: min-content 1fr;
     grid-template-areas:
@@ -80,17 +80,17 @@
       "button button";
   }
 
-  .block > .block_locked_tasks > img {
+  .block__locked_tasks > img {
     grid-area: img;
     width: 48px;
   }
 
-  .block > .block_locked_tasks > div {
+  .block__locked_tasks > div {
     grid-area: text;
     font-size: var(--font-size);
   }
 
-  .block > .block_locked_tasks > button {
+  .block__locked_tasks > button {
     grid-area: button;
   }
 }

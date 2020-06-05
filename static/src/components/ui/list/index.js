@@ -17,7 +17,7 @@ const List = (props) => {
     <div class={style.list} role="list">
       {props.items.map((item) => {
         return (
-          <div class={style.list_item} role="listitem">
+          <div class={style.list__item} role="listitem">
             <div>
               <img src={listType} alt="list icon" />
             </div>

@@ -8,7 +8,7 @@
 
 /* List item */
 
-.list > .list_item {
+.list__item {
   display: grid;
   grid-template-columns: min-content 1fr;
   column-gap: 8px;
@@ -26,8 +26,8 @@
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
-  .list > .list_item {
+@media (width <= 480px) {
+  .list__item {
     margin-left: 8px;
   }
 }

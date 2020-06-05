@@ -12,7 +12,7 @@
 
 /* Header wrapper */
 
-.header > .wrapper {
+.header__wrapper {
   display: grid;
   grid-template-columns: min-content 1fr;
   column-gap: 24px;
@@ -24,18 +24,18 @@
 
 /* Logo */
 
-.header > * > .logo > a,
-.header > * > nav > a {
+.header__logo > a,
+.header__nav > a {
   border-bottom: 0;
 }
 
-.header > * > .logo > a > img {
+.header__logo > a > img {
   width: 52px;
 }
 
 /* Navigation */
 
-.header > * > nav {
+.header__nav {
   display: grid;
   grid-template-columns: repeat(5, min-content);
   column-gap: 20px;
@@ -43,11 +43,11 @@
   justify-content: right;
 }
 
-.header > * > nav > a > img {
+.header__nav > a > img {
   width: 32px;
 }
 
-.header > * > nav > a:last-child > img {
+.header__nav > a:last-child > img {
   width: 48px;
   border-radius: 50%;
   border: 3px solid var(--gray);
@@ -55,28 +55,28 @@
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
+@media (width <= 480px) {
   .header {
     padding: 10px 8px;
   }
 
-  .header > .wrapper {
+  .header__wrapper {
     column-gap: 16px;
   }
 
-  .header > * > .logo > a > img {
+  .header__logo > a > img {
     width: 38px;
   }
 
-  .header > * > nav {
+  .header__nav {
     column-gap: 14px;
   }
 
-  .header > * > nav > a > img {
+  .header__nav > a > img {
     width: 28px;
   }
 
-  .header > * > nav > a:last-child > img {
+  .header__nav > a:last-child > img {
     width: 34px;
   }
 }

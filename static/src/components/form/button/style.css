@@ -19,13 +19,13 @@ button:hover {
 
 /* Secondary button */
 
-button.secondary {
+.button__secondary {
   border: 3px solid var(--blue);
   background-color: var(--white);
   color: var(--blue);
 }
 
-button.secondary:hover {
+.button__secondary:hover {
   border: 3px solid var(--blue-dark);
   background-color: var(--blue-dark);
   color: var(--white);
@@ -33,40 +33,40 @@ button.secondary:hover {
 
 /* Success */
 
-button.success {
+.button__success {
   background-color: var(--green);
   color: var(--white);
 }
 
-button.success:hover {
+.button__success:hover {
   background-color: var(--green-dark);
 }
 
 /* Warning */
 
-button.warning {
+.button__warning {
   background-color: var(--yellow);
   color: var(--white);
 }
 
-button.warning:hover {
+.button__warning:hover {
   background-color: var(--yellow-dark);
 }
 
 /* Danger */
 
-button.danger {
+.button__danger {
   background-color: var(--red);
   color: var(--white);
 }
 
-button.danger:hover {
+.button__danger:hover {
   background-color: var(--red-dark);
 }
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
+@media (width <= 480px) {
   button {
     font-size: calc(var(--font-size) + 1px);
     line-height: calc(var(--font-size) + 1px);

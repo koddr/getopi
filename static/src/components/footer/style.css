@@ -15,7 +15,7 @@
 
 /* Footer wrapper */
 
-.footer > .wrapper {
+.footer__wrapper {
   display: grid;
   grid-template-columns: 1fr min-content 1fr;
   column-gap: 24px;
@@ -27,17 +27,17 @@
 
 /* Logo */
 
-.footer > * > .logo > a {
+.footer__logo > a {
   border-bottom: 0;
 }
 
-.footer > * > .logo > a > img {
+.footer__logo > a > img {
   width: 96px;
 }
 
 /* Nav */
 
-.footer > * > nav {
+.footer__nav {
   display: grid;
   grid-template-columns: repeat(3, max-content);
   column-gap: 16px;
@@ -47,26 +47,26 @@
 
 /* Media */
 
-@media all and (max-width: 320px) and (max-width: 480px) {
+@media (width <= 480px) {
   .footer {
     padding: 24px 8px;
   }
 
-  .footer > .wrapper {
+  .footer__wrapper {
     grid-template-columns: 1fr;
     row-gap: 16px;
   }
 
-  .footer > * > .logo {
+  .footer__logo {
     display: none;
   }
 
-  .footer > * > nav {
+  .footer__nav {
     column-gap: 8px;
   }
 
-  .footer > * > .copyright,
-  .footer > * > nav {
+  .footer__copyright,
+  .footer__nav {
     text-align: center;
     justify-content: center;
   }

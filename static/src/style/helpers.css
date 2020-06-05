@@ -22,7 +22,7 @@
 
 /* Media */
 
-@media all and (min-width: 320px) and (max-width: 480px) {
+@media (width <= 480px) {
   .divider-24px {
     height: calc(var(--font-size) - 8px);
   }

@@ -11,15 +11,15 @@ const Footer = () => (
       <path fill="#216EF4" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
     </svg>
     <footer class={style.footer}>
-      <div class={style.wrapper}>
-        <div class={style.copyright}>
+      <div class={style.footer__wrapper}>
+        <div class={style.footer__copyright}>
           &copy; 2020. Crafted with &hearts; to people and robots by{" "}
           <a href="https://1wa.co" target="_blank" rel="noreferrer">
             True web artisans
           </a>
           .
         </div>
-        <div class={style.logo}>
+        <div class={style.footer__logo}>
           <Link href="/">
             <img
               src="/assets/images/getopi_full-logo.svg"
@@ -27,7 +27,7 @@ const Footer = () => (
             />
           </Link>
         </div>
-        <nav>
+        <nav class={style.footer__nav}>
           <div>
             <Link href="/">About Service</Link>
           </div>
