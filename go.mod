@@ -20,7 +20,7 @@ require (
 	github.com/matoous/go-nanoid v1.4.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
-	golang.org/x/crypto v0.0.0-20200602180216-279210d13fed
+	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 )
