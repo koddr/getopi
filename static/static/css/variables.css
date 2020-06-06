@@ -1,0 +1,36 @@
+/* Variables */
+
+:root {
+  /* Font */
+  --font-family: "Inter", sans-serif;
+  --font-size: 16px;
+  --line-height: calc(var(--font-size) * 1.5);
+
+  /* Normal colors */
+  --white: hsla(255, 100%, 100%, 1);
+  --black: hsla(0, 0%, 26%, 1);
+  --gray: hsla(0, 0%, 96%, 1);
+  --blue: hsla(218, 91%, 54%, 1);
+  --green: hsla(146, 78%, 42%, 1);
+  --yellow: hsla(45, 86%, 62%, 1);
+  --red: hsla(0, 78%, 42%, 1);
+
+  /* Light colors */
+  --blue-light: hsla(218, 90%, 77%, 1);
+  --green-light: hsla(146, 63%, 86%, 1);
+  --yellow-light: hsla(45, 67%, 76%, 1);
+  --red-light: hsla(0, 48%, 65%, 1);
+
+  /* Dark colors */
+  --gray-dark: hsla(0, 0%, 86%, 1);
+  --blue-dark: hsla(218, 91%, 44%, 1);
+  --green-dark: hsla(146, 78%, 32%, 1);
+  --yellow-dark: hsla(45, 86%, 52%, 1);
+  --red-dark: hsla(0, 78%, 32%, 1);
+
+  /* Elements specify color */
+  --blue-visited-links: hsla(252, 91%, 54%, 1);
+
+  /* Shadows */
+  --box-shadow: 0px 0px 24px var(--gray-dark);
+}

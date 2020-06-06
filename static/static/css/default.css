@@ -1,0 +1,107 @@
+/* Main */
+
+html,
+body {
+  background: var(--gray);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: var(--black);
+  font-weight: 400;
+}
+
+/* Links */
+
+a {
+  color: var(--blue);
+  border-bottom: 1px solid var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 0;
+}
+
+a:visited {
+  color: var(--blue-visited-links);
+  border-bottom: 1px solid var(--blue-visited-links);
+}
+
+/* Text styles */
+
+strong {
+  font-weight: 500;
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: calc(var(--font-size) + 32px);
+  line-height: calc(var(--font-size) + 32px);
+  margin-bottom: calc(var(--font-size) + 16px);
+}
+
+h2 {
+  font-size: calc(var(--font-size) + 24px);
+  line-height: calc(var(--font-size) + 24px);
+  margin-bottom: calc(var(--font-size) + 8px);
+}
+
+h3 {
+  font-size: calc(var(--font-size) + 16px);
+  line-height: calc(var(--font-size) + 16px);
+  margin-bottom: calc(var(--font-size) + 4px);
+}
+
+h4 {
+  font-size: calc(var(--font-size) + 8px);
+  line-height: calc(var(--font-size) + 8px);
+  margin-bottom: calc(var(--font-size) + 2px);
+}
+
+/* Paragraph */
+
+p {
+  margin-bottom: calc(var(--font-size) + 16px);
+}
+
+/* Media */
+
+@media (width >= 1680px) {
+  :root {
+    --font-size: 18px;
+  }
+}
+
+@media (width <= 480px) {
+  h1 {
+    font-size: calc(var(--font-size) + 16px);
+    line-height: calc(var(--font-size) + 16px);
+    margin-bottom: calc(var(--font-size) + 4px);
+  }
+
+  h2 {
+    font-size: calc(var(--font-size) + 12px);
+    line-height: calc(var(--font-size) + 12px);
+    margin-bottom: calc(var(--font-size) + 2px);
+  }
+
+  h3 {
+    font-size: calc(var(--font-size) + 8px);
+    line-height: calc(var(--font-size) + 8px);
+    margin-bottom: var(--font-size);
+  }
+
+  h4 {
+    font-size: calc(var(--font-size) + 4px);
+    line-height: calc(var(--font-size) + 4px);
+    margin-bottom: calc(var(--font-size) - 2px);
+  }
+}
