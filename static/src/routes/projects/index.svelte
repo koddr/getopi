@@ -1,8 +1,9 @@
 <script context="module">
-  export async function preload({ params, query }) {
+  export async function preload() {
     const res = await this.fetch(
       `http://192.168.88.100:5000/api/public/projects`
     );
+
     const data = await res.json();
 
     if (res.status === 200 && !data.error) {
@@ -38,7 +39,9 @@
 <ul>
   {#each projects as project (project.id)}
     <li>
-      <a href={`/projects/${project.alias}`}>{project.project_attrs.title}</a>
+      <a rel="prefetch" href={`/projects/${project.alias}`}>
+        {project.project_attrs.title}
+      </a>
     </li>
   {/each}
 </ul>

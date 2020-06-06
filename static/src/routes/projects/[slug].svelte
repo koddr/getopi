@@ -1,10 +1,10 @@
 <script context="module">
-  export async function preload({ params, query }) {
-    // the `slug` parameter is available because
-    // this file is called [slug].svelte
+  export async function preload({ params }) {
+    // The `slug` parameter is available because this file is called [slug].svelte
     const res = await this.fetch(
       `http://192.168.88.100:5000/api/public/projects/${params.slug}`
     );
+
     const data = await res.json();
 
     if (res.status === 200 && !res.error) {
