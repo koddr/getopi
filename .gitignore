@@ -5,14 +5,14 @@
 **/node_modules/
 **/build/
 **/tmp/
+**/static-*
 
 # Logs
 **/*.log
 **/*.lock
-**/size-plugin.json
 
 # Lock files
 **/package-lock.json
 
 # Env
-.env
+**/.env
