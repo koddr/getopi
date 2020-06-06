@@ -1,6 +1,5 @@
 <style>
   .footer {
-    flex: 0 0 auto;
     background-color: var(--blue);
     color: var(--white);
     font-size: calc(var(--font-size) - 3px);

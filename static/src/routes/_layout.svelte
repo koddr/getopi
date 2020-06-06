@@ -9,11 +9,11 @@
   .layout {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 100vh;
   }
 
   .main {
-    flex: 1 0 auto;
+    flex: 1;
     padding: 48px 8px;
   }
 
