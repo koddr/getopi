@@ -17,5 +17,14 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "My Profile",
+      "short_name": "Profile",
+      "description": "Go to your profile page",
+      "url": "/profile",
+      "icons": [{ "src": "logo-192.png", "sizes": "192x192" }]
+    }
   ]
 }
