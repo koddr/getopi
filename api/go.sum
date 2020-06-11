@@ -23,8 +23,8 @@ github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/gofiber/compression v0.2.0 h1:I+B2zscAPYFcRj4mhr10Wh74WUG3IRazw8KBylkVHVc=
 github.com/gofiber/compression v0.2.0/go.mod h1:4kVhdLp7AQ/9DMAJ01dCBPuDlkT9RuFSW6llOaf3F+g=
-github.com/gofiber/cors v0.1.0 h1:MsjN5RYEkDV/mWIaxHZ8Pj3ig1RSzrUAuQ2KkOtl0mA=
-github.com/gofiber/cors v0.1.0/go.mod h1:wWF90UszZFrUY7K75PbuKSIhNvnBwdblDDO01jOb7lQ=
+github.com/gofiber/cors v0.2.0 h1:NcprkYrVR4AdOhHH11M0JZLPtalAxiZDidvVBkGvU4E=
+github.com/gofiber/cors v0.2.0/go.mod h1:HSHnRk7vZJdey6iVf010ZB6K/OqteCIEApKwoUVxVy0=
 github.com/gofiber/fiber v1.10.0/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
 github.com/gofiber/fiber v1.10.1/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
 github.com/gofiber/fiber v1.10.3/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
