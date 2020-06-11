@@ -4,6 +4,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import svelte from "rollup-plugin-svelte";
 import babel from "@rollup/plugin-babel";
 import { terser } from "rollup-plugin-terser";
+import sveltePreprocess from "svelte-preprocess";
+import autoprefixer from "autoprefixer";
+import pimport from "postcss-import";
+import minmax from "postcss-media-minmax";
+import csso from "postcss-csso";
 import config from "sapper/config/rollup.js";
 import pkg from "./package.json";
 
@@ -16,6 +21,12 @@ const onwarn = (warning, onwarn) =>
     /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning);
 
+const preprocess = sveltePreprocess({
+  postcss: {
+    plugins: [pimport, minmax, autoprefixer, csso],
+  },
+});
+
 export default {
   client: {
     input: config.client.input(),
@@ -27,6 +38,7 @@ export default {
       }),
       svelte({
         dev,
+        preprocess,
         hydratable: true,
         emitCss: true,
       }),
@@ -80,6 +92,7 @@ export default {
       }),
       svelte({
         generate: "ssr",
+        preprocess,
         dev,
       }),
       resolve({

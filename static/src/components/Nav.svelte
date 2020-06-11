@@ -8,11 +8,10 @@
     box-shadow: var(--box-shadow);
     padding: 12px 8px;
     position: sticky;
-    position: -webkit-sticky;
     top: 0;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav {
       padding: 16px 24px;
     }
@@ -26,7 +25,7 @@
     margin: 0 auto;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__wrapper {
       column-gap: 16px;
     }
@@ -41,7 +40,7 @@
     width: 32px;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__logo img {
       width: 48px;
     }
@@ -55,7 +54,7 @@
     align-self: center;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__title {
       font-size: calc(var(--font-size) + 9px);
       line-height: calc(var(--font-size) + 9px);
@@ -79,7 +78,7 @@
 
   .menu__item .item__avatar {
     width: 32px;
-    border: 1.5px solid var(--blue);
+    border: 2px solid var(--blue);
     border-radius: 50%;
   }
 
