@@ -56,33 +56,33 @@
 
   @media (min-width: 768px) {
     .nav__title {
-      font-size: calc(var(--font-size) + 9px);
-      line-height: calc(var(--font-size) + 9px);
+      font-size: calc(var(--font-size) + 12px);
+      line-height: calc(var(--font-size) + 12px);
     }
   }
 
-  .menu__list {
+  .nav__list {
     display: grid;
     grid-template-columns: repeat(3, min-content);
     column-gap: 20px;
     justify-self: end;
   }
 
-  .menu__item {
+  .nav__item {
     align-self: center;
   }
 
-  .menu__item .item__icon {
+  .nav__icon {
     width: 26px;
   }
 
-  .menu__item .item__avatar {
+  .nav__avatar {
     width: 32px;
     border: 2px solid var(--blue);
     border-radius: 50%;
   }
 
-  .menu__item a {
+  .nav__link {
     display: grid;
     grid-template-columns: repeat(2, min-content);
     column-gap: 8px;
@@ -90,22 +90,22 @@
     align-items: center;
   }
 
-  .menu__item a:visited {
+  .nav__link:visited {
     color: var(--blue);
   }
 
   @media (max-width: 480px) {
-    .menu__item a {
+    .nav__link {
       display: block;
     }
 
-    .menu__item a span {
+    .nav__body {
       display: none;
     }
   }
 </style>
 
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav__wrapper">
     <a
       class="nav__logo"
@@ -114,26 +114,33 @@
       <img src="images/getopi_short-logo.svg" alt="getopi logo" />
     </a>
     <div class="nav__title">GetOpi</div>
-    <ul class="menu__list">
-      <li class="menu__item">
-        <a aria-current={segment === 'about' ? 'page' : undefined} href="about">
-          <img class="item__icon" src="icons/search.svg" alt="search icon" />
+    <ul class="nav__list">
+      <li class="nav__item">
+        <a
+          class="nav__link"
+          aria-current={segment === 'about' ? 'page' : undefined}
+          href="about">
+          <img class="nav__icon" src="icons/search.svg" alt="search icon" />
           <span>Search</span>
         </a>
       </li>
-      <li class="menu__item">
-        <a aria-current={segment === 'about' ? 'page' : undefined} href="about">
-          <img class="item__icon" src="icons/bell.svg" alt="bell icon" />
-          <span>Notifications</span>
+      <li class="nav__item">
+        <a
+          class="nav__link"
+          aria-current={segment === 'about' ? 'page' : undefined}
+          href="about">
+          <img class="nav__icon" src="icons/bell.svg" alt="bell icon" />
+          <span class="nav__body">Notifications</span>
         </a>
       </li>
-      <li class="menu__item">
+      <li class="nav__item">
         <a
           rel="prefetch"
+          class="nav__link"
           aria-current={segment === 'projects' ? 'page' : undefined}
           href="projects">
           <img
-            class="item__avatar"
+            class="nav__avatar"
             src="icons/no-avatar.svg"
             alt="no avatar icon" />
           <span>@koddr</span>

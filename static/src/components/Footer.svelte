@@ -44,7 +44,7 @@
     }
   }
 
-  .footer__menu {
+  .footer__list {
     display: grid;
     grid-template-columns: repeat(3, auto);
     column-gap: 8px;
@@ -52,7 +52,7 @@
   }
 
   @media (max-width: 480px) {
-    .footer__menu {
+    .footer__list {
       grid-template-columns: auto;
       row-gap: 8px;
       justify-self: center;
@@ -71,7 +71,7 @@
       class="footer__logo"
       src="images/getopi_short-logo-white.svg"
       alt="getopi logo" />
-    <ul class="footer__menu">
+    <ul class="footer__list">
       <li>
         <a href="about">About Service</a>
       </li>

@@ -33,5 +33,5 @@
 
 <div>
   <h1>{project.title}</h1>
-  <div class="content">{author.first_name}</div>
+  <div>{author.first_name}</div>
 </div>
