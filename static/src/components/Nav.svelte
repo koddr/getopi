@@ -11,7 +11,7 @@
     top: 0;
   }
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     .nav {
       padding: 16px 24px;
     }
@@ -25,7 +25,7 @@
     margin: 0 auto;
   }
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     .nav__wrapper {
       column-gap: 16px;
     }
@@ -40,7 +40,7 @@
     width: 32px;
   }
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     .nav__logo img {
       width: 48px;
     }
@@ -54,7 +54,7 @@
     align-self: center;
   }
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     .nav__title {
       font-size: calc(var(--font-size) + 9px);
       line-height: calc(var(--font-size) + 9px);
