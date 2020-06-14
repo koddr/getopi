@@ -7,6 +7,7 @@ import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import autoprefixer from "autoprefixer";
 import pimport from "postcss-import";
+import minmax from "postcss-media-minmax";
 import csso from "postcss-csso";
 import config from "sapper/config/rollup.js";
 import pkg from "./package.json";
@@ -22,7 +23,7 @@ const onwarn = (warning, onwarn) =>
 
 const preprocess = sveltePreprocess({
   postcss: {
-    plugins: [pimport, autoprefixer, csso],
+    plugins: [pimport, minmax, autoprefixer, csso],
   },
 });
 

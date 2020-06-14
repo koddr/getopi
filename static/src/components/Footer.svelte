@@ -1,4 +1,4 @@
-<style>
+<style lang="postcss">
   .footer {
     background-color: var(--blue);
     color: var(--white);
@@ -6,7 +6,7 @@
     padding: 12px 8px;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .footer {
       padding: 16px 24px;
     }
@@ -25,7 +25,7 @@
     margin: 0 auto;
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .footer__wrapper {
       grid-template-columns: auto;
       row-gap: 16px;
@@ -38,7 +38,7 @@
     justify-self: center;
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .footer__logo {
       display: none;
     }
@@ -51,7 +51,7 @@
     justify-self: right;
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .footer__list {
       grid-template-columns: auto;
       row-gap: 8px;

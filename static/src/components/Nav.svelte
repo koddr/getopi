@@ -2,7 +2,7 @@
   export let segment;
 </script>
 
-<style>
+<style lang="postcss">
   .nav {
     background-color: var(--white);
     box-shadow: var(--box-shadow);
@@ -11,7 +11,7 @@
     top: 0;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav {
       padding: 16px 24px;
     }
@@ -25,7 +25,7 @@
     margin: 0 auto;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__wrapper {
       column-gap: 16px;
     }
@@ -40,7 +40,7 @@
     width: 32px;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__logo img {
       width: 48px;
     }
@@ -54,7 +54,7 @@
     align-self: center;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .nav__title {
       font-size: calc(var(--font-size) + 12px);
       line-height: calc(var(--font-size) + 12px);
@@ -94,7 +94,7 @@
     color: var(--blue);
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .nav__link {
       display: block;
     }
