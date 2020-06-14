@@ -1,3 +1,7 @@
+<script>
+  import AuthForm from "../components/AuthForm.svelte";
+</script>
+
 <style>
 
 </style>
@@ -10,3 +14,5 @@
 </svelte:head>
 
 <h1>Great success!</h1>
+
+<AuthForm />

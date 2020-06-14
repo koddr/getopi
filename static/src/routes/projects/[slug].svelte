@@ -1,8 +1,15 @@
 <script context="module">
+  import fetchWithAuth from "../../utils/jwt";
+
   export async function preload({ params }) {
     // The `slug` parameter is available because this file is called [slug].svelte
-    const res = await this.fetch(
-      `http://192.168.88.100:5000/api/public/projects/${params.slug}`
+    const res = await fetchWithAuth(
+      `http://192.168.88.100:5000/api/public/projects/${params.slug}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     const data = await res.json();

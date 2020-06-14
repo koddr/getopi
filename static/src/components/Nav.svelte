@@ -121,7 +121,7 @@
           aria-current={segment === 'about' ? 'page' : undefined}
           href="about">
           <img class="nav__icon" src="icons/search.svg" alt="search icon" />
-          <span>Search</span>
+          <span class="nav__body">Search</span>
         </a>
       </li>
       <li class="nav__item">
@@ -143,7 +143,7 @@
             class="nav__avatar"
             src="icons/no-avatar.svg"
             alt="no avatar icon" />
-          <span>@koddr</span>
+          <span class="nav__body">@koddr</span>
         </a>
       </li>
     </ul>
