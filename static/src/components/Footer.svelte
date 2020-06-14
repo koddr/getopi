@@ -1,4 +1,4 @@
-<style lang="postcss">
+<style>
   .footer {
     background-color: var(--blue);
     color: var(--white);

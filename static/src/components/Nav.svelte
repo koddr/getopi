@@ -2,7 +2,7 @@
   export let segment;
 </script>
 
-<style lang="postcss">
+<style>
   .nav {
     background-color: var(--white);
     box-shadow: var(--box-shadow);
