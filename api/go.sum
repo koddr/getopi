@@ -25,8 +25,6 @@ github.com/gofiber/compression v0.2.0 h1:I+B2zscAPYFcRj4mhr10Wh74WUG3IRazw8KBylk
 github.com/gofiber/compression v0.2.0/go.mod h1:4kVhdLp7AQ/9DMAJ01dCBPuDlkT9RuFSW6llOaf3F+g=
 github.com/gofiber/cors v0.2.0 h1:NcprkYrVR4AdOhHH11M0JZLPtalAxiZDidvVBkGvU4E=
 github.com/gofiber/cors v0.2.0/go.mod h1:HSHnRk7vZJdey6iVf010ZB6K/OqteCIEApKwoUVxVy0=
-github.com/gofiber/csrf v0.1.1 h1:AW5cSqCwxWOtuXF+Cm9/zGrgHSViV5sidqDzPjHN3h0=
-github.com/gofiber/csrf v0.1.1/go.mod h1:xAm5zYUE1RuzSbQPsUTO5dgv/8qFdumGzJWZlHtQ5rw=
 github.com/gofiber/fiber v1.10.0/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
 github.com/gofiber/fiber v1.10.1/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
 github.com/gofiber/fiber v1.10.3/go.mod h1:8083zyrwS9acYIAgpYPbXPW80m57uc8WPzPF3wt1qNk=
