@@ -19,6 +19,6 @@ require (
 	github.com/klauspost/compress v1.10.8 // indirect
 	github.com/matoous/go-nanoid v1.4.1
 	github.com/pkg/errors v0.9.1 // indirect
-	golang.org/x/crypto v0.31.0
+	golang.org/x/crypto v0.35.0
 	google.golang.org/appengine v1.6.6 // indirect
 )
